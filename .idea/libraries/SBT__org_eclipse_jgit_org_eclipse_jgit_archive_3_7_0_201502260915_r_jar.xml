@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="SBT: org.eclipse.jgit:org.eclipse.jgit.archive:3.7.0.201502260915-r:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit.archive/jars/org.eclipse.jgit.archive-3.7.0.201502260915-r.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit.archive/docs/org.eclipse.jgit.archive-3.7.0.201502260915-r-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit.archive/srcs/org.eclipse.jgit.archive-3.7.0.201502260915-r-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
