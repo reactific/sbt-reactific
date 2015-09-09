@@ -32,17 +32,17 @@ object SonatypePublishing extends PluginSettings {
   }
 
   val defaultScmInfo = Def.setting {
-    val gitUrl = "//github.com/scrupal/" + normalizedName.value + ".git"
+    val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
     ScmInfo(url("https:" ++ gitUrl), "scm:git:" ++ gitUrl, Some("https:" ++ gitUrl) )
   }
 
   override def projectSettings = Sonatype.sonatypeSettings ++ Seq(
-    Sonatype.SonatypeKeys.sonatypeProfileName := "org.scrupal",
+    Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
     publishMavenStyle := true,
     publishArtifact in Test := false,
     pomIncludeRepository := { _ => false },
     licenses := Seq("Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
-    homepage := Some(new URL("http://modules.scrupal.org/" + normalizedName.value)),
+    homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
     pomExtra in Global := {
       <scm>
         <url>{scmInfo.value.getOrElse(defaultScmInfo.value).browseUrl.toString}</url>
@@ -50,9 +50,9 @@ object SonatypePublishing extends PluginSettings {
       </scm>
       <developers>
         <developer>
-          <id>{scrupalCopyrightHolder.value}</id>
-          <name>{scrupalCopyrightHolder.value}</name>
-          <url>{scrupalDeveloperUrl.value}</url>
+          <id>{copyrightHolder.value}</id>
+          <name>{copyrightHolder.value}</name>
+          <url>{developerUrl.value}</url>
         </developer>
       </developers>
     }

@@ -32,7 +32,7 @@ object Settings extends PluginSettings {
 
   override def projectSettings : Seq[sbt.Def.Setting[_]] = Defaults.coreDefaultSettings ++
     Seq(
-      scalacOptions in(Compile, doc) ++= Opts.doc.title(ProjectPlugin.autoImport.scrupalTitle.value),
+      scalacOptions in(Compile, doc) ++= Opts.doc.title(ProjectPlugin.autoImport.titleForDocs.value),
       scalacOptions in(Compile, doc) ++= Opts.doc.version(version.value),
       fork in Test := false,
       logBuffered in Test := false,

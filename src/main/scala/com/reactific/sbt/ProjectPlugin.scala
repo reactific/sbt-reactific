@@ -26,7 +26,7 @@ import sbtbuildinfo._
 import sbtrelease.ReleasePlugin
 import sbtsh.ShPlugin
 
-/** The ScrupalPlugin For Scrupal Based Modules */
+/** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
 object ProjectPlugin extends AutoPlugin {
 
   val autoplugins : Seq[AutoPlugin] = Seq(JavaAppPackaging, JavaVersionCheckPlugin,
@@ -54,20 +54,19 @@ object ProjectPlugin extends AutoPlugin {
    * when the plugin is enabled
    */
   object autoImport {
-    val scrupalPackage = settingKey[String]("The main, top level Scala package name that contains' the project's code")
-    val scrupalTitle = settingKey[String]("A title for the Scrupal module for use in documentation")
-    val scrupalCopyrightHolder = settingKey[String]("The name of the copyright holder for the scrupal module")
-    val scrupalCopyrightYears = settingKey[Seq[Int]]("The years in which the copyright was in place")
-    val scrupalDeveloperUrl = settingKey[URL]("The URL for the developer's home page")
+    val codePackage = settingKey[String]("The main, top level Scala package name that contains the project's code")
+    val titleForDocs = settingKey[String]("The name of the project as it should appear in documentation.")
+    val copyrightHolder = settingKey[String]("The name of the copyright holder for this project.")
+    val copyrightYears = settingKey[Seq[Int]]("The years in which the copyright was in place for this project.")
+    val developerUrl = settingKey[URL]("The URL for the project developer's home page")
 
     val compileOnly = TaskKey[File]("compile-only", "Compile just the specified files")
-
     val printClasspath = TaskKey[File]("print-class-path", "Print the project's compilation class path.")
     val printTestClasspath = TaskKey[File]("print-test-class-path", "Print the project's testing class path.")
     val printRuntimeClasspath = TaskKey[File]("print-runtime-class-path", "Print the project's runtime class path.")
   }
 
-  val scrupalResolvers = Seq(
+  val standardResolvers = Seq(
     "BinTray-typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
     "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
     "Bintray-scalaz" at "http://dl.bintray.com/scalaz/releases",
@@ -83,28 +82,23 @@ object ProjectPlugin extends AutoPlugin {
    * Define the values of the settings
    */
   override def projectSettings: Seq[Setting[_]] = {
-    val now = System.currentTimeMillis()
-    val dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-    dtf.setTimeZone(java.util.TimeZone.getTimeZone("UTC"))
-    val nowStr = dtf.format(new java.util.Date(now))
     Defaults.coreDefaultSettings ++
       autoplugins.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
       pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
       Seq (
-        resolvers := scrupalResolvers,
+        resolvers := standardResolvers,
         javaVersionPrefix in javaVersionCheck := Some("1.8"),
         ivyScala := ivyScala.value map {_.copy(overrideScalaVersion = true)},
         buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-        buildInfoPackage := scrupalPackage.value,
+        buildInfoPackage := codePackage.value,
         buildInfoObject := {
-          val s = scrupalPackage.value.split('.').map { s => s.head.toString.toUpperCase + s.tail }.mkString
+          val s = codePackage.value.split('.').map { s => s.head.toString.toUpperCase + s.tail }.mkString
           s.head.toString.toUpperCase + s.tail + "Info"
         },
         buildInfoKeys := Seq[BuildInfoKey](
           name, normalizedName, description, homepage, licenses, organization, organizationHomepage,
-          apiURL, version, scalaVersion, isSnapshot, scrupalTitle, scrupalCopyrightHolder, scrupalDeveloperUrl,
-          "builtAtString" -> nowStr,
-          "builtAtMillis" -> now
+          apiURL, version, scalaVersion, isSnapshot, codePackage, titleForDocs, copyrightHolder,
+          copyrightYears, developerUrl
         ),
         buildInfoOptions := Seq(BuildInfoOption.ToMap, BuildInfoOption.ToJson, BuildInfoOption.BuildTime),
         printClasspath <<= Commands.print_class_path,

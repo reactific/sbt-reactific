@@ -26,9 +26,9 @@ object Unidoc extends PluginSettings {
   import sbtunidoc.{Plugin => UnidocPlugin}
   override def projectSettings = UnidocPlugin.unidocSettings ++ Seq(
     scalacOptions in (Compile, doc) ++= Seq("-unchecked", "-deprecation", "-implicits"),
-    scalacOptions in(Compile, doc) ++= Opts.doc.title(scrupalTitle.value),
+    scalacOptions in(Compile, doc) ++= Opts.doc.title(titleForDocs.value),
     scalacOptions in(Compile, doc) ++= Opts.doc.version(version.value),
-    apiURL := Some(url("http://scrupal.org/modules/" + normalizedName.value + "/api/")),
+    apiURL := Some(url("https://github.com/reactific/" + normalizedName.value + "/api/")),
     autoAPIMappings := true,
     apiMappings ++= {
       val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value

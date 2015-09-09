@@ -24,7 +24,7 @@ import sbtrelease.ReleaseStateTransformations._
 import xerial.sbt.Sonatype
 
 object SbtPluginBuilder extends Build {
-  lazy val scrupal_resolvers = Seq(
+  lazy val standardResolvers = Seq(
     "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
     "BinTray-Typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
     Resolver.sonatypeRepo("releases"),
@@ -45,15 +45,15 @@ object SbtPluginBuilder extends Build {
   val sonatype = publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
 
 
-  lazy val project = Project("scrupal-sbt", new File("."))
+  lazy val project = Project("sbt-project", new File("."))
     .enablePlugins(Sonatype)
     .settings(
       sbtPlugin       := true,
-      organization    := "org.scrupal",
+      organization    := "com.reactific",
       scalaVersion    := "2.10.5",
       scalacOptions   ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint"),
       logLevel        := Level.Info,
-      resolvers       ++= scrupal_resolvers,
+      resolvers       ++= standardResolvers,
 
       // Scripted - sbt plugin tests
       ScriptedPlugin.scriptedSettings,
@@ -105,16 +105,16 @@ object SbtPluginBuilder extends Build {
     )
     .settings(
       // Publishing to sonatype
-      Sonatype.SonatypeKeys.sonatypeProfileName := "org.scrupal",
+      Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
       publishMavenStyle := true,
       publishArtifact in Test := false,
       pomIncludeRepository := { _ => false },
       licenses := Seq("Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
-      homepage := Some(new URL("http://modules.scrupal.org/" + normalizedName.value)),
+      homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
       pomExtra in Global := {
         <scm>
-          <url>git@github.com:scrupal/scrupal-sbt.git</url>
-          <connection>scm:git:git@github.com:scrupal/scrupal-sbt.git</connection>
+          <url>git@github.com:reactific/sbt-project.git</url>
+          <connection>scm:git:git@github.com:reactific/sbt-project.git</connection>
         </scm>
         <developers>
           <developer>
