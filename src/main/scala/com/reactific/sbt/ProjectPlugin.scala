@@ -107,8 +107,7 @@ object ProjectPlugin extends AutoPlugin {
         compileOnly <<= Commands.compile_only,
         libraryDependencies ++= Seq(
           "org.specs2" %% "specs2-core" % "3.6.1" % "test",
-          "org.specs2" %% "specs2-junit" % "3.6.1" % "test",
-          "ch.qos.logback" % "logback-classic" % "1.1.3" % "test"
+          "org.specs2" %% "specs2-junit" % "3.6.1" % "test"
         )
       )
   }
