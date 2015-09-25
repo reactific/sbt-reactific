@@ -1,3 +1,5 @@
+import sbt.Keys._
+
 /***********************************************************************************************************************                                                                                                                    *
   * Copyright (c) 2015, Reactific Software LLC. All Rights Reserved.                                                   *
   *                                                                                                                    *
@@ -11,9 +13,10 @@
   * the specific language governing permissions and limitations under the License.                                     *
   **********************************************************************************************************************/
 
-libraryDependencies += "org.scala-sbt" % "scripted-plugin" % sbtVersion.value
-
-libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.12"
+libraryDependencies ++= Seq(
+  "org.scala-sbt" % "scripted-plugin" % sbtVersion.value,
+  "org.slf4j" % "slf4j-simple" % "1.7.12"
+)
 
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.0")
 

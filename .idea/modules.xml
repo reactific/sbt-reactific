@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scrupal-sbt.iml" filepath="$PROJECT_DIR$/.idea/modules/scrupal-sbt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scrupal-sbt-build.iml" filepath="$PROJECT_DIR$/.idea/modules/scrupal-sbt-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sbt-project.iml" filepath="$PROJECT_DIR$/.idea/modules/sbt-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sbt-project-build.iml" filepath="$PROJECT_DIR$/.idea/modules/sbt-project-build.iml" />
     </modules>
   </component>
 </project>
