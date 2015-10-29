@@ -1,1 +1,1 @@
-addSbtPlugin("org.scrupal" % "scrupal-sbt" % sys.props("plugin.version") )
+addSbtPlugin("com.reactific" % "sbt-project" % sys.props("plugin.version") )

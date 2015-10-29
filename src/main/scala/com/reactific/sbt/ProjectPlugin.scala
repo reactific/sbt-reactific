@@ -15,8 +15,6 @@
 package com.reactific.sbt
 
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
-import com.typesafe.sbt.bundle.SbtBundle
-import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.{GitPlugin, JavaVersionCheckPlugin}
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt.Keys._
@@ -29,22 +27,22 @@ import sbtsh.ShPlugin
 /** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
 object ProjectPlugin extends AutoPlugin {
 
-  val autoplugins : Seq[AutoPlugin] = Seq(JavaAppPackaging, JavaVersionCheckPlugin,
-    GitPlugin, HeaderPlugin, SbtBundle, ShPlugin, ReleasePlugin)
+  val autoplugins : Seq[AutoPlugin] = Seq(JavaVersionCheckPlugin,
+    GitPlugin, HeaderPlugin, ShPlugin, ReleasePlugin )
 
   override def requires = {
     // Enable all the AutoPlugin instances listed in autoplugins
     autoplugins.foldLeft(empty) { (b,plugin) => b && plugin }
   }
 
-  // Not AutoPlugins Yet: CompileQuick, Scalariform, Unidoc, SbtSite, SbtGhPages, SbtUnidocPlugin :(
+  // Not AutoPlugins Yet: CompileQuick, Unidoc, SbtSite, SbtGhPages, SbtUnidocPlugin :(
 
   /** Settings For Plugins that are not yet AutoPlugins so we can mimic them.
     * This trait provides the same settings methods as an AutoPlugin. See [[sbt.AutoPlugin]]
     * This is used to override settings in both AutoPlugins and regular Plugins.
     */
   val pluginSettings : Seq[PluginSettings] = Seq(
-    CompileQuick, Compiler, Settings, Bundle, /*Scalariform,*/ Unidoc, SonatypePublishing, Site, Release
+    CompileQuick, Compiler, Settings, Unidoc, SonatypePublishing, Site, Release
   )
 
   override def trigger = noTrigger

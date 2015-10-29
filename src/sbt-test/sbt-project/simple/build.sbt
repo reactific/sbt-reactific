@@ -4,11 +4,18 @@ version := "0.1"
 
 scalaVersion := "2.11.6"
 
-scrupalTitle := "Hello Test"
+name := "Hello Test"
 
-scrupalCopyrightHolder := "Reactific Software LLC"
+organization := "com.reactific"
 
-scrupalCopyrightYears := Seq(2014,2015)
+maxErrors := 50
 
-scrupalDeveloperUrl := new URL("https://github.com/reid-spencer")
+copyrightHolder := "Reactific Software LLC"
 
+copyrightYears := Seq(2015)
+
+developerUrl := url("http://reactific.com/")
+
+titleForDocs := "Yo!"
+
+codePackage := "com.reactific.yo"
