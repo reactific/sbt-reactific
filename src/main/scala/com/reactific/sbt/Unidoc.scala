@@ -24,6 +24,13 @@ import ProjectPlugin.autoImport._
   */
 object Unidoc extends PluginSettings {
   import sbtunidoc.{Plugin => UnidocPlugin}
+  def knownApiMappings = Map (
+    ("org.scala-lang", "scala-library") → url(s"http://www.scala-lang.org/api/$scalaVersion/"),
+    ("com.typesafe.akka", "akka-actor") → url(s"http://doc.akka.io/api/akka/"),
+    ("com.typesafe", "config") → url("http://typesafehub.github.io/config/latest/api/"),
+    ("joda-time", "joda-time") → url("http://joda-time.sourceforge.net/apidocs/")
+  )
+
   override def projectSettings = UnidocPlugin.unidocSettings ++ Seq(
     scalacOptions in (Compile, doc) ++= Seq("-unchecked", "-deprecation", "-implicits"),
     scalacOptions in(Compile, doc) ++= Opts.doc.title(titleForDocs.value),
@@ -32,22 +39,22 @@ object Unidoc extends PluginSettings {
     autoAPIMappings := true,
     apiMappings ++= {
       val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
-      def findManagedDependency(organization: String, name: String): File = {
+      def findManagedDependency(organization: String, name: String): Option[File] = {
         ( for {
-          entry <- cp
-          module <- entry.get(moduleID.key)
-          if module.organization == organization
-          if module.name.startsWith(name)
-          jarFile = entry.data
-        } yield jarFile
-          ).head
+            entry <- cp
+            module <- entry.get(moduleID.key)
+            if module.organization == organization
+            if module.name.startsWith(name)
+            jarFile = entry.data
+          } yield jarFile
+        ).headOption
       }
-      Map(
-        findManagedDependency("org.scala-lang", "scala-library") → url(s"http://www.scala-lang.org/api/$scalaVersion/"),
-        findManagedDependency("com.typesafe.akka", "akka-actor") → url(s"http://doc.akka.io/api/akka/"),
-        findManagedDependency("com.typesafe", "config") → url("http://typesafehub.github.io/config/latest/api/"),
-        findManagedDependency("joda-time", "joda-time") → url("http://joda-time.sourceforge.net/apidocs/")
-      )
+      for (
+        ((org,lib), url) <- knownApiMappings ;
+        dep = findManagedDependency(org, lib) if dep.isDefined
+      ) yield {
+        dep.get -> url
+      }
     }
   )
 }
