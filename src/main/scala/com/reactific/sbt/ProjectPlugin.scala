@@ -27,8 +27,9 @@ import sbtsh.ShPlugin
 /** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
 object ProjectPlugin extends AutoPlugin {
 
-  val autoplugins : Seq[AutoPlugin] = Seq(JavaVersionCheckPlugin,
-    GitPlugin, HeaderPlugin, ShPlugin, ReleasePlugin )
+  val autoplugins : Seq[AutoPlugin] = Seq(
+    JavaVersionCheckPlugin, GitPlugin, HeaderPlugin, ShPlugin, ReleasePlugin
+  )
 
   override def requires = {
     // Enable all the AutoPlugin instances listed in autoplugins

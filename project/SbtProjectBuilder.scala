@@ -23,7 +23,7 @@ import sbtrelease.ReleasePlugin.autoImport._
 import sbtrelease.ReleaseStateTransformations._
 import xerial.sbt.Sonatype
 
-object SbtPluginBuilder extends Build {
+object SbtProjectBuilder extends Build {
   lazy val standardResolvers = Seq(
     "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
     "BinTray-Typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
