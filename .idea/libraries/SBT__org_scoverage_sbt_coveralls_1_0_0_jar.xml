@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/org.scoverage/sbt-coveralls/jars/sbt-coveralls-1.0.0.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/org.scoverage/sbt-coveralls/docs/sbt-coveralls-1.0.0-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/org.scoverage/sbt-coveralls/srcs/sbt-coveralls-1.0.0-sources.jar!/" />
     </SOURCES>

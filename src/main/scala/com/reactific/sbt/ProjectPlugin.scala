@@ -25,9 +25,11 @@ import sbtrelease.ReleasePlugin
 import sbtsh.ShPlugin
 
 /** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
-object ProjectPlugin extends AutoPlugin {
+object ProjectPlugin extends ProjectPluginTrait
 
-  val autoplugins : Seq[AutoPlugin] = Seq(
+trait ProjectPluginTrait extends AutoPlugin {
+
+  def autoplugins : Seq[AutoPlugin] = Seq(
     JavaVersionCheckPlugin, GitPlugin, HeaderPlugin, ShPlugin, ReleasePlugin
   )
 
@@ -42,7 +44,7 @@ object ProjectPlugin extends AutoPlugin {
     * This trait provides the same settings methods as an AutoPlugin. See [[sbt.AutoPlugin]]
     * This is used to override settings in both AutoPlugins and regular Plugins.
     */
-  val pluginSettings : Seq[PluginSettings] = Seq(
+  def pluginSettings : Seq[PluginSettings] = Seq(
     CompileQuick, Compiler, Settings, Unidoc, SonatypePublishing, Site, Release
   )
 
@@ -105,8 +107,8 @@ object ProjectPlugin extends AutoPlugin {
         printRuntimeClasspath <<= Commands.print_runtime_class_path,
         compileOnly <<= Commands.compile_only,
         libraryDependencies ++= Seq(
-          "org.specs2" %% "specs2-core" % "3.6.1" % "test",
-          "org.specs2" %% "specs2-junit" % "3.6.1" % "test"
+          "org.specs2" %% "specs2-core" % "3.6.6" % "test",
+          "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
         )
       )
   }

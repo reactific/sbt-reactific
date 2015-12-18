@@ -58,7 +58,7 @@ object SbtProjectBuilder extends Build {
       // Scripted - sbt plugin tests
       ScriptedPlugin.scriptedSettings,
       ScriptedPlugin.scriptedLaunchOpts := { ScriptedPlugin.scriptedLaunchOpts.value ++
-        Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+        Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
       },
       ScriptedPlugin.scriptedBufferLog := false,
 

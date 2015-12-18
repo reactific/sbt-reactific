@@ -1,14 +1,16 @@
+import com.reactific.sbt.ProjectPlugin.autoImport._
+
 name := "hello-test"
 
 version := "0.1"
 
 scalaVersion := "2.11.6"
 
-name := "Hello Test"
-
 organization := "com.reactific"
 
 maxErrors := 50
+
+enablePlugins(ProjectPlugin)
 
 copyrightHolder := "Reactific Software LLC"
 
