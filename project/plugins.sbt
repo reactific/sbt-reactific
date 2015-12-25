@@ -1,5 +1,3 @@
-import sbt.Keys._
-
 /***********************************************************************************************************************                                                                                                                    *
   * Copyright (c) 2015, Reactific Software LLC. All Rights Reserved.                                                   *
   *                                                                                                                    *
@@ -12,6 +10,8 @@ import sbt.Keys._
   * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for  *
   * the specific language governing permissions and limitations under the License.                                     *
   **********************************************************************************************************************/
+
+import sbt.Keys._
 
 libraryDependencies ++= Seq(
   "org.scala-sbt" % "scripted-plugin" % sbtVersion.value,
