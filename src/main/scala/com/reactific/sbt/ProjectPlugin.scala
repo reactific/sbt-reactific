@@ -41,7 +41,7 @@ trait ProjectPluginTrait extends AutoPlugin {
   // Not AutoPlugins Yet: CompileQuick, Unidoc, SbtSite, SbtGhPages, SbtUnidocPlugin :(
 
   /** Settings For Plugins that are not yet AutoPlugins so we can mimic them.
-    * This trait provides the same settings methods as an AutoPlugin. See [[sbt.AutoPlugin]]
+    * This trait provides the same settings methods as an AutoPlugin.
     * This is used to override settings in both AutoPlugins and regular Plugins.
     */
   def pluginSettings : Seq[PluginSettings] = Seq(

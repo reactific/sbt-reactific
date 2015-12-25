@@ -42,8 +42,8 @@ object SbtProjectBuilder extends Build {
       .copy(crossVersion = CrossVersion.Disabled)
   }
 
-  val sonatype = publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
-
+  val sonatype = publishTo :=
+    Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
 
   lazy val project = Project("sbt-project", new File("."))
     .enablePlugins(Sonatype)
@@ -97,8 +97,8 @@ object SbtProjectBuilder extends Build {
         pluginModuleID("com.typesafe.sbt" % "sbt-site" % "0.8.1"),
         pluginModuleID("de.heikoseeberger" % "sbt-header" % "1.5.0"),
         pluginModuleID("org.scoverage" % "sbt-coveralls" % "1.0.0"),
-        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.0.4"),
-        pluginModuleID("org.xerial.sbt" % "sbt-sonatype" % "0.5.0")
+        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.3.3"),
+        pluginModuleID("org.xerial.sbt" % "sbt-sonatype" % "1.0")
       )
     )
     .settings(
