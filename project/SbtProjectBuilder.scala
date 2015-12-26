@@ -96,8 +96,8 @@ object SbtProjectBuilder extends Build {
         pluginModuleID("com.typesafe.sbt" % "sbt-license-report" % "1.0.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-site" % "0.8.1"),
         pluginModuleID("de.heikoseeberger" % "sbt-header" % "1.5.0"),
+        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.0.1"),
         pluginModuleID("org.scoverage" % "sbt-coveralls" % "1.0.0"),
-        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.3.3"),
         pluginModuleID("org.xerial.sbt" % "sbt-sonatype" % "1.0")
       )
     )
