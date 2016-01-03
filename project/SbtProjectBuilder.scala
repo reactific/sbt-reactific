@@ -21,6 +21,7 @@ import java.io.File
 import sbt.mavenint.PomExtraDependencyAttributes
 import sbtrelease.ReleasePlugin.autoImport._
 import sbtrelease.ReleaseStateTransformations._
+import sbtrelease.Version
 import xerial.sbt.Sonatype
 
 object SbtProjectBuilder extends Build {
@@ -63,7 +64,8 @@ object SbtProjectBuilder extends Build {
       ScriptedPlugin.scriptedBufferLog := false,
 
       // Release process
-      releaseUseGlobalVersion := false,
+      releaseUseGlobalVersion := true,
+      releaseVersionBump := Version.Bump.Minor,
       releasePublishArtifactsAction := PgpKeys.publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,

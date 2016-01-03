@@ -18,11 +18,13 @@ import com.typesafe.sbt.pgp.PgpKeys
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
+import sbtrelease.Version
 
 object Release extends PluginSettings {
 
   override def projectSettings = Seq[Setting[_]](
-    releaseUseGlobalVersion := false,
+    releaseUseGlobalVersion := true,
+    releaseVersionBump := Version.Bump.Bugfix,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
