@@ -8,6 +8,8 @@ organization := "com.reactific"
 
 maxErrors := 50
 
+unmanagedResourceDirectories in compile := Seq(baseDirectory.value / "src/resources")
+
 enablePlugins(ProjectPlugin)
 
 copyrightHolder := "Reactific Software LLC"
@@ -20,4 +22,3 @@ titleForDocs := "Yo!"
 
 codePackage := "com.reactific.yo"
 
-releaseVersionFile := baseDirectory.value / "project/version.sbt"

@@ -27,7 +27,8 @@ object Commands {
       addCommandAlias("cq", "compile-quick"),
       addCommandAlias("copmile", "compile"),
       addCommandAlias("tset", "test"),
-      addCommandAlias("cov", "; clean ; coverage ; test ; coverageAggregate")
+      addCommandAlias("cov", "; clean ; coverage ; test ; coverageAggregate"),
+      addCommandAlias("!", "sh")
     ).flatten
   }
 
@@ -58,4 +59,7 @@ object Commands {
     out
   }
 
+  def shell_command = Command.args("sh", "Invoke a system shell and pass arguments to it") { (state, args) =>
+    args.mkString(" ").! ; state
+  }
 }

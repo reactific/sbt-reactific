@@ -17,12 +17,11 @@ package com.reactific.sbt
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 import com.typesafe.sbt.{GitPlugin, JavaVersionCheckPlugin}
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import sbt.Keys._
 import sbt._
-import sbtbuildinfo.BuildInfoKeys._
+import sbt.Keys._
 import sbtbuildinfo._
+import sbtbuildinfo.BuildInfoKeys._
 import sbtrelease.ReleasePlugin
-import sbtsh.ShPlugin
 
 /** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
 object ProjectPlugin extends ProjectPluginTrait
@@ -30,7 +29,7 @@ object ProjectPlugin extends ProjectPluginTrait
 trait ProjectPluginTrait extends AutoPlugin {
 
   def autoplugins : Seq[AutoPlugin] = Seq(
-    JavaVersionCheckPlugin, GitPlugin, HeaderPlugin, ShPlugin, ReleasePlugin
+    JavaVersionCheckPlugin, GitPlugin, HeaderPlugin, ReleasePlugin
   )
 
   override def requires = {
@@ -102,10 +101,19 @@ trait ProjectPluginTrait extends AutoPlugin {
           copyrightYears, developerUrl
         ),
         buildInfoOptions := Seq(BuildInfoOption.ToMap, BuildInfoOption.ToJson, BuildInfoOption.BuildTime),
+        HeaderPlugin.autoImport.headers := Map(
+          "scala" -> Apache2License("2015,2016", "Reactific Software LLC"),
+          "java" -> Apache2License("2015,2016", "Reactific Software LLC"),
+          "conf" -> Apache2License("2015,2016", "Reactific Software LLC", "#"),
+          "sbt" → Apache2License("2015,2016", "Reactific Software LLC", "#"),
+          "properties" → Apache2License("2015,2016", "Reactific Software LLC", "#"),
+          "xml" → Apache2License("2015,2016", "Reactific Software LLC", "<")
+        ),
         printClasspath <<= Commands.print_class_path,
         printTestClasspath <<= Commands.print_test_class_path,
         printRuntimeClasspath <<= Commands.print_runtime_class_path,
         compileOnly <<= Commands.compile_only,
+        Keys.commands += Commands.shell_command,
         libraryDependencies ++= Seq(
           "org.specs2" %% "specs2-core" % "3.6.6" % "test",
           "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
