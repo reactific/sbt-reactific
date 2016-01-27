@@ -1,7 +1,7 @@
 [![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Build Status](https://travis-ci.org/reactific/sbt-project.svg?branch=master)](https://travis-ci.org/reactific/sbt-project)
-[![Release](https://img.shields.io/github/release/scrupal/scrupal-core.svg?style=flat)](https://github.com/reactific/sbt-project/releases)
-[![Join the chat at https://gitter.im/scrupal/scrupal-core](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/reactific/sbt-project?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Release](https://img.shields.io/github/release/reactific/sbt-project.svg?style=flat)](https://github.com/reactific/sbt-project/releases)
+[![Join the chat at https://gitter.im/reactific/sbt-project](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/reactific/sbt-project?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # sbt-project
 An SBT plugin to pull together often used plugins for Scala based Reactific software projects. This plugin was 
