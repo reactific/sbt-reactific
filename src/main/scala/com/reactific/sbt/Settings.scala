@@ -17,6 +17,8 @@ package com.reactific.sbt
 import sbt.Keys._
 import sbt._
 
+import scala.language.postfixOps
+
 /** Title Of Thing.
   *
   * Description of thing
@@ -30,15 +32,36 @@ object Settings extends PluginSettings {
     }
   }
 
+  object devnull extends ProcessLogger {
+    def info(s: => String) {}
+
+    def error(s: => String) {}
+
+    def buffer[T](f: => T): T = f
+  }
+
+  def currBranch = (
+    ("git status -sb" lines_! devnull headOption)
+      getOrElse "-" stripPrefix "## ")
+
+  def buildShellPrompt(version: String) = {
+    (state: State) => {
+      val currProject = Project.extract(state).currentProject.id
+      "%s : %s : %s> ".format( currProject, currBranch, version )
+    }
+  }
+
+
   override def projectSettings : Seq[sbt.Def.Setting[_]] = Defaults.coreDefaultSettings ++
     Seq(
-      scalacOptions in(Compile, doc) ++= Opts.doc.title(ProjectPlugin.autoImport.titleForDocs.value),
-      scalacOptions in(Compile, doc) ++= Opts.doc.version(version.value),
+      scalacOptions in (Compile, doc) ++= Opts.doc.title(ProjectPlugin.autoImport.titleForDocs.value),
+      scalacOptions in (Compile, doc) ++= Opts.doc.version(version.value),
       fork in Test := false,
       logBuffered in Test := false,
       ivyScala := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-      shellPrompt := ShellPrompt.buildShellPrompt(version.value),
+      shellPrompt := buildShellPrompt(version.value),
       mappings in(Compile, packageBin) ~= filter,
       mappings in(Compile, packageSrc) ~= filter,
-      mappings in(Compile, packageDoc) ~= filter)
+      mappings in(Compile, packageDoc) ~= filter
+    )
 }

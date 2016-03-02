@@ -5,15 +5,15 @@
 .cache
 .history
 .lib/
-.idea/rebel_project.xml
-.idea/workspace.xml
-.idea/uiDesigner.xml
 dist/*
 target/
 lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+
+# IntelliJ IDEA specific
+.idea/
 
 # Scala-IDE specific
 .scala_dependencies

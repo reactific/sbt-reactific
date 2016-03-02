@@ -18,16 +18,39 @@ import sbt.Keys._
 import sbt._
 
 /** Commands Added To The Build */
-object Commands {
+object Commands extends PluginSettings {
 
-  def aliases : Seq[Def.Setting[(State => State)]] = {
+  val compileOnly = TaskKey[File]("compile-only", "Compile just the specified files")
+  val printClasspath = TaskKey[File]("print-class-path", "Print the project's compilation class path.")
+  val printTestClasspath = TaskKey[File]("print-test-class-path", "Print the project's testing class path.")
+  val printRuntimeClasspath = TaskKey[File]("print-runtime-class-path", "Print the project's runtime class path.")
+
+  override def projectSettings: Seq[Setting[_]] = {
+    Seq[Setting[_]](
+      compileOnly <<= Commands.compile_only,
+      printClasspath <<= print_class_path,
+      printTestClasspath <<= Commands.print_test_class_path,
+      printRuntimeClasspath <<= Commands.print_runtime_class_path,
+      Keys.commands ++= Seq(shell_command, bang_command)
+    )
+  }
+
+  def addCommandAliases(m: (String, String)*) = {
+    val s = m.map(p => addCommandAlias(p._1, p._2)).reduce(_ ++ _)
+    (_: Project).settings(s: _*)
+  }
+
+  override def globalSettings : Seq[Def.Setting[(State => State)]] = {
     Seq(
       addCommandAlias("tq", "test-quick"),
       addCommandAlias("to", "test-only"),
       addCommandAlias("cq", "compile-quick"),
       addCommandAlias("copmile", "compile"),
       addCommandAlias("tset", "test"),
-      addCommandAlias("cov", "; clean ; coverage ; test ; coverageAggregate"),
+      addCommandAlias("TEST", "; clean ; test"),
+      addCommandAlias("tc", "test:compile"),
+      addCommandAlias("ctc", "; clean ; test:compile"),
+      addCommandAlias("cov", "; clean ; coverage ; test ; coverageAggregate ; reload"),
       addCommandAlias("!", "sh")
     ).flatten
   }
@@ -60,6 +83,11 @@ object Commands {
   }
 
   def shell_command = Command.args("sh", "Invoke a system shell and pass arguments to it") { (state, args) =>
-    args.mkString(" ").! ; state
+    Process(args).! ; state
   }
+
+  def bang_command = Command.args("!", "Invoke a system shell and pass arguments to it") { (state, args) =>
+    Process(args).! ; state
+  }
+
 }

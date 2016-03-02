@@ -87,6 +87,7 @@ object SbtProjectBuilder extends Build {
       // Libraries for the project we plug into
       libraryDependencies ++= Seq (
         "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+        "org.apache.commons"  % "commons-lang3" % "3.3.2",
         pluginModuleID("com.eed3si9n" % "sbt-buildinfo" % "0.5.0"),
         pluginModuleID("com.eed3si9n" % "sbt-unidoc" % "0.3.3"),
         pluginModuleID("com.etsy" % "sbt-compile-quick-plugin" % "0.5.3"),

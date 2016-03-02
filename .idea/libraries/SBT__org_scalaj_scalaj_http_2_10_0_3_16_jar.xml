@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.scalaj/scalaj-http_2.10/jars/scalaj-http_2.10-0.3.16.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scalaj/scalaj-http_2.10/docs/scalaj-http_2.10-0.3.16-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.scalaj/scalaj-http_2.10/srcs/scalaj-http_2.10-0.3.16-sources.jar!/" />
     </SOURCES>

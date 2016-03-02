@@ -14,40 +14,82 @@
 
 package com.reactific.sbt
 
-import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 import com.typesafe.sbt.{GitPlugin, JavaVersionCheckPlugin}
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._
 import sbt.Keys._
-import sbtbuildinfo._
-import sbtbuildinfo.BuildInfoKeys._
 import sbtrelease.ReleasePlugin
 
 /** The ProjectPlugin to add to Reactific Scala projects so they share a common set of build characteristics */
 object ProjectPlugin extends ProjectPluginTrait
 
-trait ProjectPluginTrait extends AutoPlugin {
+object SubProjectPlugin extends SubProjectPluginTrait
 
-  def autoplugins : Seq[AutoPlugin] = Seq(
-    JavaVersionCheckPlugin, GitPlugin, HeaderPlugin, ReleasePlugin
+trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
+
+  /** The list of AutoPlugins that a SubProject Needs */
+  def autoPlugins : Seq[AutoPlugin] = Seq(
+    JavaVersionCheckPlugin, GitPlugin, HeaderPlugin
   )
-
-  override def requires = {
-    // Enable all the AutoPlugin instances listed in autoplugins
-    autoplugins.foldLeft(empty) { (b,plugin) => b && plugin }
-  }
-
-  // Not AutoPlugins Yet: CompileQuick, Unidoc, SbtSite, SbtGhPages, SbtUnidocPlugin :(
 
   /** Settings For Plugins that are not yet AutoPlugins so we can mimic them.
     * This trait provides the same settings methods as an AutoPlugin.
     * This is used to override settings in both AutoPlugins and regular Plugins.
     */
   def pluginSettings : Seq[PluginSettings] = Seq(
-    CompileQuick, Compiler, Settings, Unidoc, SonatypePublishing, Site, Release
+    Commands, CompileQuick, Compiler, Settings, Unidoc, SonatypePublishing, Site, Release
   )
 
-  override def trigger = noTrigger
+  /** The [[Configuration]]s to add to each project that activates this AutoPlugin.*/
+  override def projectConfigurations: Seq[Configuration] = Nil
+
+  /** The [[Setting]]s to add in the scope of each project that activates this AutoPlugin. */
+  override def projectSettings: Seq[Setting[_]]  = {
+    Defaults.coreDefaultSettings ++
+    pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
+    Seq(
+      resolvers := standardResolvers,
+      ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
+      logLevel  := Level.Info
+    )
+  }
+
+  /** The [[Setting]]s to add to the build scope for each project that activates this AutoPlugin.
+    * The settings returned here are guaranteed to be added to a given build scope only once
+    * regardless of how many projects for that build activate this AutoPlugin. */
+  override def buildSettings : Seq[Setting[_]] = {
+    Defaults.buildCore ++
+    pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.buildSettings } ++
+    Seq(
+      baseDirectory := thisProject.value.base,
+      target := baseDirectory.value / "target"
+    )
+  }
+
+  /** The [[Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
+  override def globalSettings: Seq[Setting[_]] = {
+    pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.globalSettings }
+  }
+
+  val standardResolvers = Seq(
+    "BinTray-typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
+    "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
+    "Bintray-scalaz" at "http://dl.bintray.com/scalaz/releases",
+    "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
+    "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+  )
+
+}
+
+trait ProjectPluginTrait extends SubProjectPluginTrait {
+
+  override def autoPlugins : Seq[AutoPlugin] = super.autoPlugins ++ Seq(
+    ReleasePlugin
+  )
+
+  override def pluginSettings : Seq[PluginSettings] = super.pluginSettings ++ Seq(
+    BuildInfo, Header
+  )
 
   /**
    * Defines all settings/tasks that get automatically imported,
@@ -59,76 +101,17 @@ trait ProjectPluginTrait extends AutoPlugin {
     val copyrightHolder = settingKey[String]("The name of the copyright holder for this project.")
     val copyrightYears = settingKey[Seq[Int]]("The years in which the copyright was in place for this project.")
     val developerUrl = settingKey[URL]("The URL for the project developer's home page")
-
-    val compileOnly = TaskKey[File]("compile-only", "Compile just the specified files")
-    val printClasspath = TaskKey[File]("print-class-path", "Print the project's compilation class path.")
-    val printTestClasspath = TaskKey[File]("print-test-class-path", "Print the project's testing class path.")
-    val printRuntimeClasspath = TaskKey[File]("print-runtime-class-path", "Print the project's runtime class path.")
   }
-
-  val standardResolvers = Seq(
-    "BinTray-typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
-    "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
-    "Bintray-scalaz" at "http://dl.bintray.com/scalaz/releases",
-    "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
-    "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
-  )
-
-  // Get all the autoImport keys into this namespace for easier reference
-
-  import autoImport._
 
   /**
    * Define the values of the settings
    */
-  override def projectSettings: Seq[Setting[_]] = {
-    Defaults.coreDefaultSettings ++
-      autoplugins.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
-      pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
-      Seq (
-        resolvers := standardResolvers,
-        javaVersionPrefix in javaVersionCheck := Some("1.8"),
-        ivyScala := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-        buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-        buildInfoPackage := codePackage.value,
-        buildInfoObject := {
-          val s = codePackage.value.split('.').map { s => s.head.toString.toUpperCase + s.tail }.mkString
-          s.head.toString.toUpperCase + s.tail + "Info"
-        },
-        buildInfoKeys := Seq[BuildInfoKey](
-          name, normalizedName, description, homepage, licenses, organization, organizationHomepage,
-          apiURL, version, scalaVersion, isSnapshot, codePackage, titleForDocs, copyrightHolder,
-          copyrightYears, developerUrl
-        ),
-        buildInfoOptions := Seq(BuildInfoOption.ToMap, BuildInfoOption.ToJson, BuildInfoOption.BuildTime),
-        HeaderPlugin.autoImport.headers := Map(
-          "scala" -> Apache2License("2015,2016", "Reactific Software LLC"),
-          "java" -> Apache2License("2015,2016", "Reactific Software LLC"),
-          "conf" -> Apache2License("2015,2016", "Reactific Software LLC", "#"),
-          "sbt" → Apache2License("2015,2016", "Reactific Software LLC", "#"),
-          "properties" → Apache2License("2015,2016", "Reactific Software LLC", "#"),
-          "xml" → Apache2License("2015,2016", "Reactific Software LLC", "<")
-        ),
-        printClasspath <<= Commands.print_class_path,
-        printTestClasspath <<= Commands.print_test_class_path,
-        printRuntimeClasspath <<= Commands.print_runtime_class_path,
-        compileOnly <<= Commands.compile_only,
-        Keys.commands += Commands.shell_command,
-        libraryDependencies ++= Seq(
-          "org.specs2" %% "specs2-core" % "3.6.6" % "test",
-          "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
-        )
-      )
-  }
-
-  override def buildSettings : Seq[Setting[_]] = Defaults.buildCore ++
-    Seq(
-      baseDirectory := thisProject.value.base,
-      target := baseDirectory.value / "target"
-    ) ++
-    Commands.aliases ++
-    autoplugins.foldLeft(Seq.empty[Setting[_]]) { (s,p) => s ++ p.buildSettings } ++
-    pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s,p) => s ++ p.buildSettings }
+  override def projectSettings: Seq[Setting[_]] = super.projectSettings ++ Seq(
+    libraryDependencies ++= Seq(
+      "org.specs2" %% "specs2-core" % "3.6.6" % "test",
+      "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
+    )
+  )
 }
 
 

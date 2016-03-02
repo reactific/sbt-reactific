@@ -28,4 +28,8 @@ trait PluginSettings {
     * The settings returned here are guaranteed to be added to a given build scope only once
     * regardless of how many projects for that build activate this AutoPlugin. */
   def buildSettings: Seq[Setting[_]] = Nil
+
+  /** The [[Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
+  def globalSettings: Seq[Setting[_]] = Nil
+
 }

@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit/jars/org.eclipse.jgit-3.7.0.201502260915-r.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit/docs/org.eclipse.jgit-3.7.0.201502260915-r-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jgit/org.eclipse.jgit/srcs/org.eclipse.jgit-3.7.0.201502260915-r-sources.jar!/" />
     </SOURCES>
