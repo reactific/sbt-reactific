@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Publish Local" type="SbtRunConfiguration" factoryName="SBT Task" singleton="true">
-    <setting name="tasks" value="publish-local" />
-    <setting name="vmparams" value="-Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M" />
-    <envs />
-    <method />
-  </configuration>
-</component>
