@@ -46,6 +46,12 @@ object SbtProjectBuilder extends Build {
   val sonatype = publishTo :=
     Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
 
+
+  val defaultScmInfo = Def.setting {
+    val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
+    ScmInfo(url("https:" ++ gitUrl), "scm:git:" ++ gitUrl, Some("https:" ++ gitUrl) )
+  }
+
   lazy val project = Project("sbt-project", new File("."))
     .enablePlugins(Sonatype)
     .settings(
@@ -106,6 +112,13 @@ object SbtProjectBuilder extends Build {
     .settings(
       // Publishing to sonatype
       Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
+      publishTo := {
+        val nexus = "https://oss.sonatype.org/"
+        val snapshotsR = "snapshots" at nexus + "content/repositories/snapshots"
+        val releasesR  = "releases"  at nexus + "service/local/staging/deploy/maven2"
+        val resolver = if (isSnapshot.value) snapshotsR else releasesR
+        Some(resolver)
+      },
       publishMavenStyle := true,
       publishArtifact in Test := false,
       pomIncludeRepository := { _ => false },
@@ -113,16 +126,16 @@ object SbtProjectBuilder extends Build {
       homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
       pomExtra in Global := {
         <scm>
-          <url>git@github.com:reactific/sbt-project.git</url>
-          <connection>scm:git:git@github.com:reactific/sbt-project.git</connection>
+          <url>{scmInfo.value.getOrElse(defaultScmInfo.value).browseUrl.toString}</url>
+          <connection>{scmInfo.value.getOrElse(defaultScmInfo.value).connection}</connection>
         </scm>
-        <developers>
-          <developer>
-            <id>reid-spencer</id>
-            <name>Reid Spencer</name>
-            <url>https://github.com/reid-spencer</url>
-          </developer>
-        </developers>
+          <developers>
+            <developer>
+              <id>reid-spencer</id>
+              <name>Reid Spencer</name>
+              <url>https://github.com/reid-spencer</url>
+            </developer>
+          </developers>
       }
     )
 }
