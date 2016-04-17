@@ -38,6 +38,12 @@ object SonatypePublishing extends PluginSettings {
 
   override def projectSettings = Sonatype.sonatypeSettings ++ Seq(
     Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
+    publishTo := {
+      if (isSnapshot.value)
+        Some(publishSnapshotsTo.value)
+      else
+        Some(publishReleasesTo.value)
+    },
     publishMavenStyle := true,
     publishArtifact in Test := false,
     pomIncludeRepository := { _ => false },

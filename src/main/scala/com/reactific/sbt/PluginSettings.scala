@@ -29,7 +29,7 @@ trait PluginSettings {
     * regardless of how many projects for that build activate this AutoPlugin. */
   def buildSettings: Seq[Setting[_]] = Nil
 
-  /** The [[Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
+  /** The [[sbt.Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
   def globalSettings: Seq[Setting[_]] = Nil
 
 }

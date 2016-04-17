@@ -17,9 +17,20 @@ package com.reactific.sbt
 import sbt.Keys._
 import sbt._
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
+import ProjectPlugin.autoImport._
 
 /** Compiler Settings Needed */
 object Compiler extends PluginSettings {
+  val java_compile_options = Seq[String](
+    "-g",
+    "-deprecation",
+    "-encoding", "UTF-8",
+    "-Xlint",
+    "-Xdoclint:all",
+    "-Xmaxerrs", "50",
+    "-Xmaxwarns", "50",
+    "-Xprefer:source"
+  )
   val scalac_2_10_options = Seq(
     "-encoding", "UTF-8",             // Yes, this is 2 args
     "-language:existentials",         // Turn on existentials feature
@@ -30,20 +41,23 @@ object Compiler extends PluginSettings {
     "-feature",                       // Warn about use of features that should be imported
     "-unchecked",                     // Enable additional warnings where generated code depends on assumptions.
     "-Xlint",                         // Turn on all linting warnings
-    "-Xfatal-warnings",               // Warnings are fatal
     "-Xfuture",                       // Turn on future language features
     "-Ywarn-numeric-widen",           // Warn when numeric types are widened
-    "-Ywarn-value-discard"            // Warn when non-Unit values are discarded
+    "-Ywarn-value-discard"           // Warn when non-Unit values are discarded
   )
 
   override def projectSettings : Seq[Setting[_]] = Seq(
     javaVersionPrefix in javaVersionCheck := Some("1.8"),
     javaOptions in test ++= Seq("-Xmx512m"),
+    javacOptions ++= java_compile_options ++ Seq(
+      { if (warningsAreErrors.value) "-Werror" else "" }
+    ),
     scalaVersion := "2.11.7",
     scalacOptions ++= scalac_2_10_options ++ Seq(
       "-target:jvm-1.8",                // Let's be modern
       "-Ywarn-unused",                  // Warn about unused variables
-      "-Ywarn-unused-import"            // Warn about unused imports
+      "-Ywarn-unused-import",           // Warn about unused imports
+      { if (warningsAreErrors.value) "-Xfatal-warnings" else "" }
     ),
     scalacOptions in (Compile, doc) ++=
       Seq("-feature", "-unchecked", "-deprecation", "-diagrams", "-implicits", "-skip-packages", "samples")

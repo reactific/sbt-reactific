@@ -40,10 +40,10 @@ trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
     Commands, CompileQuick, Compiler, Settings, Unidoc, SonatypePublishing, Site, Release
   )
 
-  /** The [[Configuration]]s to add to each project that activates this AutoPlugin.*/
+  /** The Configurations to add to each project that activates this AutoPlugin.*/
   override def projectConfigurations: Seq[Configuration] = Nil
 
-  /** The [[Setting]]s to add in the scope of each project that activates this AutoPlugin. */
+  /** The [[sbt.Setting]]s to add in the scope of each project that activates this AutoPlugin. */
   override def projectSettings: Seq[Setting[_]]  = {
     Defaults.coreDefaultSettings ++
     pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.projectSettings } ++
@@ -54,7 +54,7 @@ trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
     )
   }
 
-  /** The [[Setting]]s to add to the build scope for each project that activates this AutoPlugin.
+  /** The [[sbt.Setting]]s to add to the build scope for each project that activates this AutoPlugin.
     * The settings returned here are guaranteed to be added to a given build scope only once
     * regardless of how many projects for that build activate this AutoPlugin. */
   override def buildSettings : Seq[Setting[_]] = {
@@ -66,12 +66,12 @@ trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
     )
   }
 
-  /** The [[Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
+  /** The [[sbt.Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
   override def globalSettings: Seq[Setting[_]] = {
     pluginSettings.foldLeft(Seq.empty[Setting[_]]) { (s, p) => s ++ p.globalSettings }
   }
 
-  val standardResolvers = Seq(
+  def standardResolvers : Seq[Resolver] = Seq[Resolver](
     "BinTray-typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
     "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
     "Bintray-scalaz" at "http://dl.bintray.com/scalaz/releases",
@@ -101,12 +101,20 @@ trait ProjectPluginTrait extends SubProjectPluginTrait {
     val copyrightHolder = settingKey[String]("The name of the copyright holder for this project.")
     val copyrightYears = settingKey[Seq[Int]]("The years in which the copyright was in place for this project.")
     val developerUrl = settingKey[URL]("The URL for the project developer's home page")
+    val publishSnapshotsTo = settingKey[Resolver]("The Sonatype Repository to which snapshot versions are published")
+    val publishReleasesTo = settingKey[Resolver]("The Sonatype Repository to which release versions are published")
+    val warningsAreErrors = settingKey[Boolean]("Cause compiler warnings to be errors instead. Default=true")
   }
 
   /**
    * Define the values of the settings
    */
   override def projectSettings: Seq[Setting[_]] = super.projectSettings ++ Seq(
+    autoImport.warningsAreErrors := true,
+    autoImport.publishSnapshotsTo :=
+      MavenRepository("Sonatype Snapshots", "https://oss.sonatype.org/content/repositories/snapshots"),
+    autoImport.publishReleasesTo :=
+      MavenRepository("Sonatype Local Staging", "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
     libraryDependencies ++= Seq(
       "org.specs2" %% "specs2-core" % "3.6.6" % "test",
       "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
