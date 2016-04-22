@@ -22,15 +22,6 @@ import xerial.sbt.Sonatype
 /** Settings For SonatypePublishing Plugin */
 object SonatypePublishing extends PluginSettings {
 
-
-  def targetRepository: Def.Initialize[Option[Resolver]] = Def.setting {
-    val nexus = "https://oss.sonatype.org/"
-    val snapshotsR = "snapshots" at nexus + "content/repositories/snapshots"
-    val releasesR  = "releases"  at nexus + "service/local/staging/deploy/maven2"
-    val resolver = if (isSnapshot.value) snapshotsR else releasesR
-    Some(resolver)
-  }
-
   val defaultScmInfo = Def.setting {
     val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
     ScmInfo(url("https:" ++ gitUrl), "scm:git:" ++ gitUrl, Some("https:" ++ gitUrl) )

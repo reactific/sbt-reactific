@@ -72,13 +72,12 @@ trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
   }
 
   def standardResolvers : Seq[Resolver] = Seq[Resolver](
-    "BinTray-typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
-    "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
-    "Bintray-scalaz" at "http://dl.bintray.com/scalaz/releases",
     "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases/",
-    "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+    "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
+    "BinTray Typesafe Releases" at "https://dl.bintray.com/typesafe/ivy-releases",
+    "BinTray Sbt Plugin Releases" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
+    "Bintray Scalaz Releases" at "http://dl.bintray.com/scalaz/releases"
   )
-
 }
 
 trait ProjectPluginTrait extends SubProjectPluginTrait {
@@ -114,7 +113,7 @@ trait ProjectPluginTrait extends SubProjectPluginTrait {
     autoImport.publishSnapshotsTo :=
       MavenRepository("Sonatype Snapshots", "https://oss.sonatype.org/content/repositories/snapshots"),
     autoImport.publishReleasesTo :=
-      MavenRepository("Sonatype Local Staging", "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
+      MavenRepository("Sonatype Maven Staging", "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
     libraryDependencies ++= Seq(
       "org.specs2" %% "specs2-core" % "3.6.6" % "test",
       "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
