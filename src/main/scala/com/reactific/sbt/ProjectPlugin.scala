@@ -14,6 +14,8 @@
 
 package com.reactific.sbt
 
+import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.packager.universal.UniversalPlugin
 import com.typesafe.sbt.{GitPlugin, JavaVersionCheckPlugin}
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._
@@ -83,7 +85,7 @@ trait SubProjectPluginTrait extends AutoPluginHelper with PluginSettings {
 trait ProjectPluginTrait extends SubProjectPluginTrait {
 
   override def autoPlugins : Seq[AutoPlugin] = super.autoPlugins ++ Seq(
-    ReleasePlugin
+    ReleasePlugin, UniversalPlugin
   )
 
   override def pluginSettings : Seq[PluginSettings] = super.pluginSettings ++ Seq(
@@ -103,12 +105,28 @@ trait ProjectPluginTrait extends SubProjectPluginTrait {
     val publishSnapshotsTo = settingKey[Resolver]("The Sonatype Repository to which snapshot versions are published")
     val publishReleasesTo = settingKey[Resolver]("The Sonatype Repository to which release versions are published")
     val warningsAreErrors = settingKey[Boolean]("Cause compiler warnings to be errors instead. Default=true")
+    //--a dummy task to hold the result of the universal:packageBin to stop the circular dependency issue
+    val packageZip = taskKey[File]("package-zip")
   }
 
   /**
    * Define the values of the settings
    */
   override def projectSettings: Seq[Setting[_]] = super.projectSettings ++ Seq(
+    //--hard coded result of "universal:packageBin"
+    autoImport.packageZip :=
+      (baseDirectory in Compile).value / "target" / "universal" / s"${name.value}-${version.value}.zip",
+
+    //--label the zip artifact as a zip instead of the default jar
+    artifact in (Universal, autoImport.packageZip) ~= { (art:Artifact) =>
+      art.copy(`type` = "zip", extension = "zip")
+    },
+
+    //--make sure the zip gets made before the publishing commands for the added artifacts
+    publish <<= (publish) dependsOn (packageBin in Universal),
+    publishM2 <<= (publishM2) dependsOn (packageBin in Universal),
+    publishLocal <<= (publishLocal) dependsOn (packageBin in Universal),
+
     autoImport.warningsAreErrors := true,
     autoImport.publishSnapshotsTo :=
       MavenRepository("Sonatype Snapshots", "https://oss.sonatype.org/content/repositories/snapshots"),
@@ -118,7 +136,9 @@ trait ProjectPluginTrait extends SubProjectPluginTrait {
       "org.specs2" %% "specs2-core" % "3.6.6" % "test",
       "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
     )
-  )
+  ) ++
+    //--add the artifact so it is included in the publishing tasks
+    addArtifact(artifact in (Universal, autoImport.packageZip), autoImport.packageZip in Universal)
 }
 
 

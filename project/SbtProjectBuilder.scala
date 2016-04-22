@@ -103,7 +103,7 @@ object SbtProjectBuilder extends Build {
         pluginModuleID("com.typesafe.sbt" % "sbt-javaversioncheck" % "0.1.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-license-report" % "1.0.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-site" % "0.8.1"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC2"),
+        pluginModuleID("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC3"),
         pluginModuleID("de.heikoseeberger" % "sbt-header" % "1.5.0"),
         pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.0.1"),
         pluginModuleID("org.scoverage" % "sbt-coveralls" % "1.0.0"),

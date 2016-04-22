@@ -19,10 +19,7 @@ import sbt._
 
 import scala.language.postfixOps
 
-/** Title Of Thing.
-  *
-  * Description of thing
-  */
+/** General settings for the project */
 object Settings extends PluginSettings {
 
   val filter = { (ms: Seq[(File, String)]) =>
