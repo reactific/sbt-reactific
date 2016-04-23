@@ -38,7 +38,8 @@ object Compiler extends AutoPluginHelper {
     "-Xmaxwarns", "50",
     "-Xprefer:source"
   )
-  val scalac_2_10_options = Seq(
+
+  val scalac_common_options = Seq(
     "-encoding", "UTF-8",             // Yes, this is 2 args
     "-language:existentials",         // Turn on existentials feature
     "-language:higherKinds",          // Turn on higher kinds feature
@@ -50,7 +51,20 @@ object Compiler extends AutoPluginHelper {
     "-Xlint",                         // Turn on all linting warnings
     "-Xfuture",                       // Turn on future language features
     "-Ywarn-numeric-widen",           // Warn when numeric types are widened
-    "-Ywarn-value-discard"           // Warn when non-Unit values are discarded
+    "-Ywarn-value-discard",           // Warn when non-Unit values are discarded
+    "-Ywarn-dead-code",               // Warn when dead code is identified.
+    "-Ywarn-nullary-override",        // Warn when non-nullary overrides nullary, e.g. `def foo()` over `def foo`.
+    "-Ywarn-nullary-unit"             // Warn when nullary methods return Unit.
+  )
+  val scalac_2_10_options = scalac_common_options ++ Seq(
+    "-target:jvm-1.7"
+  )
+
+  val scalac_2_11_options = scalac_common_options ++ Seq(
+    "-target:jvm-1.8",
+    "-Ywarn-infer-any",               // Warn when a type argument is inferred to be `Any`.
+    "-Ywarn-unused",                  // Warn about unused variables
+    "-Ywarn-unused-import"            // Warn about unused imports
   )
 
   override def projectSettings : Seq[Setting[_]] = Seq(
@@ -61,12 +75,9 @@ object Compiler extends AutoPluginHelper {
     ),
     scalaVersion := "2.11.7",
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-    scalacOptions ++= scalac_2_10_options ++ Seq(
-      "-target:jvm-1.8",                // Let's be modern
-      "-Ywarn-unused",                  // Warn about unused variables
-      "-Ywarn-unused-import",           // Warn about unused imports
-      { if (warningsAreErrors.value) "-Xfatal-warnings" else "" }
-    ),
+    scalacOptions ++=
+      { if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options else scalac_2_11_options } ++
+      { if (warningsAreErrors.value) Seq("-Xfatal-warnings") else Seq.empty[String] },
     scalacOptions in (Compile, doc) ++=
       Opts.doc.title(titleForDocs.value) ++
       Opts.doc.version(version.value) ++

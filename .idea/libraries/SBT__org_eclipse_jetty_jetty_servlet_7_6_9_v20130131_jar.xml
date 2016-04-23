@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-servlet/jars/jetty-servlet-7.6.9.v20130131.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-servlet/docs/jetty-servlet-7.6.9.v20130131-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-servlet/srcs/jetty-servlet-7.6.9.v20130131-sources.jar!/" />
     </SOURCES>

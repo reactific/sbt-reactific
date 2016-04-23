@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/com.eed3si9n/sbt-buildinfo/jars/sbt-buildinfo-0.5.0.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/com.eed3si9n/sbt-buildinfo/docs/sbt-buildinfo-0.5.0-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/com.eed3si9n/sbt-buildinfo/srcs/sbt-buildinfo-0.5.0-sources.jar!/" />
     </SOURCES>
