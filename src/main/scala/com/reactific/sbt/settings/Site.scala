@@ -12,53 +12,16 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
-import sbt.Keys._
-import sbt._
+import com.reactific.sbt.AutoPluginHelper
+import sbt.AutoPlugin
 
-import scala.language.postfixOps
+/** Settings For Site Plugin */
+object Site extends AutoPluginHelper {
+  import com.typesafe.sbt.SbtSite
+  override def projectSettings = SbtSite.settings
 
-/** General settings for the project */
-object Settings extends PluginSettings {
-
-  val filter = { (ms: Seq[(File, String)]) =>
-    ms filter {
-      case (file, path) =>
-        path != "logback.xml" && !path.startsWith("toignore") && !path.startsWith("samples")
-    }
-  }
-
-  object devnull extends ProcessLogger {
-    def info(s: => String) {}
-
-    def error(s: => String) {}
-
-    def buffer[T](f: => T): T = f
-  }
-
-  def currBranch = (
-    ("git status -sb" lines_! devnull headOption)
-      getOrElse "-" stripPrefix "## ")
-
-  def buildShellPrompt(version: String) = {
-    (state: State) => {
-      val currProject = Project.extract(state).currentProject.id
-      "%s : %s : %s> ".format( currProject, currBranch, version )
-    }
-  }
-
-
-  override def projectSettings : Seq[sbt.Def.Setting[_]] = Defaults.coreDefaultSettings ++
-    Seq(
-      scalacOptions in (Compile, doc) ++= Opts.doc.title(ProjectPlugin.autoImport.titleForDocs.value),
-      scalacOptions in (Compile, doc) ++= Opts.doc.version(version.value),
-      fork in Test := false,
-      logBuffered in Test := false,
-      ivyScala := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-      shellPrompt := buildShellPrompt(version.value),
-      mappings in(Compile, packageBin) ~= filter,
-      mappings in(Compile, packageSrc) ~= filter,
-      mappings in(Compile, packageDoc) ~= filter
-    )
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
 }

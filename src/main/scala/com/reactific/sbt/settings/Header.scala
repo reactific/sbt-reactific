@@ -1,9 +1,13 @@
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
+import com.reactific.sbt.AutoPluginHelper
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._
 
-object Header extends PluginSettings {
+object Header extends AutoPluginHelper {
+
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq(HeaderPlugin)
 
   override def projectSettings: Seq[Setting[_]] = {
     Seq (
@@ -17,4 +21,5 @@ object Header extends PluginSettings {
       )
     )
   }
+
 }

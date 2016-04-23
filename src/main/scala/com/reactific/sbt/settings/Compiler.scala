@@ -12,15 +12,22 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
+import com.reactific.sbt.AutoPluginHelper
+import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 import sbt.Keys._
 import sbt._
-import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
-import ProjectPlugin.autoImport._
 
 /** Compiler Settings Needed */
-object Compiler extends PluginSettings {
+object Compiler extends AutoPluginHelper {
+
+  object autoImport {
+  }
+
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+
   val java_compile_options = Seq[String](
     "-g",
     "-deprecation",
@@ -47,12 +54,13 @@ object Compiler extends PluginSettings {
   )
 
   override def projectSettings : Seq[Setting[_]] = Seq(
-    javaVersionPrefix in javaVersionCheck := Some("1.8"),
+    warningsAreErrors := true,
     javaOptions in test ++= Seq("-Xmx512m"),
     javacOptions ++= java_compile_options ++ Seq(
       { if (warningsAreErrors.value) "-Werror" else "" }
     ),
     scalaVersion := "2.11.7",
+    // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
     scalacOptions ++= scalac_2_10_options ++ Seq(
       "-target:jvm-1.8",                // Let's be modern
       "-Ywarn-unused",                  // Warn about unused variables
@@ -60,6 +68,8 @@ object Compiler extends PluginSettings {
       { if (warningsAreErrors.value) "-Xfatal-warnings" else "" }
     ),
     scalacOptions in (Compile, doc) ++=
+      Opts.doc.title(titleForDocs.value) ++
+      Opts.doc.version(version.value) ++
       Seq("-feature", "-unchecked", "-deprecation", "-diagrams", "-implicits", "-skip-packages", "samples")
   )
 }

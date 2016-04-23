@@ -12,18 +12,19 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
+import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
-import ProjectPlugin.autoImport._
+import sbtunidoc.{Plugin ⇒ UnidocPlugin}
 
-/** Title Of Thing.
-  *
-  * Description of thing
-  */
-object Unidoc extends PluginSettings {
-  import sbtunidoc.{Plugin => UnidocPlugin}
+/** Plugin Settings For UniDoc, since it is not an AutoPlugin */
+object Unidoc extends AutoPluginHelper {
+
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+
   def knownApiMappings = Map (
     ("org.scala-lang", "scala-library") → url(s"http://www.scala-lang.org/api/$scalaVersion/"),
     ("com.typesafe.akka", "akka-actor") → url(s"http://doc.akka.io/api/akka/"),

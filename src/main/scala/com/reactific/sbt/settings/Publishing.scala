@@ -12,23 +12,30 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
+import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
-import ProjectPlugin.autoImport._
-import xerial.sbt.Sonatype
+import xerial.sbt.{Sonatype ⇒ SonatypePlugin}
+import xerial.sbt.Sonatype._
 
 /** Settings For SonatypePublishing Plugin */
-object SonatypePublishing extends PluginSettings {
+object Publishing extends AutoPluginHelper {
+
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq(SonatypePlugin)
 
   val defaultScmInfo = Def.setting {
     val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
     ScmInfo(url("https:" ++ gitUrl), "scm:git:" ++ gitUrl, Some("https:" ++ gitUrl) )
   }
 
-  override def projectSettings = Sonatype.sonatypeSettings ++ Seq(
-    Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
+  override def projectSettings = sonatypeSettings ++ Seq(
+    SonatypeKeys.sonatypeProfileName := "com.reactific",
+    publishSnapshotsTo := Resolver.sonatypeRepo("snapshots"),
+    publishReleasesTo :=
+      MavenRepository("Sonatype Maven Staging", "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
     publishTo := {
       if (isSnapshot.value)
         Some(publishSnapshotsTo.value)
@@ -54,4 +61,5 @@ object SonatypePublishing extends PluginSettings {
       </developers>
     }
   )
+
 }

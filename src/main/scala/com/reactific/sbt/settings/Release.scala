@@ -12,24 +12,38 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
+import com.reactific.sbt.AutoPluginHelper
+import com.typesafe.sbt.pgp.PgpKeys
 import sbt._
+import sbtrelease.ReleasePlugin
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.Version
 
-/** Basic configuration of a plugin */
-trait PluginSettings {
-  /** The Configurations to add to each project that activates this AutoPlugin. */
-  def projectConfigurations: Seq[Configuration] = Nil
+object Release extends AutoPluginHelper {
 
-  /** The [[sbt.Setting]]s to add in the scope of each project that activates this AutoPlugin. */
-  def projectSettings: Seq[Setting[_]] = Nil
+  /** The AutoPlugins that we depend upon */
+  def autoPlugins : Seq[AutoPlugin] = Seq(ReleasePlugin)
 
-  /** The [[sbt.Setting]]s to add to the build scope for each project that activates this AutoPlugin.
-    * The settings returned here are guaranteed to be added to a given build scope only once
-    * regardless of how many projects for that build activate this AutoPlugin. */
-  def buildSettings: Seq[Setting[_]] = Nil
-
-  /** The [[sbt.Setting]]s to add to the global scope exactly once if any project activates this AutoPlugin. */
-  def globalSettings: Seq[Setting[_]] = Nil
-
+  override def projectSettings = Seq[Setting[_]](
+    releaseUseGlobalVersion := true,
+    releaseVersionBump := Version.Bump.Bugfix,
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      publishArtifacts,
+      setNextVersion,
+      commitNextVersion,
+      releaseStepCommand("sonatypeReleaseAll"),
+      pushChanges
+    )
+  )
 }

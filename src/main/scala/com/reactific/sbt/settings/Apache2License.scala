@@ -1,4 +1,4 @@
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
 import de.heikoseeberger.sbtheader.HeaderPattern
 import de.heikoseeberger.sbtheader.license.License

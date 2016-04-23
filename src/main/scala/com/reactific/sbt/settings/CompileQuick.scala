@@ -12,33 +12,25 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+package com.reactific.sbt.settings
 
-import com.typesafe.sbt.pgp.PgpKeys
+import com.reactific.sbt.AutoPluginHelper
+import com.etsy.sbt.CompileQuick.compileQuickSettings
+import sbt.Keys._
 import sbt._
-import sbtrelease.ReleasePlugin.autoImport._
-import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
-import sbtrelease.Version
 
-object Release extends PluginSettings {
+/** Settings For The CompileQuick Plugin
+  * This sets up the CompileQuick plugin and makes it an AutoPlugin
+  */
+object CompileQuick extends AutoPluginHelper {
 
-  override def projectSettings = Seq[Setting[_]](
-    releaseUseGlobalVersion := true,
-    releaseVersionBump := Version.Bump.Bugfix,
-    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-    releaseProcess := Seq[ReleaseStep](
-      checkSnapshotDependencies,
-      inquireVersions,
-      runClean,
-      runTest,
-      setReleaseVersion,
-      commitReleaseVersion,
-      tagRelease,
-      publishArtifacts,
-      setNextVersion,
-      commitNextVersion,
-      releaseStepCommand("sonatypeReleaseAll"),
-      pushChanges
+  import com.etsy.sbt.CompileQuick.CompileQuickTasks._
+
+  /** The AutoPlugins that we depend upon */
+  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+
+  override def projectSettings : Seq[Setting[_]] =
+    compileQuickSettings  ++ Seq(
+      packageQuickOutput := new File(baseDirectory.value, "libs")
     )
-  )
 }
