@@ -39,6 +39,7 @@ object Release extends AutoPluginHelper {
       setReleaseVersion,
       commitReleaseVersion,
       tagRelease,
+      releaseStepTask(com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport.dist),
       publishArtifacts,
       setNextVersion,
       commitNextVersion,
