@@ -71,7 +71,7 @@ object SbtProjectBuilder extends Build {
 
       // Release process
       releaseUseGlobalVersion := true,
-      releaseVersionBump := Version.Bump.Minor,
+      releaseVersionBump := Version.Bump.Bugfix,
       releasePublishArtifactsAction := PgpKeys.publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
