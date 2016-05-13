@@ -15,13 +15,19 @@
 package com.reactific.sbt.settings
 
 import com.reactific.sbt.AutoPluginHelper
-import sbt.AutoPlugin
+import sbt._
+
+import com.typesafe.sbt.site.SitePlugin
+import com.typesafe.sbt.site.SitePlugin.autoImport._
+
 
 /** Settings For Site Plugin */
 object Site extends AutoPluginHelper {
-  import com.typesafe.sbt.SbtSite
-  override def projectSettings = SbtSite.settings
-
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+  override def autoPlugins: Seq[AutoPlugin] = Seq(SitePlugin)
+
+    override def projectSettings: Seq[Setting[_]] = Seq(
+      siteSubdirName := ""
+    )
+
 }

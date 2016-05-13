@@ -15,22 +15,21 @@
 package com.reactific.sbt.settings
 
 import com.reactific.sbt.AutoPluginHelper
-import com.etsy.sbt.CompileQuick.compileQuickSettings
 import sbt.Keys._
 import sbt._
+
+import com.etsy.sbt.{CompileQuick ⇒ CQPlugin}
+import com.etsy.sbt.CompileQuick._
 
 /** Settings For The CompileQuick Plugin
   * This sets up the CompileQuick plugin and makes it an AutoPlugin
   */
 object CompileQuick extends AutoPluginHelper {
 
-  import com.etsy.sbt.CompileQuick.CompileQuickTasks._
-
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+  override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
 
-  override def projectSettings : Seq[Setting[_]] =
-    compileQuickSettings  ++ Seq(
-      packageQuickOutput := new File(baseDirectory.value, "libs")
-    )
+  override def projectSettings : Seq[Setting[_]] = Seq(
+    packageQuickOutput := new File(baseDirectory.value, "libs")
+  )
 }

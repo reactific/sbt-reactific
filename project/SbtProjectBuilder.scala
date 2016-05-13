@@ -26,12 +26,11 @@ import xerial.sbt.Sonatype
 
 object SbtProjectBuilder extends Build {
   lazy val standardResolvers = Seq(
-    "BinTray-sbt" at "https://dl.bintray.com/sbt/sbt-plugin-releases",
-    "BinTray-Typesafe" at "https://dl.bintray.com/typesafe/ivy-releases",
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots"),
-    "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-    "jgit-repo" at "http://download.eclipse.org/jgit/maven"
+    Resolver.bintrayRepo("sbt","sbt-plugin-releases"),
+    Resolver.typesafeIvyRepo("releases"),
+    "eclipse-jgit" at "http://download.eclipse.org/jgit/maven"
   )
 
   val scalaV = "2.10"
@@ -92,21 +91,21 @@ object SbtProjectBuilder extends Build {
 
       // Libraries for the project we plug into
       libraryDependencies ++= Seq (
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+        "org.scalatest" %% "scalatest" % "2.2.6" % "test",
         "org.apache.commons"  % "commons-lang3" % "3.3.2",
-        pluginModuleID("com.eed3si9n" % "sbt-buildinfo" % "0.5.0"),
+        pluginModuleID("com.eed3si9n" % "sbt-buildinfo" % "0.6.1"),
         pluginModuleID("com.eed3si9n" % "sbt-unidoc" % "0.3.3"),
-        pluginModuleID("com.etsy" % "sbt-compile-quick-plugin" % "0.5.3"),
-        pluginModuleID("com.github.gseitz" % "sbt-release" % "1.0.1"),
+        pluginModuleID("com.etsy" % "sbt-compile-quick-plugin" % "1.2.0"),
+        pluginModuleID("com.github.gseitz" % "sbt-release" % "1.0.3"),
         pluginModuleID("com.jsuereth" % "sbt-pgp" % "1.0.0"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-git" % "0.8.4"),
+        pluginModuleID("com.typesafe.sbt" % "sbt-git" % "0.8.5"),
         pluginModuleID("com.typesafe.sbt" % "sbt-javaversioncheck" % "0.1.0"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-license-report" % "1.0.0"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-site" % "0.8.1"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC3"),
-        pluginModuleID("de.heikoseeberger" % "sbt-header" % "1.5.0"),
-        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.0.1"),
-        pluginModuleID("org.scoverage" % "sbt-coveralls" % "1.0.0"),
+        pluginModuleID("com.typesafe.sbt" % "sbt-license-report" % "1.2.0"),
+        pluginModuleID("com.typesafe.sbt" % "sbt-site" % "1.0.0"),
+        pluginModuleID("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0"),
+        pluginModuleID("de.heikoseeberger" % "sbt-header" % "1.5.1"),
+        pluginModuleID("org.scoverage" % "sbt-scoverage" % "1.3.5"),
+        pluginModuleID("org.scoverage" % "sbt-coveralls" % "1.1.0"),
         pluginModuleID("org.xerial.sbt" % "sbt-sonatype" % "1.1")
       )
     )
