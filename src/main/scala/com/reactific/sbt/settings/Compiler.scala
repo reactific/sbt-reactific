@@ -81,6 +81,7 @@ object Compiler extends AutoPluginHelper {
     scalacOptions in (Compile, doc) ++=
       Opts.doc.title(titleForDocs.value) ++
       Opts.doc.version(version.value) ++
-      Seq("-feature", "-unchecked", "-deprecation", "-diagrams", "-implicits", "-skip-packages", "samples")
+      Seq("-feature", "-unchecked", "-deprecation", "-diagrams", "-implicits", "-skip-packages", "samples"),
+    ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
   )
 }
