@@ -92,18 +92,7 @@ object Compiler extends AutoPluginHelper {
         "-language:existentials", // Turn on existentials feature
         "-language:higherKinds", // Turn on higher kinds feature
         "-language:implicitConversions" // Turn on implicit conversions feature
-      ) ++ {
-        scalaVersion.value match {
-          case s: String if s.startsWith("2.10") =>
-            Seq("-target:jvm-1.7")
-          case s: String if s.startsWith("2.11") =>
-            Seq("-target:jvm-1.8")
-          case s: String if s.startsWith("2.12") =>
-            Seq("-target:jvm-1.8")
-          case _ =>
-            Seq.empty[String]
-        }
-      }
+      )
     }
    )
 }
