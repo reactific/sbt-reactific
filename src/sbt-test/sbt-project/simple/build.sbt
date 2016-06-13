@@ -2,7 +2,7 @@ import com.reactific.sbt.settings._
 
 name := "hello-test"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.8"
 
 organization := "com.reactific"
 

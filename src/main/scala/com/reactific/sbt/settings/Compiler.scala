@@ -15,7 +15,6 @@
 package com.reactific.sbt.settings
 
 import com.reactific.sbt.AutoPluginHelper
-import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 import sbt.Keys._
 import sbt._
 
@@ -73,7 +72,7 @@ object Compiler extends AutoPluginHelper {
     javacOptions ++= java_compile_options ++ Seq(
       { if (warningsAreErrors.value) "-Werror" else "" }
     ),
-    scalaVersion := "2.11.7",
+    scalaVersion := "2.11.8",
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
     scalacOptions ++=
       { if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options else scalac_2_11_options } ++

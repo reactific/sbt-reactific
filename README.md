@@ -34,7 +34,6 @@ This bundles together the following sbt plugins for convenience:
 "com.github.gseitz" % "sbt-release" % "1.0.1"
 "com.jsuereth" % "sbt-pgp" % "1.0.0"
 "com.typesafe.sbt" % "sbt-git" % "0.8.4"
-"com.typesafe.sbt" % "sbt-javaversioncheck" % "0.1.0"
 "com.typesafe.sbt" % "sbt-license-report" % "1.0.0"
 "com.typesafe.sbt" % "sbt-site" % "0.8.2"
 "de.heikoseeberger" % "sbt-header" % "1.5.1"
@@ -50,7 +49,6 @@ And those plugins endow your project with these features:
 * sbt-compile-quick-plugin: Compile
 * sbt-pgp: Certification and signing support for publishing releases
 * sbt-git: Run git commands directly from sbt
-* sbt-javaversioncheck: make sure you are building with the right jvm
 * sbt-license-report: Find out what licenses your project utilizes 
 * sbt-site: Site generation for your project
 * sbt-header: Update file headers for open source licensing

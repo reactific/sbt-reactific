@@ -42,10 +42,10 @@ object Miscellaneous extends AutoPluginHelper {
     ("git status -sb" lines_! devnull headOption)
       getOrElse "-" stripPrefix "## ")
 
-  def buildShellPrompt(version: String) = {
+  def buildShellPrompt = Def.setting {
     (state: State) => {
-      val currProject = Project.extract(state).currentProject.id
-      "%s : %s : %s> ".format( currProject, currBranch, version )
+      val id = Project.extract(state).currentProject.id
+      s"${name.value}($id) : $currBranch : ${version.value}>"
     }
   }
 
@@ -65,7 +65,7 @@ object Miscellaneous extends AutoPluginHelper {
       logLevel  := Level.Info,
       fork in Test := false,
       logBuffered in Test := false,
-      shellPrompt := buildShellPrompt(version.value),
+      shellPrompt := buildShellPrompt.value,
       unmanagedJars in Compile <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },
       unmanagedJars in Runtime <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },
       unmanagedJars in Test    <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },

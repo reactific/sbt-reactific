@@ -99,7 +99,6 @@ object SbtProjectBuilder extends Build {
         pluginModuleID("com.github.gseitz" % "sbt-release" % "1.0.3"),
         pluginModuleID("com.jsuereth" % "sbt-pgp" % "1.0.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-git" % "0.8.5"),
-        pluginModuleID("com.typesafe.sbt" % "sbt-javaversioncheck" % "0.1.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-license-report" % "1.2.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-site" % "1.0.0"),
         pluginModuleID("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0"),

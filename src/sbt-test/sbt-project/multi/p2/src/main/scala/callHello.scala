@@ -12,42 +12,8 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt
+import Hello._
 
-import com.reactific.sbt.settings._
-import com.typesafe.sbt.{GitPlugin}
-import sbt._
-
-/** The ProjectPlugin to add to your projects so they share a common set of build characteristics. */
-object ProjectPlugin extends ProjectPluginTrait
-
-trait ProjectPluginTrait extends AutoPluginHelper {
-
-  override def autoPlugins : Seq[AutoPlugin] = Seq(
-    Commands, CompileQuick, settings.Compiler,
-    GitPlugin, Miscellaneous,
-    Site, Unidoc, BuildInfo, Header, Publishing, Release
-  )
+object Main {
+  def main(args: Array[String]) : Unit = { println(message) }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
