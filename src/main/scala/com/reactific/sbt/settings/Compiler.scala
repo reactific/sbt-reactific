@@ -76,10 +76,6 @@ object Compiler extends AutoPluginHelper {
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
     scalacOptions ++=
       { if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options else scalac_2_11_options } ++
-      { if (warningsAreErrors.value) Seq("-Xfatal-warnings") else Seq.empty[String] },
-    scalacOptions in (Compile, doc) ++=
-      Opts.doc.title(titleForDocs.value) ++
-      Opts.doc.version(version.value) ++
-      Seq("-feature", "-unchecked", "-deprecation", "-diagrams", "-implicits", "-skip-packages", "samples")
+      { if (warningsAreErrors.value) Seq("-Xfatal-warnings") else Seq.empty[String] }
   )
 }
