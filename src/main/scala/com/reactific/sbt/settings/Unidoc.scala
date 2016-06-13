@@ -33,19 +33,6 @@ object Unidoc extends AutoPluginHelper {
   )
 
   override def projectSettings = UnidocPlugin.unidocSettings ++ Seq(
-    scalacOptions in (Compile, doc) ++=
-      Opts.doc.title(titleForDocs.value) ++
-      Opts.doc.version(version.value) ++ Seq(
-      "-feature",
-      "-unchecked",
-      "-deprecation",
-      "-diagrams",
-      "-target:jvm-1.8",
-      "-explaintypes",
-      "-language:existentials",         // Turn on existentials feature
-      "-language:higherKinds",          // Turn on higher kinds feature
-      "-language:implicitConversions"  // Turn on implicit conversions feature
-    ),
     apiURL := Some(url("https://github.com/reactific/" + normalizedName.value + "/api/")),
     autoAPIMappings := true,
     apiMappings ++= {

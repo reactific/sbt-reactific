@@ -74,8 +74,36 @@ object Compiler extends AutoPluginHelper {
     ),
     scalaVersion := "2.11.8",
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-    scalacOptions ++=
-      { if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options else scalac_2_11_options } ++
-      { if (warningsAreErrors.value) Seq("-Xfatal-warnings") else Seq.empty[String] }
-  )
+    scalacOptions ++= {
+      {
+        if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options else scalac_2_11_options
+      } ++ {
+        if (warningsAreErrors.value) Seq("-Xfatal-warnings") else Seq.empty[String]
+      }
+    },
+    scalacOptions in (Compile, doc) ++= {
+      Opts.doc.title(titleForDocs.value) ++
+      Opts.doc.version(version.value) ++ Seq(
+        "-feature",
+        "-unchecked",
+        "-deprecation",
+        "-diagrams",
+        "-explaintypes",
+        "-language:existentials", // Turn on existentials feature
+        "-language:higherKinds", // Turn on higher kinds feature
+        "-language:implicitConversions" // Turn on implicit conversions feature
+      ) ++ {
+        scalaVersion.value match {
+          case s: String if s.startsWith("2.10") =>
+            Seq("-target:jvm-1.7")
+          case s: String if s.startsWith("2.11") =>
+            Seq("-target:jvm-1.8")
+          case s: String if s.startsWith("2.12") =>
+            Seq("-target:jvm-1.8")
+          case _ =>
+            Seq.empty[String]
+        }
+      }
+    }
+   )
 }
