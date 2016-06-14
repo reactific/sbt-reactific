@@ -32,11 +32,7 @@ class AggregatingRootBuild extends SingleProjectBuild {
   lazy val root : Option[Project] = {
     val aggregates = projects.
       filterNot(_.base == file(".")).
-      map { p =>
-        println(s"Project: ${p.id}")
-        p.project
-        // ProjectRef(p.base, p.id)
-      }
+      map { p => p.project }
     Some(
       Build.defaultProject("root", file(".")).
         settings(
