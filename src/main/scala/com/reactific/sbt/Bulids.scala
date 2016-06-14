@@ -12,12 +12,10 @@ import sbt._
 class SingleProjectBuild extends Build {
 
   override def settings = super.settings ++ Seq(
-    shellPrompt := Miscellaneous.buildShellPrompt.value,
     organization := "com.reactific",
     copyrightHolder := "Reactific Software LLC",
     copyrightYears := Seq(2016),
-    developerUrl := url("http://reactific.com/"),
-    codePackage := s"com.reactific.${name.value}"
+    developerUrl := url("http://reactific.com/")
   )
 }
 
@@ -31,12 +29,41 @@ class SingleProjectBuild extends Build {
   */
 class AggregatingRootBuild extends SingleProjectBuild {
 
-  final override def rootProject: Option[Project] = None
-
-  override def settings: scala.Seq[sbt.Def.Setting[_]] = {
-    super.settings ++ Seq(
-      name := "root",
-      publish := {}
+  lazy val root : Option[Project] = {
+    val aggregates = projects.
+      filterNot(_.base == file(".")).
+      map { p =>
+        println(s"Project: ${p.id}")
+        p.project
+        // ProjectRef(p.base, p.id)
+      }
+    Some(
+      Build.defaultProject("root", file(".")).
+        settings(
+          name := "root",
+          normalizedName := "root",
+          publishArtifact := false, // no artifact to publish for the virtual root project
+          publish := {}, // just to be sure
+          publishLocal := {}, // and paranoid
+          shellPrompt :=  Miscellaneous.buildShellPrompt.value
+        ).aggregate(aggregates:_*)
     )
+  }
+
+  override def projectDefinitions(base: File) = {
+    root match {
+      case Some(project) =>
+        project +: super.projectDefinitions(base)
+      case None =>
+        throw new Exception("Failed to lazy init root project definition")
+    }
+  }
+
+  final override def rootProject = {
+    root match {
+      case Some(project) => Some(project)
+      case None =>
+        throw new Exception("Failed to lazy init root project definition")
+    }
   }
 }

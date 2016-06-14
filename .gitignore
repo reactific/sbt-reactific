@@ -13,7 +13,13 @@ project/boot/
 project/plugins/project/
 
 # IntelliJ IDEA specific
-.idea/
+.idea/libraries/
+.idea/workspace.xml
+.idea/rebel_project.xml
+.idea/scopes/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
 
 # Scala-IDE specific
 .scala_dependencies
