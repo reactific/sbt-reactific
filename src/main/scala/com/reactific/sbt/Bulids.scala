@@ -30,14 +30,13 @@ class SingleProjectBuild extends Build {
 class AggregatingRootBuild extends SingleProjectBuild {
 
   lazy val root : Option[Project] = {
-    val aggregates = projects.
-      filterNot(_.base == file(".")).
-      map { p => p.project }
+    val aggregates = projects.filterNot(_.base == file(".")).map { p => p.project }
+    val root_file = file(".")
+    val root_name = root_file.getCanonicalFile.getName + "-root"
     Some(
-      Build.defaultProject("root", file(".")).
+      Build.defaultProject(root_name, root_file).
         settings(
-          name := "root",
-          normalizedName := "root",
+          name := root_name,
           publishArtifact := false, // no artifact to publish for the virtual root project
           publish := {}, // just to be sure
           publishLocal := {}, // and paranoid
