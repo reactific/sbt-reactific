@@ -8,6 +8,9 @@ import sbt._
 import sbt.dsl._
 
 object MultiBuild extends AggregatingRootBuild {
+
+  override def rootName : Option[String] = Some("MultiBuildTest")
+
   override def settings = super.settings ++ Seq(
     maxErrors := 5,
     titleForDocs := "Yo!",

@@ -29,10 +29,16 @@ class SingleProjectBuild extends Build {
   */
 class AggregatingRootBuild extends SingleProjectBuild {
 
+  def rootName : Option[String] = None
+
   lazy val root : Option[Project] = {
     val aggregates = projects.filterNot(_.base == file(".")).map { p => p.project }
     val root_file = file(".")
-    val root_name = root_file.getCanonicalFile.getName + "-root"
+    val root_name = rootName match {
+      case Some(nm) ⇒ nm
+      case None ⇒
+        root_file.getCanonicalFile.getName + "-root"
+    }
     Some(
       Build.defaultProject(root_name, root_file).
         settings(
