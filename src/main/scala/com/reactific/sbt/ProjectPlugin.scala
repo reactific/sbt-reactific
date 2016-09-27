@@ -15,7 +15,7 @@
 package com.reactific.sbt
 
 import com.reactific.sbt.settings._
-import com.typesafe.sbt.{GitPlugin}
+import com.typesafe.sbt.GitPlugin
 import sbt._
 
 /** The ProjectPlugin to add to your projects so they share a common set of build characteristics. */

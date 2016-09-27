@@ -18,8 +18,10 @@ object BuildInfo extends AutoPluginHelper {
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := codePackage.value,
     buildInfoObject := {
-      val s = codePackage.value.split('.').map { s => s.head.toString.toUpperCase + s.tail }.mkString
-      s.head.toString.toUpperCase + s.tail + "Info"
+      val pieces = codePackage.value.split('.').map { s =>
+        s.head.toString.toUpperCase + s.tail
+      }.mkString
+      pieces.head.toString.toUpperCase + pieces.tail + "Info"
     },
     buildInfoKeys := Seq[BuildInfoKey](
       name, normalizedName, description, homepage, licenses, organization, organizationHomepage,
