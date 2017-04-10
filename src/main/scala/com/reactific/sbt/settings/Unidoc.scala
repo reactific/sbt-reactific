@@ -17,13 +17,13 @@ package com.reactific.sbt.settings
 import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
-import sbtunidoc.{Plugin ⇒ UnidocPlugin}
+import sbtunidoc.ScalaUnidocPlugin
 
 /** Plugin Settings For UniDoc, since it is not an AutoPlugin */
 object Unidoc extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
+  override def autoPlugins: Seq[AutoPlugin] = Seq(ScalaUnidocPlugin)
 
   def knownApiMappings = Map (
     ("org.scala-lang", "scala-library") → url(s"http://www.scala-lang.org/api/$scalaVersion/"),
@@ -32,7 +32,7 @@ object Unidoc extends AutoPluginHelper {
     ("joda-time", "joda-time") → url("http://joda-time.sourceforge.net/apidocs/")
   )
 
-  override def projectSettings = UnidocPlugin.unidocSettings ++ Seq(
+  override def projectSettings = ScalaUnidocPlugin.projectSettings ++ Seq(
     apiURL := Some(url("https://github.com/reactific/" + normalizedName.value + "/api/")),
     autoAPIMappings := true,
     apiMappings ++= {
