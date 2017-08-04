@@ -1,6 +1,5 @@
-package com.reactific.sbt.settings
+package com.reactific.sbt
 
-import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
 import sbtbuildinfo.BuildInfoKeys._
@@ -10,10 +9,13 @@ import sbtbuildinfo._
   * This sets up the BuildInfo plugin
   */
 object BuildInfo extends AutoPluginHelper {
-
-  /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
-
+  
+  override def autoPlugins : Seq[ AutoPlugin ] = {
+    Seq(BuildInfoPlugin)
+  }
+  
+  import com.reactific.sbt.ReactificPlugin.autoImport._
+  
   override def projectSettings : Seq[Setting[_]] = Seq(
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := codePackage.value,

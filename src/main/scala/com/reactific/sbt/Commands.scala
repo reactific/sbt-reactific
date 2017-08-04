@@ -12,22 +12,15 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
+package com.reactific.sbt
 
-import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
 
 /** Commands Added To The Build */
 object Commands extends AutoPluginHelper {
 
-  /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
-
-  val compileOnly = TaskKey[File]("compile-only", "Compile just the specified files")
-  val printClasspath = TaskKey[File]("print-class-path", "Print the project's compilation class path.")
-  val printTestClasspath = TaskKey[File]("print-test-class-path", "Print the project's testing class path.")
-  val printRuntimeClasspath = TaskKey[File]("print-runtime-class-path", "Print the project's runtime class path.")
+  import com.reactific.sbt.ReactificPlugin.autoImport._
 
   override def projectSettings: Seq[Setting[_]] = {
     Seq[Setting[_]](

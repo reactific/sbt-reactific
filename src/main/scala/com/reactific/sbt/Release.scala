@@ -12,24 +12,37 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
+package com.reactific.sbt
 
-import com.reactific.sbt.AutoPluginHelper
-import sbt.Keys._
+import com.typesafe.sbt.pgp.PgpKeys
 import sbt._
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.{ReleasePlugin, Version}
 
-import com.etsy.sbt.{CompileQuick ⇒ CQPlugin}
-import com.etsy.sbt.CompileQuick._
-
-/** Settings For The CompileQuick Plugin
-  * This sets up the CompileQuick plugin and makes it an AutoPlugin
-  */
-object CompileQuick extends AutoPluginHelper {
+object Release extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
+  override def autoPlugins : Seq[AutoPlugin] = Seq(ReleasePlugin)
 
-  override def projectSettings : Seq[Setting[_]] = Seq(
-    packageQuickOutput := new File(baseDirectory.value, "libs")
+  override def projectSettings = Seq[Setting[_]](
+    releaseUseGlobalVersion := true,
+    releaseVersionBump := Version.Bump.Bugfix,
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepTask(com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport.dist),
+      publishArtifacts,
+      setNextVersion,
+      commitNextVersion,
+      releaseStepCommand("sonatypeReleaseAll"),
+      pushChanges
+    )
   )
 }

@@ -12,13 +12,12 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
-
-import com.reactific.sbt.AutoPluginHelper
-import sbt.Keys._
-import sbt._
+package com.reactific.sbt
 
 import scala.language.postfixOps
+
+import sbt.Keys._
+import sbt._
 
 /** General settings for the project */
 object Miscellaneous extends AutoPluginHelper {
@@ -77,7 +76,4 @@ object Miscellaneous extends AutoPluginHelper {
         "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
       )
     )
-
-  /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
 }

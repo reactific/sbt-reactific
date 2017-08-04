@@ -12,13 +12,11 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
-
-import com.reactific.sbt.AutoPluginHelper
-import sbt._
+package com.reactific.sbt
 
 import com.typesafe.sbt.site.SitePlugin
 import com.typesafe.sbt.site.SitePlugin.autoImport._
+import sbt._
 
 
 /** Settings For Site Plugin */

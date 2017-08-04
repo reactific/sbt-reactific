@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ScalaSbtSettings">
     <option name="customLauncherEnabled" value="true" />
-    <option name="customLauncherPath" value="$SBT_LAUNCH_JAR_PATH$" />
+    <option name="customLauncherPath" value="/usr/local/Cellar/sbt/0.13.16/libexec/bin/sbt-launch.jar" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
+        <option name="enableDebugSbtShell" value="false" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="jdk" value="1.8" />
         <option name="modules">
@@ -13,15 +14,9 @@
             <option value="$PROJECT_DIR$/project" />
           </set>
         </option>
-        <option name="resolveJavadocs" value="true" />
         <option name="resolveSbtClassifiers" value="true" />
-        <option name="sbtVersion" value="0.13.11" />
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/project" />
-          </set>
-        </option>
+        <option name="sbtVersion" value="0.13.16" />
+        <option name="useSbtShell" value="true" />
       </SbtProjectSettings>
     </option>
     <option name="maximumHeapSize" value="2048" />

@@ -12,21 +12,16 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
+package com.reactific.sbt
 
-import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
 
 /** Compiler Settings Needed */
 object Compiler extends AutoPluginHelper {
-
-  object autoImport {
-  }
-
-  /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq.empty[AutoPlugin]
-
+  
+  import com.reactific.sbt.ReactificPlugin.autoImport._
+  
   val java_compile_options = Seq[String](
     "-g",
     "-deprecation",

@@ -12,17 +12,17 @@
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
 
-package com.reactific.sbt.settings
+package com.reactific.sbt
 
-import com.reactific.sbt.AutoPluginHelper
 import sbt.Keys._
 import sbt._
-import xerial.sbt.{Sonatype ⇒ SonatypePlugin}
 import xerial.sbt.Sonatype._
+import xerial.sbt.{Sonatype ⇒ SonatypePlugin}
 
 /** Settings For SonatypePublishing Plugin */
 object Publishing extends AutoPluginHelper {
 
+  import com.reactific.sbt.ReactificPlugin.autoImport._
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(SonatypePlugin)
 
