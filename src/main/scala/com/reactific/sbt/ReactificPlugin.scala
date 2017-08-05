@@ -81,11 +81,16 @@ object ReactificPlugin extends AutoPlugin {
   
   
   override def projectSettings : Seq[ Def.Setting[ _ ] ] = {
-    super.projectSettings
+    super.projectSettings ++ helpers.flatMap(h ⇒ h.projectSettings)
   }
   
   override def buildSettings : Seq[ Def.Setting[ _ ] ] = {
-    super.buildSettings ++ identificationSettings
+    super.buildSettings ++ identificationSettings ++ helpers.flatMap(h ⇒ h
+      .buildSettings)
+  }
+  
+  override def globalSettings: Seq[Def.Setting[_]] = {
+    super.globalSettings ++ helpers.flatMap(h ⇒ h.globalSettings)
   }
   
 }

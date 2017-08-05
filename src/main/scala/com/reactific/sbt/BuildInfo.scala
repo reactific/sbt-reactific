@@ -2,6 +2,7 @@ package com.reactific.sbt
 
 import java.time.Instant
 import java.time.temporal.ChronoField
+import java.util.Calendar
 
 import sbt.Keys._
 import sbt._
@@ -20,6 +21,8 @@ object BuildInfo extends AutoPluginHelper {
   import com.reactific.sbt.ReactificPlugin.autoImport._
   
   override def projectSettings : Seq[Setting[_]] = {
+    val now:  Calendar = Calendar.getInstance()
+    val year = now.get(Calendar.YEAR)
     Seq(
       buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
       buildInfoPackage := codePackage.value,
@@ -36,7 +39,7 @@ object BuildInfo extends AutoPluginHelper {
         isSnapshot, codePackage, titleForDocs, copyrightHolder, developerUrl,
         buildInfoBuildNumber,
         BuildInfoKey.action[String]("copyrightYears")(
-          startYear.value.get + "-" + Instant.now.get(ChronoField.YEAR)
+          startYear.value.get + "-" + year.toString
         )
       ),
       buildInfoOptions :=

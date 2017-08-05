@@ -13,7 +13,7 @@ enablePlugins(ReactificPlugin)
 
 copyrightHolder := "Reactific Software LLC"
 
-copyrightYears := Seq(2015)
+startYear  := Some(2015)
 
 developerUrl := url("http://reactific.com/")
 
