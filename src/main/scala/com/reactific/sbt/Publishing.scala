@@ -48,10 +48,6 @@ object Publishing extends AutoPluginHelper {
     licenses := Seq("Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
     pomExtra in Global := {
-      <scm>
-        <url>{scmInfo.value.getOrElse(defaultScmInfo.value).browseUrl.toString}</url>
-        <connection>{scmInfo.value.getOrElse(defaultScmInfo.value).connection}</connection>
-      </scm>
       <developers>
         <developer>
           <id>{copyrightHolder.value}</id>
