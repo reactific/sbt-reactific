@@ -118,17 +118,13 @@ lazy val root = {
       licenses := Seq("Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
       homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
       pomExtra in Global := {
-        <scm>
-          <url>{scmInfo.value.getOrElse(defaultScmInfo.value).browseUrl.toString}</url>
-          <connection>{scmInfo.value.getOrElse(defaultScmInfo.value).connection}</connection>
-        </scm>
-          <developers>
-            <developer>
-              <id>reid-spencer</id>
-              <name>Reid Spencer</name>
-              <url>https://github.com/reid-spencer</url>
-            </developer>
-          </developers>
+        <developers>
+          <developer>
+            <id>reid-spencer</id>
+            <name>Reid Spencer</name>
+            <url>https://github.com/reid-spencer</url>
+          </developer>
+        </developers>
       }
     )
 }
