@@ -1,4 +1,3 @@
-import com.reactific.sbt.settings._
 
 name := "hello-test"
 
@@ -10,7 +9,7 @@ maxErrors := 50
 
 unmanagedResourceDirectories in compile := Seq(baseDirectory.value / "src/resources")
 
-enablePlugins(ProjectPlugin,PublishUniversalPlugin)
+enablePlugins(ReactificPlugin)
 
 copyrightHolder := "Reactific Software LLC"
 

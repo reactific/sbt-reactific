@@ -57,7 +57,7 @@ lazy val root = {
   (project in file("."))
     .enablePlugins(Sonatype)
     .settings(
-      name := "sbt-reactific",
+      name            := "sbt-reactific",
       sbtPlugin       := true,
       organization    := "com.reactific",
       scalaVersion    := "2.10.5",

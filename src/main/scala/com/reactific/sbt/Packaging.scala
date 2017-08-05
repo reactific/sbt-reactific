@@ -1,6 +1,5 @@
 package com.reactific.sbt
 
-import com.reactific.sbt.settings._
 import com.typesafe.sbt.SbtNativePackager.{Universal, UniversalDocs, UniversalSrc}
 import com.typesafe.sbt.packager.SettingsHelper
 import com.typesafe.sbt.packager.universal.UniversalPlugin
@@ -9,10 +8,12 @@ import sbt.Keys._
 import sbt._
 
 /** Enable PublishUniversalPlugin to make universal artifacts publishable */
-object PublishUniversalPlugin extends AutoPluginHelper {
+object Packaging extends AutoPluginHelper {
 
+  import ReactificPlugin.autoImport._
+  
   override def autoPlugins : Seq[AutoPlugin] = Seq(
-    ProjectPlugin, UniversalPlugin
+    UniversalPlugin
   )
 
   /**

@@ -1,5 +1,8 @@
 package com.reactific.sbt
 
+import java.time.Instant
+import java.time.temporal.ChronoField
+
 import sbt.Keys._
 import sbt._
 import sbtbuildinfo.BuildInfoKeys._
@@ -16,25 +19,29 @@ object BuildInfo extends AutoPluginHelper {
   
   import com.reactific.sbt.ReactificPlugin.autoImport._
   
-  override def projectSettings : Seq[Setting[_]] = Seq(
-    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-    buildInfoPackage := codePackage.value,
-    buildInfoObject := {
-      val pieces = codePackage.value.split('.').map { s =>
-        s.head.toString.toUpperCase + s.tail
-      }.mkString
-      pieces.head.toString.toUpperCase + pieces.tail + "Info"
-    },
-    buildInfoKeys := Seq[BuildInfoKey](
-      name, normalizedName, description, homepage, licenses, organization, organizationHomepage,
-      apiURL, version, scalaVersion, isSnapshot,
-      codePackage,
-      titleForDocs,
-      copyrightHolder,
-      copyrightYears,
-      developerUrl
-    ),
-    buildInfoOptions := Seq(BuildInfoOption.ToMap, BuildInfoOption.ToJson, BuildInfoOption.BuildTime)
-  )
+  override def projectSettings : Seq[Setting[_]] = {
+    Seq(
+      buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+      buildInfoPackage := codePackage.value,
+      buildInfoObject := {
+        val pieces = codePackage.value.split('.').map { s =>
+          s.head.toString.toUpperCase + s.tail
+        }.mkString
+        pieces.head.toString.toUpperCase + pieces.tail + "Info"
+      },
+      buildInfoKeys := Seq[BuildInfoKey](
+        name, normalizedName, description, homepage, licenses,
+        organization, organizationHomepage, apiURL, version, scalaVersion,
+        sbtVersion,
+        isSnapshot, codePackage, titleForDocs, copyrightHolder, developerUrl,
+        buildInfoBuildNumber,
+        BuildInfoKey.action[String]("copyrightYears")(
+          startYear.value.get + "-" + Instant.now.get(ChronoField.YEAR)
+        )
+      ),
+      buildInfoOptions :=
+        Seq(BuildInfoOption.ToMap, BuildInfoOption.ToJson, BuildInfoOption.BuildTime)
+    )
+  }
 
 }
