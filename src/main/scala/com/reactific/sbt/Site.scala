@@ -18,14 +18,12 @@ import com.typesafe.sbt.site.SitePlugin
 import com.typesafe.sbt.site.SitePlugin.autoImport._
 import sbt._
 
-
 /** Settings For Site Plugin */
 object Site extends AutoPluginHelper {
+
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(SitePlugin)
 
-    override def projectSettings: Seq[Setting[_]] = Seq(
-      siteSubdirName := ""
-    )
+  override def projectSettings: Seq[Setting[_]] = Seq(siteSubdirName := "")
 
 }

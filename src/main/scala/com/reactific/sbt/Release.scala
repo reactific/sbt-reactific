@@ -23,7 +23,7 @@ import sbtrelease.{ReleasePlugin, Version}
 object Release extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins : Seq[AutoPlugin] = Seq(ReleasePlugin)
+  override def autoPlugins: Seq[AutoPlugin] = Seq(ReleasePlugin)
 
   override def projectSettings = Seq[Setting[_]](
     releaseUseGlobalVersion := true,
@@ -37,7 +37,9 @@ object Release extends AutoPluginHelper {
       setReleaseVersion,
       commitReleaseVersion,
       tagRelease,
-      releaseStepTask(com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport.dist),
+      releaseStepTask(
+        com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport.dist
+      ),
       publishArtifacts,
       setNextVersion,
       commitNextVersion,

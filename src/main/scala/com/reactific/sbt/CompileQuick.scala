@@ -20,14 +20,14 @@ import sbt.Keys._
 import sbt._
 
 /** Settings For The CompileQuick Plugin
-  * This sets up the CompileQuick plugin and makes it an AutoPlugin
-  */
+ * This sets up the CompileQuick plugin and makes it an AutoPlugin
+ */
 object CompileQuick extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
 
-  override def projectSettings : Seq[Setting[_]] = Seq(
+  override def projectSettings: Seq[Setting[_]] = Seq(
     packageQuickOutput := new File(baseDirectory.value, "libs")
   )
 }

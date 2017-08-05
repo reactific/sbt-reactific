@@ -23,9 +23,10 @@ import sbt._
 object Miscellaneous extends AutoPluginHelper {
 
   val filter = { (ms: Seq[(File, String)]) =>
-    ms filter {
+    ms.filter {
       case (file, path) =>
-        path != "logback.xml" && !path.startsWith("toignore") && !path.startsWith("samples")
+        path != "logback.xml" && !path.startsWith("toignore") && !path
+          .startsWith("samples")
     }
   }
 
@@ -37,18 +38,20 @@ object Miscellaneous extends AutoPluginHelper {
     def buffer[T](f: => T): T = f
   }
 
-  def currBranch = (
-    ("git status -sb" lines_! devnull headOption)
-      getOrElse "-" stripPrefix "## ")
+  def currBranch =
+    ("git status -sb"
+      .lines_!(devnull) headOption)
+      .getOrElse("-")
+      .stripPrefix("## ")
 
-  def buildShellPrompt = Def.setting {
-    (state: State) => {
+  def buildShellPrompt = Def.setting { (state: State) =>
+    {
       val id = Project.extract(state).currentProject.id
       s"${name.value}($id) : $currBranch : ${version.value}>"
     }
   }
 
-  def standardResolvers : Seq[Resolver] = Seq[Resolver](
+  def standardResolvers: Seq[Resolver] = Seq[Resolver](
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots"),
     Resolver.bintrayRepo("typesafe", "ivy-releases"),
@@ -56,24 +59,31 @@ object Miscellaneous extends AutoPluginHelper {
     Resolver.bintrayRepo("scalaz", "releases")
   )
 
-  override def projectSettings : Seq[sbt.Def.Setting[_]] = Defaults.coreDefaultSettings ++
-    Seq(
-      baseDirectory := thisProject.value.base,
-      target := baseDirectory.value / "target",
-      resolvers := standardResolvers,
-      logLevel  := Level.Info,
-      fork in Test := false,
-      logBuffered in Test := false,
-      shellPrompt := buildShellPrompt.value,
-      unmanagedJars in Compile <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },
-      unmanagedJars in Runtime <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },
-      unmanagedJars in Test    <<= baseDirectory map { base => (base / "libs" ** "*.jar").classpath },
-      mappings in(Compile, packageBin) ~= filter,
-      mappings in(Compile, packageSrc) ~= filter,
-      mappings in(Compile, packageDoc) ~= filter,
-      libraryDependencies ++= Seq(
-        "org.specs2" %% "specs2-core" % "3.6.6" % "test",
-        "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
+  override def projectSettings: Seq[sbt.Def.Setting[_]] =
+    Defaults.coreDefaultSettings ++
+      Seq(
+        baseDirectory := thisProject.value.base,
+        target := baseDirectory.value / "target",
+        resolvers := standardResolvers,
+        logLevel := Level.Info,
+        fork in Test := false,
+        logBuffered in Test := false,
+        shellPrompt := buildShellPrompt.value,
+        unmanagedJars in Compile <<= baseDirectory.map { base =>
+          (base / "libs" ** "*.jar").classpath
+        },
+        unmanagedJars in Runtime <<= baseDirectory.map { base =>
+          (base / "libs" ** "*.jar").classpath
+        },
+        unmanagedJars in Test <<= baseDirectory.map { base =>
+          (base / "libs" ** "*.jar").classpath
+        },
+        mappings in (Compile, packageBin) ~= filter,
+        mappings in (Compile, packageSrc) ~= filter,
+        mappings in (Compile, packageDoc) ~= filter,
+        libraryDependencies ++= Seq(
+          "org.specs2" %% "specs2-core" % "3.6.6" % "test",
+          "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
+        )
       )
-    )
 }

@@ -23,19 +23,27 @@ import xerial.sbt.{Sonatype ⇒ SonatypePlugin}
 object Publishing extends AutoPluginHelper {
 
   import com.reactific.sbt.ReactificPlugin.autoImport._
+
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(SonatypePlugin)
 
   val defaultScmInfo = Def.setting {
     val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
-    ScmInfo(url("https:" ++ gitUrl), "scm:git:" ++ gitUrl, Some("https:" ++ gitUrl) )
+    ScmInfo(
+      url("https:" ++ gitUrl),
+      "scm:git:" ++ gitUrl,
+      Some("https:" ++ gitUrl)
+    )
   }
 
   override def projectSettings = sonatypeSettings ++ Seq(
     SonatypeKeys.sonatypeProfileName := "com.reactific",
     publishSnapshotsTo := Resolver.sonatypeRepo("snapshots"),
     publishReleasesTo :=
-      MavenRepository("Sonatype Maven Staging", "https://oss.sonatype.org/service/local/staging/deploy/maven2"),
+      MavenRepository(
+        "Sonatype Maven Staging",
+        "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+      ),
     publishTo := {
       if (isSnapshot.value)
         Some(publishSnapshotsTo.value)
@@ -44,9 +52,15 @@ object Publishing extends AutoPluginHelper {
     },
     publishMavenStyle := true,
     publishArtifact in Test := false,
-    pomIncludeRepository := { _ => false },
-    licenses := Seq("Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
-    homepage := Some(new URL("https://github.com/reactific/" + normalizedName.value)),
+    pomIncludeRepository := { _ =>
+      false
+    },
+    licenses := Seq(
+      "Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")
+    ),
+    homepage := Some(
+      new URL("https://github.com/reactific/" + normalizedName.value)
+    ),
     pomExtra in Global := {
       <developers>
         <developer>

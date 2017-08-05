@@ -9,12 +9,12 @@ import sbt._
 
 /*
 object Apache2License extends License {
-  
+
   val xmlBlockComment = """(?s)(<!--(?!--).*?-->(?:\n|\r|\r\n)+)(.*)""".r
   val xmlStyle = new ("<!--", "  --", "-->")
-  
+
   CommentStyle.XmlStyleBlockComment
-  
+
   override def apply(
     yyyy: String, copyrightOwner: String, commentStyle: String = "*"
   ) : CommentStyle = {
@@ -33,7 +33,7 @@ object Apache2License extends License {
   }
 }
 
-*/
+ */
 
 object Header extends AutoPluginHelper {
 
@@ -44,7 +44,7 @@ object Header extends AutoPluginHelper {
     val years = "2015-2017"
     val copyright = "Reactific Software LLC"
     import HeaderPlugin.autoImport._
-    Seq (
+    Seq(
       headerLicense := Some(ALv2(years, copyright)),
       organizationName := ReactificPlugin.autoImport.copyrightHolder.value,
       startYear := Some(2015)

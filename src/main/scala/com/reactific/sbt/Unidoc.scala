@@ -24,32 +24,40 @@ object Unidoc extends AutoPluginHelper {
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ScalaUnidocPlugin)
 
-  def knownApiMappings = Map (
-    ("org.scala-lang", "scala-library") → url(s"http://www.scala-lang.org/api/$scalaVersion/"),
+  def knownApiMappings = Map(
+    ("org.scala-lang", "scala-library") → url(
+      s"http://www.scala-lang.org/api/$scalaVersion/"
+    ),
     ("com.typesafe.akka", "akka-actor") → url(s"http://doc.akka.io/api/akka/"),
-    ("com.typesafe", "config") → url("http://typesafehub.github.io/config/latest/api/"),
-    ("joda-time", "joda-time") → url("http://joda-time.sourceforge.net/apidocs/")
+    ("com.typesafe", "config") → url(
+      "http://typesafehub.github.io/config/latest/api/"
+    ),
+    ("joda-time", "joda-time") → url(
+      "http://joda-time.sourceforge.net/apidocs/"
+    )
   )
 
   override def projectSettings = ScalaUnidocPlugin.projectSettings ++ Seq(
-    apiURL := Some(url("https://github.com/reactific/" + normalizedName.value + "/api/")),
+    apiURL := Some(
+      url("https://github.com/reactific/" + normalizedName.value + "/api/")
+    ),
     autoAPIMappings := true,
     apiMappings ++= {
       val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
-      def findManagedDependency(organization: String, name: String): Option[File] = {
-        ( for {
-            entry <- cp
-            module <- entry.get(moduleID.key)
-            if module.organization == organization
-            if module.name.startsWith(name)
-            jarFile = entry.data
-          } yield jarFile
-        ).headOption
+      def findManagedDependency(
+        organization: String,
+        name: String
+      ): Option[File] = {
+        (for {
+          entry <- cp
+          module <- entry.get(moduleID.key)
+          if module.organization == organization
+          if module.name.startsWith(name)
+          jarFile = entry.data
+        } yield jarFile).headOption
       }
-      for (
-        ((org,lib), url) <- knownApiMappings ;
-        dep = findManagedDependency(org, lib) if dep.isDefined
-      ) yield {
+      for (((org, lib), url) <- knownApiMappings;
+           dep = findManagedDependency(org, lib) if dep.isDefined) yield {
         dep.get -> url
       }
     }

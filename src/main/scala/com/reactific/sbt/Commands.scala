@@ -11,7 +11,6 @@
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for  *
  * the specific language governing permissions and limitations under the License.                                     *
  **********************************************************************************************************************/
-
 package com.reactific.sbt
 
 import sbt.Keys._
@@ -37,7 +36,7 @@ object Commands extends AutoPluginHelper {
     (_: Project).settings(s: _*)
   }
 
-  override def globalSettings : Seq[Def.Setting[_]] = {
+  override def globalSettings: Seq[Def.Setting[_]] = {
     Seq(
       addCommandAlias("tq", "test-quick"),
       addCommandAlias("to", "test-only"),
@@ -47,19 +46,24 @@ object Commands extends AutoPluginHelper {
       addCommandAlias("TEST", "; clean ; test"),
       addCommandAlias("tc", "test:compile"),
       addCommandAlias("ctc", "; clean ; test:compile"),
-      addCommandAlias("cov", "; clean ; coverage ; test ; coverageAggregate ; reload"),
+      addCommandAlias(
+        "cov",
+        "; clean ; coverage ; test ; coverageAggregate ; reload"
+      ),
       addCommandAlias("!", "sh")
     ).flatten
   }
 
-  def print_class_path = (target, fullClasspath in Compile, compile in Compile) map { (out, cp, analysis) =>
-    println("----- Compile: " + out.getCanonicalPath + ": FILES:")
-    println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-    println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
-    println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
-    println("----- END")
-    out
-  }
+  def print_class_path =
+    (target, fullClasspath in Compile, compile in Compile).map {
+      (out, cp, analysis) =>
+        println("----- Compile: " + out.getCanonicalPath + ": FILES:")
+        println(cp.files.map(_.getCanonicalPath).mkString("\n"))
+        println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
+        println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
+        println("----- END")
+        out
+    }
 
   def print_test_class_path = (target, fullClasspath in Test).map { (out, cp) =>
     println("----- Test: " + out.getCanonicalPath + ": FILES:")
@@ -67,24 +71,30 @@ object Commands extends AutoPluginHelper {
     println("----- END")
     out
   }
-  def print_runtime_class_path = (target, fullClasspath in Runtime).map { (out, cp) =>
-    println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
-    println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-    println("----- END")
-    out
+
+  def print_runtime_class_path = (target, fullClasspath in Runtime).map {
+    (out, cp) =>
+      println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
+      println(cp.files.map(_.getCanonicalPath).mkString("\n"))
+      println("----- END")
+      out
   }
 
-  def compile_only = (target, compile in Compile) map { (out, compile) =>
+  def compile_only = (target, compile in Compile).map { (out, compile) =>
     println("Not Implemented Yet.")
     out
   }
 
-  def shell_command = Command.args("sh", "Invoke a system shell and pass arguments to it") { (state, args) =>
-    Process(args).! ; state
-  }
+  def shell_command =
+    Command.args("sh", "Invoke a system shell and pass arguments to it") {
+      (state, args) =>
+        Process(args).!; state
+    }
 
-  def bang_command = Command.args("!", "Invoke a system shell and pass arguments to it") { (state, args) =>
-    Process(args).! ; state
-  }
+  def bang_command =
+    Command.args("!", "Invoke a system shell and pass arguments to it") {
+      (state, args) =>
+        Process(args).!; state
+    }
 
 }
