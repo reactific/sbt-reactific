@@ -23,10 +23,10 @@ object Commands extends AutoPluginHelper {
 
   override def projectSettings: Seq[Setting[_]] = {
     Seq[Setting[_]](
-      compileOnly <<= Commands.compile_only,
-      printClasspath <<= print_class_path,
-      printTestClasspath <<= Commands.print_test_class_path,
-      printRuntimeClasspath <<= Commands.print_runtime_class_path,
+      compileOnly := { compile_only.value },
+      printClasspath := { print_class_path.value },
+      printTestClasspath := { print_test_class_path.value },
+      printRuntimeClasspath := { print_runtime_class_path.value },
       Keys.commands ++= Seq(shell_command, bang_command)
     )
   }
@@ -54,47 +54,54 @@ object Commands extends AutoPluginHelper {
     ).flatten
   }
 
-  def print_class_path =
-    (target, fullClasspath in Compile, compile in Compile).map {
-      (out, cp, analysis) =>
-        println("----- Compile: " + out.getCanonicalPath + ": FILES:")
-        println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-        println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
-        println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
-        println("----- END")
-        out
-    }
+  def print_class_path = Def.task {
+    val out = target.value
+    val cp = (fullClasspath in Compile).value
+    val analysis= (compile in Compile).value
+    println("----- Compile: " + out.getCanonicalPath + ": FILES:")
+    println(cp.files.map(_.getCanonicalPath).mkString("\n"))
+    println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
+    println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
+    println("----- END")
+    out
+  }
 
-  def print_test_class_path = (target, fullClasspath in Test).map { (out, cp) =>
+  def print_test_class_path = Def.task {
+    val out = target.value
+    val cp = (fullClasspath in Test).value
     println("----- Test: " + out.getCanonicalPath + ": FILES:")
     println(cp.files.map(_.getCanonicalPath).mkString("\n"))
     println("----- END")
     out
   }
 
-  def print_runtime_class_path = (target, fullClasspath in Runtime).map {
-    (out, cp) =>
-      println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
-      println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-      println("----- END")
-      out
+  def print_runtime_class_path = Def.task {
+    val out = target.value
+    val cp = (fullClasspath in Runtime).value
+    println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
+    println(cp.files.map(_.getCanonicalPath).mkString("\n"))
+    println("----- END")
+    out
   }
 
-  def compile_only = (target, compile in Compile).map { (out, compile) =>
+  def compile_only = Def.task {
+    val out = target.value
+    val comp = (compile in Compile).value
     println("Not Implemented Yet.")
     out
   }
 
-  def shell_command =
+  def shell_command = {
     Command.args("sh", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state
     }
+  }
 
-  def bang_command =
+  def bang_command = {
     Command.args("!", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state
     }
-
+  }
 }

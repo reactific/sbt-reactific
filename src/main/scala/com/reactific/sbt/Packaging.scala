@@ -43,9 +43,9 @@ object Packaging extends AutoPluginHelper {
         art.copy(`type` = "zip", extension = "zip")
       },
       //--make sure the zip gets made before the publishing commands for the added artifacts
-      publish <<= publish.dependsOn(dist in Universal),
-      publishM2 <<= publishM2.dependsOn(dist in Universal),
-      publishLocal <<= publishLocal.dependsOn(dist in Universal)
+      publish := { publish.dependsOn(dist in Universal).value },
+      publishM2 := { publishM2.dependsOn(dist in Universal).value },
+      publishLocal := { publishLocal.dependsOn(dist in Universal).value }
     ) ++
       //--add the artifact so it is included in the publishing tasks
       addArtifact(artifact in (Universal, packageZip), packageZip in Universal)

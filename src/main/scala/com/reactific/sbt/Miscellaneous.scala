@@ -69,21 +69,23 @@ object Miscellaneous extends AutoPluginHelper {
         fork in Test := false,
         logBuffered in Test := false,
         shellPrompt := buildShellPrompt.value,
-        unmanagedJars in Compile <<= baseDirectory.map { base =>
-          (base / "libs" ** "*.jar").classpath
+        unmanagedJars in Compile :=  {
+          baseDirectory.map { base =>
+            (base / "libs" ** "*.jar").classpath
+          }.value
         },
-        unmanagedJars in Runtime <<= baseDirectory.map { base =>
-          (base / "libs" ** "*.jar").classpath
+        unmanagedJars in Runtime := {
+          baseDirectory.map { base =>
+            (base / "libs" ** "*.jar").classpath
+          }.value
         },
-        unmanagedJars in Test <<= baseDirectory.map { base =>
-          (base / "libs" ** "*.jar").classpath
+        unmanagedJars in Test := {
+          baseDirectory.map { base =>
+            (base / "libs" ** "*.jar").classpath
+          }.value
         },
         mappings in (Compile, packageBin) ~= filter,
         mappings in (Compile, packageSrc) ~= filter,
-        mappings in (Compile, packageDoc) ~= filter,
-        libraryDependencies ++= Seq(
-          "org.specs2" %% "specs2-core" % "3.6.6" % "test",
-          "org.specs2" %% "specs2-junit" % "3.6.6" % "test"
-        )
+        mappings in (Compile, packageDoc) ~= filter
       )
 }
