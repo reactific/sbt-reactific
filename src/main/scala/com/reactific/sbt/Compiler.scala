@@ -66,9 +66,9 @@ object Compiler extends AutoPluginHelper {
   override def projectSettings: Seq[Setting[_]] = Seq(
     warningsAreErrors := true,
     javaOptions in test ++= Seq("-Xmx512m"),
-    javacOptions ++= java_compile_options ++ Seq({
-      if (warningsAreErrors.value) "-Werror" else ""
-    }),
+    javacOptions ++= java_compile_options ++ {
+      if (warningsAreErrors.value) Seq("-Werror") else Seq.empty[String]
+    },
     scalaVersion := "2.11.8",
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
     scalacOptions ++= {
