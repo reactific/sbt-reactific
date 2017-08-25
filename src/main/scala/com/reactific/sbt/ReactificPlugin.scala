@@ -40,7 +40,7 @@ object ReactificPlugin extends AutoPlugin {
   val helpers: Seq[AutoPluginHelper] = {
     Seq(
       Commands,
-      CompileQuick,
+      // CompileQuick,
       Compiler,
       Miscellaneous,
       Site,

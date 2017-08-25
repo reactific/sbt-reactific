@@ -45,10 +45,9 @@ object Publishing extends AutoPluginHelper {
         "https://oss.sonatype.org/service/local/staging/deploy/maven2"
       ),
     publishTo := {
-      if (isSnapshot.value)
-        Some(publishSnapshotsTo.value)
-      else
-        Some(publishReleasesTo.value)
+      val snap = Some(publishSnapshotsTo.value)
+      val rel = Some(publishReleasesTo.value)
+      if (isSnapshot.value) snap else rel
     },
     publishMavenStyle := true,
     publishArtifact in Test := false,

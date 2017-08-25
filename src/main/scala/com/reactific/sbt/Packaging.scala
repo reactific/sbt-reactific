@@ -39,8 +39,8 @@ object Packaging extends AutoPluginHelper {
       packageZip :=
         (baseDirectory in Compile).value / "target" / "universal" / s"${name.value}-${version.value}.zip",
       //--label the zip artifact as a zip instead of the default jar
-      artifact in (Universal, packageZip) ~= { (art: Artifact) =>
-        art.copy(`type` = "zip", extension = "zip")
+      artifact in (Universal, packageZip) ~= { art =>
+        art.withType("zip").withExtension("zip")
       },
       //--make sure the zip gets made before the publishing commands for the added artifacts
       publish := { publish.dependsOn(dist in Universal).value },

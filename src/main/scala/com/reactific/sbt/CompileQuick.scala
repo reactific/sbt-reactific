@@ -14,8 +14,7 @@
 
 package com.reactific.sbt
 
-import com.etsy.sbt.CompileQuick._
-import com.etsy.sbt.{CompileQuick ⇒ CQPlugin}
+// import com.etsy.sbt.CompileQuick._
 import sbt.Keys._
 import sbt._
 
@@ -25,9 +24,10 @@ import sbt._
 object CompileQuick extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
-  override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
+  // override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
 
-  override def projectSettings: Seq[Setting[_]] = Seq(
-    packageQuickOutput := new File(baseDirectory.value, "libs")
-  )
+  // override def projectSettings: Seq[Setting[_]] = Seq(
+  //  packageQuickOutput := new File(baseDirectory.value, "libs")
+  // )
 }
+

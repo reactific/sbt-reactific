@@ -1,7 +1,5 @@
 package com.reactific.sbt
 
-import com.reactific.sbt.ReactificPlugin.helpers
-import com.typesafe.sbt.GitPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.License.ALv2
 import sbt.Keys._

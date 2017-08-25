@@ -13,15 +13,7 @@
  * License for  the specific language governing permissions and limitations under the License.
  */
 
-
-import com.typesafe.sbt.pgp.PgpKeys
-import sbt.mavenint.PomExtraDependencyAttributes
-import sbtrelease.ReleasePlugin.autoImport.{ReleaseStep, releaseStepCommand}
-import sbtrelease.ReleaseStateTransformations._
-import sbt.Keys.scalacOptions
-import sbt.mavenint.PomExtraDependencyAttributes
-import sbtrelease.ReleaseStateTransformations._
-import sbtrelease._
+import ReleaseTransformations._
 
 
 val defaultScmInfo = Def.setting {
@@ -30,22 +22,6 @@ val defaultScmInfo = Def.setting {
 }
 
 
-val build_steps = Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  releaseStepCommand("scripted"),
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommand("packageBin"),
-  publishArtifacts,
-  setNextVersion,
-  commitNextVersion,
-  ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
-  pushChanges
-)
 
 // Libraries for the project we plug into
 val dependencies = Seq (
@@ -55,12 +31,12 @@ val dependencies = Seq (
 
 lazy val root = {
   (project in file("."))
-    .enablePlugins(Sonatype)
+    .enablePlugins(SbtPgp,GitPlugin,Sonatype,ScriptedPlugin,ReleasePlugin)
     .settings(
       name            := "sbt-reactific",
       sbtPlugin       := true,
       organization    := "com.reactific",
-      scalaVersion    := "2.10.5",
+      scalaVersion    := "2.12.3",
       scalacOptions   ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint"),
       logLevel        := Level.Info,
       resolvers       ++= Seq(
@@ -76,15 +52,14 @@ lazy val root = {
       ),
   
       // Scripted - sbt plugin tests
-      ScriptedPlugin.scriptedSettings,
-      ScriptedPlugin.scriptedLaunchOpts := { ScriptedPlugin.scriptedLaunchOpts.value ++
+      scriptedLaunchOpts := { scriptedLaunchOpts.value ++
         Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
       },
-      ScriptedPlugin.scriptedBufferLog := false,
+      scriptedBufferLog := false,
   
       // Release process
       releaseUseGlobalVersion := true,
-      releaseVersionBump := Version.Bump.Bugfix,
+      releaseVersionBump := sbtrelease.Version.Bump.Bugfix,
       releasePublishArtifactsAction := PgpKeys.publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
@@ -99,7 +74,7 @@ lazy val root = {
         publishArtifacts,
         setNextVersion,
         commitNextVersion,
-        ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+        releaseStepCommand("sonatypeReleaseAll"),
         pushChanges
       ),
   
@@ -129,16 +104,16 @@ lazy val root = {
     )
 }
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.5")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.1")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0-M1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
-addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.0")
-addSbtPlugin("com.etsy" % "sbt-compile-quick-plugin" % "1.2.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-license-report" % "1.2.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.2.1")
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.2.0")
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % "2.0.0")
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")
+addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.1")
+// addSbtPlugin("com.etsy" % "sbt-compile-quick-plugin" % "1.3.0")
+// addSbtPlugin("com.typesafe.sbt" % "sbt-license-report" % "1.2.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.3.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.2.2")
+addSbtPlugin("de.heikoseeberger" % "sbt-header" % "3.0.1")
+// addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
+// addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")

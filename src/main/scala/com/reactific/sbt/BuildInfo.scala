@@ -1,7 +1,5 @@
 package com.reactific.sbt
 
-import java.time.Instant
-import java.time.temporal.ChronoField
 import java.util.Calendar
 
 import sbt.Keys._

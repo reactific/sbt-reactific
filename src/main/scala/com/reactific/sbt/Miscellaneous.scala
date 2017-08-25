@@ -14,36 +14,27 @@
 
 package com.reactific.sbt
 
-import scala.language.postfixOps
-
 import sbt.Keys._
 import sbt._
 
 /** General settings for the project */
 object Miscellaneous extends AutoPluginHelper {
 
-  val filter = { (ms: Seq[(File, String)]) =>
+  def filter(ms: Seq[(File, String)]): Seq[(File,String)] = {
     ms.filter {
       case (file, path) =>
-        path != "logback.xml" && !path.startsWith("toignore") && !path
-          .startsWith("samples")
+        path != "logback.xml" &&
+          !path.startsWith("toignore") &&
+          !path.startsWith("samples")
     }
   }
-
-  object devnull extends ProcessLogger {
-    def info(s: => String) {}
-
-    def error(s: => String) {}
-
-    def buffer[T](f: => T): T = f
+  
+  def currBranch: String = {
+    import com.typesafe.sbt.git.JGit
+    val jgit = JGit(new File("."))
+    jgit.branch
   }
-
-  def currBranch =
-    ("git status -sb"
-      .lines_!(devnull) headOption)
-      .getOrElse("-")
-      .stripPrefix("## ")
-
+  
   def buildShellPrompt = Def.setting { (state: State) =>
     {
       val id = Project.extract(state).currentProject.id

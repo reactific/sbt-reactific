@@ -15,6 +15,7 @@ package com.reactific.sbt
 
 import sbt.Keys._
 import sbt._
+import scala.sys.process.Process
 
 /** Commands Added To The Build */
 object Commands extends AutoPluginHelper {
@@ -57,11 +58,13 @@ object Commands extends AutoPluginHelper {
   def print_class_path = Def.task {
     val out = target.value
     val cp = (fullClasspath in Compile).value
-    val analysis= (compile in Compile).value
+    //val analysis= (compile in Compile).value
     println("----- Compile: " + out.getCanonicalPath + ": FILES:")
     println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-    println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
-    println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
+//    println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
+//    println(analysis.readSourceInfos().getAllSourceInfos.asScala.values.head.)
+//    println(analysis.readCompilations().getAllCompilations.toSeq.mkString("\n"))
+    // println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
     println("----- END")
     out
   }
@@ -86,7 +89,7 @@ object Commands extends AutoPluginHelper {
 
   def compile_only = Def.task {
     val out = target.value
-    val comp = (compile in Compile).value
+    // val comp = (compile in Compile).value
     println("Not Implemented Yet.")
     out
   }
