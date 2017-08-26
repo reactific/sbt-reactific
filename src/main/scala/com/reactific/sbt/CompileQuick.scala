@@ -15,15 +15,16 @@
 package com.reactific.sbt
 
 // import com.etsy.sbt.CompileQuick._
-import sbt.Keys._
-import sbt._
+// import sbt.Keys._
+// import sbt._
 
 /** Settings For The CompileQuick Plugin
  * This sets up the CompileQuick plugin and makes it an AutoPlugin
  */
-object CompileQuick extends AutoPluginHelper {
+object CompileQuick /* extends AutoPluginHelper */ {
+  // FIXME: Can't use CompileQuick until it supports sbt 1.0
 
-  /** The AutoPlugins that we depend upon */
+  // /** The AutoPlugins that we depend upon */
   // override def autoPlugins: Seq[AutoPlugin] = Seq(CQPlugin)
 
   // override def projectSettings: Seq[Setting[_]] = Seq(
