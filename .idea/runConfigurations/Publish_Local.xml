@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Publish Local" type="SbtRunConfiguration" factoryName="SBT Task" singleton="true">
-    <setting name="tasks" value="publish-local" />
+    <setting name="tasks" value="publishLocal" />
     <setting name="vmparams" value="-Xms512M -Xmx1024M -Xss1M " />
     <setting name="workingDir" value="$PROJECT_DIR$" />
     <envs />

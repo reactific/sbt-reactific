@@ -33,6 +33,8 @@ object Release extends AutoPluginHelper {
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
+      releaseStepCommand("headerCheck"),
+      releaseStepCommand("scalastyle"),
       runTest,
       setReleaseVersion,
       commitReleaseVersion,

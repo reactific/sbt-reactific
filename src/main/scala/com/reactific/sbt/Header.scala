@@ -1,5 +1,6 @@
 package com.reactific.sbt
 
+import de.heikoseeberger.sbtheader
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.License.ALv2
 import sbt.Keys._
@@ -41,11 +42,21 @@ object Header extends AutoPluginHelper {
   override def projectSettings: Seq[Setting[_]] = {
     val years = "2015-2017"
     val copyright = "Reactific Software LLC"
+    import sbtheader.{FileType,CommentStyle}
     import HeaderPlugin.autoImport._
     Seq(
       headerLicense := Some(ALv2(years, copyright)),
       organizationName := ReactificPlugin.autoImport.copyrightHolder.value,
-      startYear := Some(2015)
+      startYear := Some(2015),
+      headerMappings ++= Map[FileType,CommentStyle](
+        FileType.sh → CommentStyle.HashLineComment,
+        FileType(".sbt") → CommentStyle.CStyleBlockComment,
+        FileType(".xml") → CommentStyle.XmlStyleBlockComment,
+        FileType(".scala.html") → CommentStyle.TwirlStyleBlockComment,
+        FileType(".conf") → CommentStyle.HashLineComment
+      )
+      
+      
     )
   }
 }

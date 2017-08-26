@@ -15,6 +15,7 @@
 
 import ReleaseTransformations._
 
+import sbt.ScriptedPlugin._
 
 val defaultScmInfo = Def.setting {
   val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
@@ -31,12 +32,13 @@ val dependencies = Seq (
 
 lazy val root = {
   (project in file("."))
-    .enablePlugins(SbtPgp,GitPlugin,Sonatype,ScriptedPlugin,ReleasePlugin)
+    .enablePlugins(SbtPgp,GitPlugin,Sonatype,ReleasePlugin)
+    .settings(ScriptedPlugin.scriptedSettings:_*)
     .settings(
       name            := "sbt-reactific",
       sbtPlugin       := true,
       organization    := "com.reactific",
-      scalaVersion    := "2.12.3",
+      // scalaVersion    := "2.12.3",
       scalacOptions   ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint"),
       logLevel        := Level.Info,
       resolvers       ++= Seq(
