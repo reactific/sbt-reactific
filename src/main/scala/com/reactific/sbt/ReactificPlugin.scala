@@ -1,22 +1,8 @@
 package com.reactific.sbt
 
 import com.typesafe.sbt.GitPlugin
-import sbt.Keys.organization
-import sbt.{
-  settingKey,
-  taskKey,
-  url,
-  AllRequirements,
-  AutoPlugin,
-  Def,
-  File,
-  Project,
-  Resolver,
-  Setting,
-  SettingKey,
-  TaskKey,
-  URL
-}
+import sbt._
+import sbt.Keys._
 
 /** ReactificPlugin Implementation */
 object ReactificPlugin extends AutoPlugin {
@@ -133,4 +119,24 @@ object ReactificPlugin extends AutoPlugin {
     super.globalSettings ++ helpers.flatMap(h ⇒ h.globalSettings)
   }
 
+
+  def makeRootProject(): Project = {
+    val projects: Seq[Project] = {
+      ReflectUtilities.allVals[Project](this).values.toSeq
+    }
+    val aggregates = projects.filterNot(_.base == file(".")).map { p => p.project }
+    val base = file(".")
+    val id = base.getCanonicalFile.getName + "-root"
+    Project
+      .apply(id, base)
+      .settings(
+        name := id,
+        aggregate in update := false,
+        publishArtifact := false, // no artifact to publish for the virtual root project
+        publish := {}, // just to be sure
+        publishLocal := {}, // and paranoid
+        shellPrompt :=  Miscellaneous.buildShellPrompt.value
+      )
+      .aggregate(aggregates:_*)
+  }
 }

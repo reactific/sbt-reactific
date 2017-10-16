@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ScalaSbtSettings">
     <option name="customLauncherEnabled" value="true" />
-    <option name="customLauncherPath" value="/usr/local/Cellar/sbt/1.0.0/libexec/bin/sbt-launch.jar" />
+    <option name="customLauncherPath" value="$SBT_LAUNCH_JAR_PATH$" />
     <option name="linkedExternalProjectsSettings">
       <SbtProjectSettings>
         <option name="enableDebugSbtShell" value="false" />

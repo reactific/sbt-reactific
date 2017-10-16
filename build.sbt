@@ -29,6 +29,8 @@ val dependencies = Seq (
   "org.apache.commons"  % "commons-lang3" % "3.5"
 )
 
+sbtPlugin := true
+
 
 lazy val root = {
   (project in file("."))
@@ -36,7 +38,6 @@ lazy val root = {
     .settings(ScriptedPlugin.scriptedSettings:_*)
     .settings(
       name            := "sbt-reactific",
-      sbtPlugin       := true,
       organization    := "com.reactific",
       // scalaVersion    := "2.12.3",
       scalacOptions   ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint"),
@@ -52,13 +53,13 @@ lazy val root = {
         "org.apache.commons"  % "commons-lang3" % "3.5",
         "org.slf4j" % "slf4j-simple" % "1.7.25"
       ),
-  
+
       // Scripted - sbt plugin tests
       scriptedLaunchOpts := { scriptedLaunchOpts.value ++
         Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
       },
       scriptedBufferLog := false,
-  
+
       // Release process
       releaseUseGlobalVersion := true,
       releaseVersionBump := sbtrelease.Version.Bump.Bugfix,
@@ -79,7 +80,7 @@ lazy val root = {
         releaseStepCommand("sonatypeReleaseAll"),
         pushChanges
       ),
-  
+
       // Publishing to sonatype
       Sonatype.SonatypeKeys.sonatypeProfileName := "com.reactific",
       publishTo := {
@@ -112,12 +113,12 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0-M1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
 addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.1")
-// addSbtPlugin("com.etsy" % "sbt-compile-quick-plugin" % "1.3.0")
-// addSbtPlugin("com.typesafe.sbt" % "sbt-license-report" % "1.2.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.3.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.2.2")
 addSbtPlugin("de.heikoseeberger" % "sbt-header" % "3.0.1")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 
+// addSbtPlugin("com.etsy" % "sbt-compile-quick-plugin" % "1.3.0")
+// addSbtPlugin("com.typesafe.sbt" % "sbt-license-report" % "1.2.0")
 // addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
 // addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")
