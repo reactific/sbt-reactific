@@ -22,7 +22,7 @@ object Miscellaneous extends AutoPluginHelper {
 
   def filter(ms: Seq[(File, String)]): Seq[(File,String)] = {
     ms.filter {
-      case (file, path) =>
+      case (_, path) =>
         path != "logback.xml" &&
           !path.startsWith("toignore") &&
           !path.startsWith("samples")

@@ -63,21 +63,45 @@ object Compiler extends AutoPluginHelper {
     "-Ywarn-unused-import" // Warn about unused imports
   )
 
+  val scalac_2_12_options = scalac_common_options ++ Seq(
+    "-Yno-adapted-args", // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver.
+    "-Ypartial-unification", // Enable partial unification in type constructor
+    // inference
+    "-Ywarn-extra-implicit", // Warn when more than one implicit parameter section is defined.
+    "-Ywarn-inaccessible", // Warn about inaccessible types in method signatures.
+    "-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
+    "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
+    "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.
+    "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
+    "-Ywarn-unused:locals", // Warn if a local definition is unused.
+    "-Ywarn-unused:params", // Warn if a value parameter is unused.
+    "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
+    "-Ywarn-unused:privates" // Warn if a private member is unused.
+  )
+
   override def projectSettings: Seq[Setting[_]] = Seq(
     warningsAreErrors := true,
     javaOptions in test ++= Seq("-Xmx512m"),
     javacOptions ++= java_compile_options ++ {
       if (warningsAreErrors.value) Seq("-Werror") else Seq.empty[String]
     },
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.12.3",
     // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
     scalacOptions ++= {
       {
-        if (scalaVersion.value.startsWith("2.10")) scalac_2_10_options
-        else scalac_2_11_options
+        if (scalaVersion.value.startsWith("2.10"))
+          scalac_2_10_options
+        else if (scalaVersion.value.startsWith("2.11"))
+          scalac_2_11_options
+        else if (scalaVersion.value.startsWith("2.12"))
+          scalac_2_12_options
+        else
+          scalac_common_options
       } ++ {
-        if (warningsAreErrors.value) Seq("-Xfatal-warnings")
-        else Seq.empty[String]
+        if (warningsAreErrors.value)
+          Seq("-Xfatal-warnings")
+        else
+          Seq.empty[String]
       }
     },
     scalacOptions in (Compile, doc) ++= {
