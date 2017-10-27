@@ -1,14 +1,12 @@
 > publishLocal
-$ exists p1/target/universal/project1-0.1.7-SNAPSHOT.zip
-$ exists p1/target/scala-2.11/project1_2.11-0.1.7-SNAPSHOT.jar
-$ exists p1/target/scala-2.11/project1_2.11-0.1.7-SNAPSHOT.pom
-$ exists p1/target/scala-2.11/project1_2.11-0.1.7-SNAPSHOT-javadoc.jar
-$ exists p1/target/scala-2.11/project1_2.11-0.1.7-SNAPSHOT-sources.jar
-$ exists p2/target/universal/project2-0.1.7-SNAPSHOT.zip
-$ exists p2/target/scala-2.11/project2_2.11-0.1.7-SNAPSHOT.jar
-$ exists p2/target/scala-2.11/project2_2.11-0.1.7-SNAPSHOT.pom
-$ exists p2/target/scala-2.11/project2_2.11-0.1.7-SNAPSHOT-javadoc.jar
-$ exists p2/target/scala-2.11/project2_2.11-0.1.7-SNAPSHOT-sources.jar
+$ exists p1/target/scala-2.12/project1_2.12-0.1.7-SNAPSHOT.jar
+$ exists p1/target/scala-2.12/project1_2.12-0.1.7-SNAPSHOT.pom
+$ exists p1/target/scala-2.12/project1_2.12-0.1.7-SNAPSHOT-javadoc.jar
+$ exists p1/target/scala-2.12/project1_2.12-0.1.7-SNAPSHOT-sources.jar
+$ exists p2/target/scala-2.12/project2_2.12-0.1.7-SNAPSHOT.jar
+$ exists p2/target/scala-2.12/project2_2.12-0.1.7-SNAPSHOT.pom
+$ exists p2/target/scala-2.12/project2_2.12-0.1.7-SNAPSHOT-javadoc.jar
+$ exists p2/target/scala-2.12/project2_2.12-0.1.7-SNAPSHOT-sources.jar
 # Unfortunately scripted plugin doesn't understand ~ and putting full path makes it depend on user name
 #$ exists ~/.ivy2/local/com.reactific/project1_2.11/0.1.7-SNAPSHOT/jars/project1_2.11.jar
 #$ exists ~/.ivy2/local/com.reactific/project1_2.11/0.1.7-SNAPSHOT/srcs/project1_2.11-sources.jar
