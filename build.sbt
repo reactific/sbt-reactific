@@ -31,15 +31,13 @@ val dependencies = Seq (
 
 sbtPlugin := true
 
-
 lazy val root = {
   (project in file("."))
-    .enablePlugins(SbtPgp,GitPlugin,Sonatype,ReleasePlugin)
-    .settings(ScriptedPlugin.scriptedSettings:_*)
+    .enablePlugins(SbtPgp,GitPlugin,Sonatype,ReleasePlugin,ScriptedPlugin)
     .settings(
       name            := "sbt-reactific",
       organization    := "com.reactific",
-      // scalaVersion    := "2.12.3",
+      scalaVersion    := "2.12.4",
       scalacOptions   ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint"),
       logLevel        := Level.Info,
       resolvers       ++= Seq(

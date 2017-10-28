@@ -3,6 +3,7 @@ package com.reactific.sbt
 import com.typesafe.sbt.GitPlugin
 import sbt._
 import sbt.Keys._
+import sbt.internal.inc.ReflectUtilities
 
 /** ReactificPlugin Implementation */
 object ReactificPlugin extends AutoPlugin {

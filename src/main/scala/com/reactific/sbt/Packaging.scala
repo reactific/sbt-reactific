@@ -41,7 +41,7 @@ object Packaging extends AutoPluginHelper {
       //--label the zip artifact as a zip instead of the default jar
 // 0.13:
       artifact in (Universal, packageZip) ~= { (art: Artifact) =>
-        art.copy(`type` = "zip", extension = "zip")
+        art.withType("zip").withExtension("zip")
       },
 /* 1.0:
       artifact in (Universal, packageZip) ~= { art =>
