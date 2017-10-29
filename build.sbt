@@ -15,7 +15,6 @@
 
 import ReleaseTransformations._
 
-import sbt.ScriptedPlugin._
 
 val defaultScmInfo = Def.setting {
   val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"

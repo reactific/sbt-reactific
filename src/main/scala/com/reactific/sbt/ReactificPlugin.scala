@@ -103,7 +103,7 @@ object ReactificPlugin extends AutoPlugin {
   def identificationSettings: Seq[Setting[_]] = Seq(
     organization := "com.reactific",
     autoImport.copyrightHolder := "Reactific Software LLC",
-    autoImport.developerUrl := url("http://reactific.com/")
+    autoImport.developerUrl := url("http://github.com/reactific")
   )
 
   override def projectSettings: Seq[Def.Setting[_]] = {
