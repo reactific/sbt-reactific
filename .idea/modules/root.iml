@@ -27,6 +27,15 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: antlr:antlr:2.7.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scoverage:sbt-coveralls:1.2.2:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalaj:scalaj-http_2.12:2.3.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.12.4:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.8:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-scala_2.12:2.9.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-paranamer:2.9.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-databind:2.9.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-core:2.9.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.9.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-sbt.ivy:ivy:2.3.0-sbt-1b57d3bbc08ecf671169fd548918da18c91f77be:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-sbt:zinc_2.12:1.0.3:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-sbt:zinc-persist_2.12:1.0.3:jar" level="project" />
@@ -117,9 +126,6 @@
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.eed3si9n:sjson-new-core_2.12:0.8.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.eed3si9n:sjson-new-murmurhash_2.12:0.8.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.eed3si9n:sjson-new-scalajson_2.12:0.8.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.6.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-core:2.6.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-databind:2.6.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.datatype:jackson-datatype-guava:2.6.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.6.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.6.0:jar" level="project" />
@@ -197,7 +203,6 @@
     <orderEntry type="library" name="SBT: org.ow2.asm:asm-commons:5.0.3:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-lang:scala-compiler:2.12.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.12.4:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-lang:scala-reflect:2.12.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-parser-combinators_2.12:1.0.6:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.12:1.0.6:jar" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="SBT: org.scala-sbt:io_2.12:1.0.0:jar" level="project" />
@@ -224,5 +229,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="SBT: org.scoverage:sbt-scoverage:1.5.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scoverage:scalac-scoverage-plugin_2.12:1.3.1:jar" level="project" />
   </component>
 </module>
