@@ -136,6 +136,7 @@ object ReactificPlugin extends AutoPlugin {
         publishArtifact := false, // no artifact to publish for the virtual root project
         publish := {}, // just to be sure
         publishLocal := {}, // and paranoid
+        publishTo := Some(Resolver.defaultLocal),
         shellPrompt :=  Miscellaneous.buildShellPrompt.value
       )
       .aggregate(aggregates:_*)
