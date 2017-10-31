@@ -1,16 +1,19 @@
-/**********************************************************************************************************************
- *                                                                                                                    *
- * Copyright (c) 2015, Reactific Software LLC. All Rights Reserved.                                                   *
- *                                                                                                                    *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance     *
- * with the License. You may obtain a copy of the License at                                                          *
- *                                                                                                                    *
- *     http://www.apache.org/licenses/LICENSE-2.0                                                                     *
- *                                                                                                                    *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed   *
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for  *
- * the specific language governing permissions and limitations under the License.                                     *
- **********************************************************************************************************************/
+/*
+ * Copyright 2015-2017 Reactific Software LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reactific.sbt
 
 import sbt.Keys._
@@ -32,7 +35,7 @@ object Commands extends AutoPluginHelper {
     )
   }
 
-  def addCommandAliases(m: (String, String)*) = {
+  def addCommandAliases(m: (String, String)*): Unit = {
     val s = m.map(p => addCommandAlias(p._1, p._2)).reduce(_ ++ _)
     (_: Project).settings(s: _*)
   }
@@ -55,21 +58,16 @@ object Commands extends AutoPluginHelper {
     ).flatten
   }
 
-  def print_class_path = Def.task {
+  def print_class_path: Def.Initialize[Task[File]] = Def.task {
     val out = target.value
     val cp = (fullClasspath in Compile).value
-    //val analysis= (compile in Compile).value
     println("----- Compile: " + out.getCanonicalPath + ": FILES:")
     println(cp.files.map(_.getCanonicalPath).mkString("\n"))
-//    println("----- " + out.getCanonicalPath + ": All Binary Dependencies:")
-//    println(analysis.readSourceInfos().getAllSourceInfos.asScala.values.head.)
-//    println(analysis.readCompilations().getAllCompilations.toSeq.mkString("\n"))
-    // println(analysis.relations.allBinaryDeps.toSeq.mkString("\n"))
     println("----- END")
     out
   }
 
-  def print_test_class_path = Def.task {
+  def print_test_class_path: Def.Initialize[Task[File]]  = Def.task {
     val out = target.value
     val cp = (fullClasspath in Test).value
     println("----- Test: " + out.getCanonicalPath + ": FILES:")
@@ -78,7 +76,7 @@ object Commands extends AutoPluginHelper {
     out
   }
 
-  def print_runtime_class_path = Def.task {
+  def print_runtime_class_path: Def.Initialize[Task[File]]  = Def.task {
     val out = target.value
     val cp = (fullClasspath in Runtime).value
     println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
@@ -87,21 +85,21 @@ object Commands extends AutoPluginHelper {
     out
   }
 
-  def compile_only = Def.task {
+  def compile_only: Def.Initialize[Task[File]]  = Def.task {
     val out = target.value
     // val comp = (compile in Compile).value
     println("Not Implemented Yet.")
     out
   }
 
-  def shell_command = {
+  def shell_command: Command = {
     Command.args("sh", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state
     }
   }
 
-  def bang_command = {
+  def bang_command: Command = {
     Command.args("!", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state

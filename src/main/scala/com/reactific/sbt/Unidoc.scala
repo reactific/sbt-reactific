@@ -1,16 +1,18 @@
-/**********************************************************************************************************************
- *                                                                                                                    *
- * Copyright (c) 2015, Reactific Software LLC. All Rights Reserved.                                                   *
- *                                                                                                                    *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance     *
- * with the License. You may obtain a copy of the License at                                                          *
- *                                                                                                                    *
- *     http://www.apache.org/licenses/LICENSE-2.0                                                                     *
- *                                                                                                                    *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed   *
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for  *
- * the specific language governing permissions and limitations under the License.                                     *
- **********************************************************************************************************************/
+/*
+ * Copyright 2015-2017 Reactific Software LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.reactific.sbt
 
@@ -24,7 +26,7 @@ object Unidoc extends AutoPluginHelper {
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ScalaUnidocPlugin)
 
-  def knownApiMappings = Map(
+  def knownApiMappings: Map[(String,String),sbt.URL] = Map(
     ("org.scala-lang", "scala-library") → url(
       s"http://www.scala-lang.org/api/$scalaVersion/"
     ),
@@ -37,29 +39,33 @@ object Unidoc extends AutoPluginHelper {
     )
   )
 
-  override def projectSettings = ScalaUnidocPlugin.projectSettings ++ Seq(
-    apiURL := Some(
-      url("https://github.com/reactific/" + normalizedName.value + "/api/")
-    ),
-    autoAPIMappings := true,
-    apiMappings ++= {
-      val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
-      def findManagedDependency(
-        organization: String,
-        name: String
-      ): Option[File] = {
-        (for {
-          entry <- cp
-          module <- entry.get(moduleID.key)
-          if module.organization == organization
-          if module.name.startsWith(name)
-          jarFile = entry.data
-        } yield jarFile).headOption
+  override def projectSettings: Seq[Setting[_]] = {
+    ScalaUnidocPlugin
+      .projectSettings ++ Seq(
+      apiURL := Some(
+        url("https://github.com/reactific/" + normalizedName.value + "/api/")
+      ),
+      autoAPIMappings := true,
+      apiMappings ++= {
+        val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
+        def findManagedDependency(
+                                   organization: String,
+                                   name: String
+                                 ): Option[File] = {
+          (for {
+            entry <- cp
+            module <- entry.get(moduleID.key)
+            if module.organization == organization
+            if module.name.startsWith(name)
+            jarFile = entry.data
+          } yield jarFile).headOption
+        }
+        for { ((org, lib), url ) <- knownApiMappings
+             dep = findManagedDependency(org, lib) if dep.isDefined
+        } yield {
+          dep.get -> url
+        }
       }
-      for (((org, lib), url) <- knownApiMappings;
-           dep = findManagedDependency(org, lib) if dep.isDefined) yield {
-        dep.get -> url
-      }
-    }
-  )
+    )
+  }
 }

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2015-2017 Reactific Software LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reactific.sbt
 
 import com.typesafe.sbt.SbtNativePackager.{
@@ -35,28 +51,32 @@ object Packaging extends AutoPluginHelper {
         dist in UniversalDocs,
         "zip"
       ) ++ Seq(
-      //--hard coded result of "universal:packageBin"
+      // --hard coded result of "universal:packageBin"
       packageZip :=
-        (baseDirectory in Compile).value / "target" / "universal" / s"${name.value}-${version.value}.zip",
-      //--label the zip artifact as a zip instead of the default jar
+        (baseDirectory in Compile).value / "target" / "universal" /
+          s"${name.value}-${version.value}.zip",
+      // --label the zip artifact as a zip instead of the default jar
 // 0.13:
       artifact in (Universal, packageZip) ~= { (art: Artifact) =>
         art.withType("zip").withExtension("zip")
       },
-/* 1.0:
+      /* 1.0:
       artifact in (Universal, packageZip) ~= { art =>
         art.withType("zip").withExtension("zip")
       }, */
-      //--make sure the zip gets made before the publishing commands for the added artifacts
+      // --make sure the zip gets made before the publishing commands for the
+      // added artifacts
       publish := { publish.dependsOn(dist in Universal).value },
       publishM2 := { publishM2.dependsOn(dist in Universal).value },
       publishLocal := { publishLocal.dependsOn(dist in Universal).value }
     ) ++
-      //--add the artifact so it is included in the publishing tasks
+      // --add the artifact so it is included in the publishing tasks
       addArtifact(artifact in (Universal, packageZip), packageZip in Universal)
   }
 
-  /** The Configurations to add to each project that activates this AutoPlugin.*/
+  /** The Configurations to add to each project that activates this
+   * AutoPlugin.
+   */
   override def projectConfigurations: Seq[Configuration] = Nil
   override def buildSettings: Seq[Setting[_]] = Nil
   override def globalSettings: Seq[Setting[_]] = Nil

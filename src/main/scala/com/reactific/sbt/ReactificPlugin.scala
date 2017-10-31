@@ -1,3 +1,19 @@
+/*
+ * Copyright 2015-2017 Reactific Software LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reactific.sbt
 
 import com.typesafe.sbt.GitPlugin
@@ -10,18 +26,6 @@ object ReactificPlugin extends AutoPlugin {
 
   /** A convenience type for configuration functions */
   type P2P = Project ⇒ Project
-
-  /** All Requirements Must Be Met */
-  override def allRequirements = {
-    // must have all requirements satisfied to activate
-    AllRequirements
-  }
-
-  /** Require the AutoPlugin to be manually activated */
-  override def trigger = {
-    // requires manual activation via "enablePlugin(ProjectPlugin)
-    noTrigger
-  }
 
   /** The list of helper objects in this package */
   val helpers: Seq[AutoPluginHelper] = {
@@ -45,7 +49,7 @@ object ReactificPlugin extends AutoPlugin {
     helpers.flatMap(_.autoPlugins) :+ GitPlugin
   }
 
-  override def requires = {
+  override def requires: Plugins = {
     autoPlugins.foldLeft(empty) { (b, plugin) =>
       b && plugin
     }
@@ -120,12 +124,13 @@ object ReactificPlugin extends AutoPlugin {
     super.globalSettings ++ helpers.flatMap(h ⇒ h.globalSettings)
   }
 
-
   def makeRootProject(): Project = {
     val projects: Seq[Project] = {
       ReflectUtilities.allVals[Project](this).values.toSeq
     }
-    val aggregates = projects.filterNot(_.base == file(".")).map { p => p.project }
+    val aggregates = projects.filterNot(_.base == file(".")).map { p =>
+      p.project
+    }
     val base = file(".")
     val id = base.getCanonicalFile.getName + "-root"
     Project
@@ -137,8 +142,8 @@ object ReactificPlugin extends AutoPlugin {
         publish := {}, // just to be sure
         publishLocal := {}, // and paranoid
         publishTo := Some(Resolver.defaultLocal),
-        shellPrompt :=  Miscellaneous.buildShellPrompt.value
+        shellPrompt := Miscellaneous.buildShellPrompt.value
       )
-      .aggregate(aggregates:_*)
+      .aggregate(aggregates: _*)
   }
 }
