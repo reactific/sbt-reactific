@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="root-build" external.linked.project.path="$MODULE_DIR$/../../project" external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" sbt.imports="SUB:DOLLAR2e9fa88c0d37003aa5f8.root, _root_.org.jetbrains.sbt.IdeaShellPlugin.autoImport._, _root_.sbtrelease.ReleasePlugin.autoImport._, _root_.xerial.sbt.Sonatype.autoImport._, _root_.com.typesafe.sbt.SbtPgp.autoImport._, _root_.com.typesafe.sbt.GitPlugin.autoImport._, _root_.org.scalastyle.sbt.ScalastylePlugin.autoImport._, _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.Keys._, _root_.sbt._, _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.org.jetbrains.sbt.StructurePlugin, _root_.org.jetbrains.sbt.IdeaShellPlugin, _root_.sbtrelease.ReleasePlugin, _root_.xerial.sbt.Sonatype, _root_.com.typesafe.sbt.SbtPgp, _root_.com.typesafe.sbt.GitBranchPrompt, _root_.com.typesafe.sbt.GitPlugin, _root_.com.typesafe.sbt.GitVersioning, _root_.org.scalastyle.sbt.ScalastylePlugin, _root_.sbt.ScriptedPlugin, _root_.scala.xml.{TopScope=&gt;SUB:DOLLARscope}" sbt.resolvers="https://dl.bintray.com/sbt/sbt-plugin-releases/|maven|bintray-sbt-sbt-plugin-releases, https://oss.sonatype.org/content/repositories/releases|maven|sonatype-releases, http://download.eclipse.org/jgit/maven|maven|eclipse-jgit, /home/reid/.ivy2/cache|ivy|Local cache, https://oss.sonatype.org/content/repositories/snapshots|maven|sonatype-snapshots, https://repo1.maven.org/maven2/|maven|public, file:/home/reid/.sbt/preloaded/|maven|local-preloaded" type="SBT_MODULE" version="4">
+<module external.linked.project.id="root-build" external.linked.project.path="$MODULE_DIR$/../../project" external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" sbt.imports="SUB:DOLLAR6168bd37b60feadbcc6e.root, _root_.org.jetbrains.sbt.IdeaShellPlugin.autoImport._, _root_.sbtrelease.ReleasePlugin.autoImport._, _root_.xerial.sbt.Sonatype.autoImport._, _root_.com.typesafe.sbt.SbtPgp.autoImport._, _root_.com.typesafe.sbt.GitPlugin.autoImport._, _root_.org.scalastyle.sbt.ScalastylePlugin.autoImport._, _root_.de.heikoseeberger.sbtheader.AutomateHeaderPlugin.autoImport._, _root_.de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._, _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.Keys._, _root_.sbt._, _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.org.jetbrains.sbt.StructurePlugin, _root_.org.jetbrains.sbt.IdeaShellPlugin, _root_.sbtrelease.ReleasePlugin, _root_.xerial.sbt.Sonatype, _root_.com.typesafe.sbt.SbtPgp, _root_.com.typesafe.sbt.GitBranchPrompt, _root_.com.typesafe.sbt.GitPlugin, _root_.com.typesafe.sbt.GitVersioning, _root_.org.scalastyle.sbt.ScalastylePlugin, _root_.de.heikoseeberger.sbtheader.AutomateHeaderPlugin, _root_.de.heikoseeberger.sbtheader.HeaderPlugin, _root_.sbt.ScriptedPlugin, _root_.scala.xml.{TopScope=&gt;SUB:DOLLARscope}" sbt.resolvers="https://dl.bintray.com/sbt/sbt-plugin-releases/|maven|bintray-sbt-sbt-plugin-releases, https://oss.sonatype.org/content/repositories/releases|maven|sonatype-releases, http://download.eclipse.org/jgit/maven|maven|eclipse-jgit, /home/reid/.ivy2/cache|ivy|Local cache, https://oss.sonatype.org/content/repositories/snapshots|maven|sonatype-snapshots, https://repo1.maven.org/maven2/|maven|public, file:/home/reid/.sbt/preloaded/|maven|local-preloaded" type="SBT_MODULE" version="4">
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/../../project/target/idea-classes" />
     <output-test url="file://$MODULE_DIR$/../../project/target/idea-test-classes" />
@@ -98,6 +98,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.github.gseitz/sbt-release/jars/sbt-release-1.0.6.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.jsuereth/sbt-pgp/jars/sbt-pgp-1.1.0-M1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.typesafe.sbt/sbt-git/jars/sbt-git-0.9.3.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/de.heikoseeberger/sbt-header/jars/sbt-header-3.0.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.jetbrains/sbt-idea-shell/jars/sbt-idea-shell-2017.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.jetbrains/sbt-structure-extractor/jars/sbt-structure-extractor-2017.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.scalastyle/scalastyle-sbt-plugin/jars/scalastyle-sbt-plugin-1.0.0.jar!/" />
@@ -177,7 +178,9 @@
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.4/org.scala-sbt/sbt/1.0.3/zinc-persist_2.12-1.0.3.jar!/" />
           <root url="jar://$USER_HOME$/.sbt/boot/scala-2.12.4/org.scala-sbt/sbt/1.0.3/zinc_2.12-1.0.3.jar!/" />
         </CLASSES>
-        <JAVADOC />
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/de.heikoseeberger/sbt-header/docs/sbt-header-3.0.2-javadoc.jar!/" />
+        </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/com.eed3si9n/gigahorse-core_2.12/srcs/gigahorse-core_2.12-0.3.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.eed3si9n/gigahorse-okhttp_2.12/srcs/gigahorse-okhttp_2.12-0.3.0-sources.jar!/" />
@@ -266,6 +269,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.github.gseitz/sbt-release/srcs/sbt-release-1.0.6-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.jsuereth/sbt-pgp/srcs/sbt-pgp-1.1.0-M1-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/com.typesafe.sbt/sbt-git/srcs/sbt-git-0.9.3-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/de.heikoseeberger/sbt-header/srcs/sbt-header-3.0.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.jetbrains/sbt-idea-shell/srcs/sbt-idea-shell-2017.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.jetbrains/sbt-structure-extractor/srcs/sbt-structure-extractor-2017.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/scala_2.12/sbt_1.0/org.scalastyle/scalastyle-sbt-plugin/srcs/scalastyle-sbt-plugin-1.0.0-sources.jar!/" />

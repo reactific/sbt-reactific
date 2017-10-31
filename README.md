@@ -49,12 +49,10 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
 addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.0")
-addSbtPlugin("com.etsy" % "sbt-compile-quick-plugin" % "1.2.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-license-report" % "1.2.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.2.1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.2.0")
 addSbtPlugin("de.heikoseeberger" % "sbt-header" % "2.0.0")
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
 addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")
 ```
 

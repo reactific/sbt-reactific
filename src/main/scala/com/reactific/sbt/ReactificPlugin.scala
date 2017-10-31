@@ -30,17 +30,17 @@ object ReactificPlugin extends AutoPlugin {
   /** The list of helper objects in this package */
   val helpers: Seq[AutoPluginHelper] = {
     Seq(
-      Commands,
-      // CompileQuick,
-      Compiler,
-      Miscellaneous,
-      Site,
-      Unidoc,
       BuildInfo,
+      Commands,
+      Compiler,
       Header,
+      Miscellaneous,
       Packaging,
       Publishing,
-      Release
+      Release,
+      Scalastyle,
+      Site,
+      Unidoc,
     )
   }
 

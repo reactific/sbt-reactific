@@ -16,7 +16,6 @@
 
 package com.reactific.sbt
 
-import java.time.Instant
 import java.time.Year
 
 import de.heikoseeberger.sbtheader
