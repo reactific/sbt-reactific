@@ -16,6 +16,8 @@
 
 package com.reactific.sbt
 
+import java.net.HttpURLConnection
+
 import sbt.Keys._
 import sbt._
 
@@ -43,6 +45,24 @@ object Miscellaneous extends AutoPluginHelper {
       s"${name.value}($id) : $currBranch : ${version.value}>"
     }
   }
+
+  private val updatePrefix: String = "https://raw.githubusercontent.com/"
+
+  def updateFromPublicRepository(local: File, remote: String): Unit = {
+    val url = new URL("https","raw.githubusercontent.com",remote)
+    val conn: HttpURLConnection =
+      url.openConnection().asInstanceOf[HttpURLConnection]
+    val timeout = 30000
+    conn.setConnectTimeout(timeout)
+    conn.setReadTimeout(timeout)
+    conn.setInstanceFollowRedirects(true)
+    // Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT
+
+    System.out.println(String.valueOf(conn.getResponseCode))
+  }
+
+  val scalafmt_path: String = "reactific/sbt-reactific/master/.scalafmt.conf"
+
 
   def standardResolvers: Seq[Resolver] = Seq[Resolver](
     Resolver.sonatypeRepo("releases"),
