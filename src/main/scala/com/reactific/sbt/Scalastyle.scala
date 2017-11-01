@@ -33,12 +33,12 @@ object Scalastyle extends AutoPluginHelper {
    * AutoPlugin.
    */
   override def projectSettings: Seq[Setting[_]] = {
+    val compName = "scalastyle-config.xml"
+    val testName = "scalastyle-test-config.xml"
     Seq(
       scalastyleFailOnError := true,
-      scalastyleConfig :=
-        baseDirectory.value / "project" / "scalastyle-config.xml",
-      (scalastyleConfig in Test) :=
-        baseDirectory.value / "project" / "scalastyle-test-config.xml",
+      scalastyleConfig := baseDirectory.value / "project" / compName,
+      (scalastyleConfig in Test) := baseDirectory.value / "project" / testName,
       scalastyleConfigUrl :=
         Some(
           url(
@@ -53,9 +53,8 @@ object Scalastyle extends AutoPluginHelper {
               "/master/project/scalastyle-test-config.xml"
           )
         ),
-      scalastyleConfigUrlCacheFile := "project/scalastyle-config.xml",
-      (scalastyleConfigUrlCacheFile in Test) :=
-        "project/scalastyle-test-config.xml"
+      scalastyleConfigUrlCacheFile := compName,
+      (scalastyleConfigUrlCacheFile in Test) := testName
     )
   }
 }
