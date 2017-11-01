@@ -70,6 +70,7 @@
     <check enabled="true"  level="warning"   class="org.scalastyle.scalariform.FieldNamesChecker">
         <parameters>
             <parameter name="regex">^[(A-Za-z_][ ,A-Za-z0-9_)]{0,64}$</parameter>
+            <parameter name="objectFieldRegex">^[(A-Za-z_][ ,A-Za-z0-9_)]{0,64}$</parameter>
         </parameters>
     </check>
     <check enabled="true"  level="warning" class="org.scalastyle.scalariform.ForBraceChecker"/>
