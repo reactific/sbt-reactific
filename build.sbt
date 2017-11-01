@@ -125,13 +125,6 @@ pomExtra in Global := {
   // scalastyle:on
 }
 
-excludeDependencies ++= Seq(
-  // commons-logging is replaced by jcl-over-slf4j
-  ExclusionRule("org.codehaus.plexus", "plexus-utils"),
-  ExclusionRule("org.eclipse.jgit","org.eclipse.jgit"),
-  ExclusionRule("com.google.guava","guava")
-)
-
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0")
