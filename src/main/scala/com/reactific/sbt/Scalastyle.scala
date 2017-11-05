@@ -46,7 +46,7 @@ object Scalastyle extends AutoPluginHelper {
               "/master/project/scalastyle-config.xml"
           )
         ),
-      (scalastyleConfigUrl in Test):=
+      (scalastyleConfigUrl in Test) :=
         Some(
           url(
             "https://raw.githubusercontent.com/reactific/sbt-reactific" +

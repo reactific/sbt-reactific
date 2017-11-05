@@ -31,7 +31,7 @@ object Header extends AutoPluginHelper {
 
   override def projectSettings: Seq[Setting[_]] = {
     val copyright = "Reactific Software LLC"
-    import sbtheader.{FileType,CommentStyle}
+    import sbtheader.{CommentStyle, FileType}
     import HeaderPlugin.autoImport._
     Seq(
       startYear := Some(2015),
@@ -40,15 +40,13 @@ object Header extends AutoPluginHelper {
         Some(ALv2(years, copyright))
       },
       organizationName := ReactificPlugin.autoImport.copyrightHolder.value,
-      headerMappings ++= Map[FileType,CommentStyle](
+      headerMappings ++= Map[FileType, CommentStyle](
         FileType.sh → CommentStyle.HashLineComment,
         FileType(".sbt") → CommentStyle.CStyleBlockComment,
         FileType(".xml") → CommentStyle.XmlStyleBlockComment,
         FileType(".scala.html") → CommentStyle.TwirlStyleBlockComment,
         FileType(".conf") → CommentStyle.HashLineComment
       )
-
-
     )
   }
 }

@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import sbt.Keys._
+object Ver {
 
-libraryDependencies ++= Seq("org.slf4j" % "slf4j-simple" % "1.7.25")
+  // NOTE: Always keep these in synch with plugins.sbt
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0-M1")
-addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % "3.0.2")
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.1")
-addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.3.0")
+  val sbt_buildinfo = "0.7.0"
+  val sbt_git = "0.9.3"
+  val sbt_header = "3.0.2"
+  val sbt_native_packager = "1.3.1"
+  val sbt_pgp = "1.1.0"
+  val sbt_release = "1.0.6"
+  val sbt_scoverage = "1.5.1"
+  val sbt_coveralls = "1.2.2"
+  val sbt_site = "1.3.1"
+  val sbt_sonatype = "2.0"
+  val sbt_unidoc = "0.4.1"
+  val scalastyle_sbt_plugin = "1.0.0"
+  val sbt_scalafmt = "1.3.0"
+
+}

@@ -22,8 +22,13 @@ import com.typesafe.sbt.SbtNativePackager.{
   UniversalSrc
 }
 import com.typesafe.sbt.packager.SettingsHelper
+import com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging
+import com.typesafe.sbt.packager.archetypes.systemloader.SystemVPlugin
+import com.typesafe.sbt.packager.debian.DebianPlugin
+import com.typesafe.sbt.packager.rpm.RpmPlugin
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
+import com.typesafe.sbt.packager.windows.WindowsPlugin
 import sbt.Keys._
 import sbt._
 
@@ -32,7 +37,15 @@ object Packaging extends AutoPluginHelper {
 
   import ReactificPlugin.autoImport._
 
-  override def autoPlugins: Seq[AutoPlugin] = Seq(UniversalPlugin)
+  override def autoPlugins: Seq[AutoPlugin] =
+    Seq(
+      JavaServerAppPackaging,
+      UniversalPlugin,
+      SystemVPlugin,
+      WindowsPlugin,
+      RpmPlugin,
+      DebianPlugin
+    )
 
   /**
    * Define the values of the settings

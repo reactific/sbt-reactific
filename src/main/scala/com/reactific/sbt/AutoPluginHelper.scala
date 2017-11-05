@@ -25,9 +25,6 @@ import sbt._
  */
 trait AutoPluginHelper {
 
-  /** A convenience type for configuration functions */
-  type P2P = Project ⇒ Project
-
   /** The AutoPlugins that we depend upon */
   def autoPlugins: Seq[AutoPlugin] = {
     Seq.empty[AutoPlugin]

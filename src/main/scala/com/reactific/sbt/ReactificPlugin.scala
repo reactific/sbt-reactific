@@ -24,9 +24,6 @@ import sbt.internal.inc.ReflectUtilities
 /** ReactificPlugin Implementation */
 object ReactificPlugin extends AutoPlugin {
 
-  /** A convenience type for configuration functions */
-  type P2P = Project ⇒ Project
-
   /** The list of helper objects in this package */
   val helpers: Seq[AutoPluginHelper] = {
     Seq(
@@ -47,6 +44,10 @@ object ReactificPlugin extends AutoPlugin {
   /** Extract the AutoPlugins needed from the Helpers */
   val autoPlugins: Seq[AutoPlugin] = {
     helpers.flatMap(_.autoPlugins) :+ GitPlugin
+  }
+
+  object conf {
+    val useClassPathJar: P2P = Miscellaneous.useClassPathJar
   }
 
   override def requires: Plugins = {
@@ -146,4 +147,5 @@ object ReactificPlugin extends AutoPlugin {
       )
       .aggregate(aggregates: _*)
   }
+
 }

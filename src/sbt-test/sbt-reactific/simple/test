@@ -4,6 +4,6 @@ $ exists target/scala-2.11/hello-test_2.11-0.1.2-SNAPSHOT.jar
 $ exists target/scala-2.11/hello-test_2.11-0.1.2-SNAPSHOT.pom
 $ exists target/scala-2.11/hello-test_2.11-0.1.2-SNAPSHOT-javadoc.jar
 $ exists target/scala-2.11/hello-test_2.11-0.1.2-SNAPSHOT-sources.jar
-> ! touch foo
-$ exists foo
-> ! rm foo
+> scalafmt
+> update
+> check

@@ -26,7 +26,7 @@ object Unidoc extends AutoPluginHelper {
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ScalaUnidocPlugin)
 
-  def knownApiMappings: Map[(String,String),sbt.URL] = Map(
+  def knownApiMappings: Map[(String, String), sbt.URL] = Map(
     ("org.scala-lang", "scala-library") → url(
       s"http://www.scala-lang.org/api/$scalaVersion/"
     ),
@@ -40,8 +40,7 @@ object Unidoc extends AutoPluginHelper {
   )
 
   override def projectSettings: Seq[Setting[_]] = {
-    ScalaUnidocPlugin
-      .projectSettings ++ Seq(
+    ScalaUnidocPlugin.projectSettings ++ Seq(
       apiURL := Some(
         url("https://github.com/reactific/" + normalizedName.value + "/api/")
       ),
@@ -49,9 +48,9 @@ object Unidoc extends AutoPluginHelper {
       apiMappings ++= {
         val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
         def findManagedDependency(
-                                   organization: String,
-                                   name: String
-                                 ): Option[File] = {
+          organization: String,
+          name: String
+        ): Option[File] = {
           (for {
             entry <- cp
             module <- entry.get(moduleID.key)
@@ -60,8 +59,9 @@ object Unidoc extends AutoPluginHelper {
             jarFile = entry.data
           } yield jarFile).headOption
         }
-        for { ((org, lib), url ) <- knownApiMappings
-             dep = findManagedDependency(org, lib) if dep.isDefined
+        for {
+          ((org, lib), url) <- knownApiMappings
+          dep = findManagedDependency(org, lib) if dep.isDefined
         } yield {
           dep.get -> url
         }

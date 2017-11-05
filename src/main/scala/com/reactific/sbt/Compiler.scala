@@ -48,38 +48,39 @@ object Compiler extends AutoPluginHelper {
     "-explaintypes", // Explain type errors in more detail
     "-feature", // Warn about use of features that should be imported
     "-unchecked",
-      // Enable additional warnings where generated code depends on assumptions.
+    // Enable additional warnings where generated code depends on assumptions.
     "-Xlint", // Turn on all linting warnings
     "-Xfuture", // Turn on future language features
     "-Ywarn-numeric-widen", // Warn when numeric types are widened
     "-Ywarn-value-discard", // Warn when non-Unit values are discarded
     "-Ywarn-dead-code", // Warn when dead code is identified.
     "-Ywarn-nullary-override",
-      // Warn when non-nullary overrides nullary,
-      // e.g. `def foo()` over `def foo`.
+    // Warn when non-nullary overrides nullary,
+    // e.g. `def foo()` over `def foo`.
     "-Ywarn-nullary-unit" // Warn when nullary methods return Unit.
   )
+
   val scalac_2_10_options: Seq[String] =
     scalac_common_options ++ Seq("-target:jvm-1.7")
 
   val scalac_2_11_options: Seq[String] =
     scalac_common_options ++ Seq(
-    "-target:jvm-1.8",
-    "-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
-    "-Ywarn-unused", // Warn about unused variables
-    "-Ywarn-unused-import" // Warn about unused imports
-  )
+      "-target:jvm-1.8",
+      "-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
+      "-Ywarn-unused", // Warn about unused variables
+      "-Ywarn-unused-import" // Warn about unused imports
+    )
 
   val scalac_2_12_options: Seq[String] = scalac_common_options ++ Seq(
     "-Yno-adapted-args",
-      // Do not adapt an argument list (either by inserting () or creating a
-      // tuple) to match the receiver.
+    // Do not adapt an argument list (either by inserting () or creating a
+    // tuple) to match the receiver.
     "-Ypartial-unification",
-      // Enable partial unification in type constructor inference
+    // Enable partial unification in type constructor inference
     "-Ywarn-extra-implicit",
-      // Warn when more than one implicit parameter section is defined.
+    // Warn when more than one implicit parameter section is defined.
     "-Ywarn-inaccessible",
-      // Warn about inaccessible types in method signatures.
+    // Warn about inaccessible types in method signatures.
     "-Ywarn-infer-any", // Warn when a type argument is inferred to be `Any`.
     "-Ywarn-unused:imports", // Warn if an import selector is not referenced.
     "-Ywarn-unused:implicits", // Warn if an implicit parameter is unused.

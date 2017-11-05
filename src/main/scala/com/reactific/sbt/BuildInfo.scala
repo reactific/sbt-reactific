@@ -24,8 +24,8 @@ import sbtbuildinfo.BuildInfoKeys._
 import sbtbuildinfo._
 
 /** The BuildInfo AutoPlugin
-  * This sets up the BuildInfo plugin
-  */
+ * This sets up the BuildInfo plugin
+ */
 object BuildInfo extends AutoPluginHelper {
 
   override def autoPlugins: Seq[AutoPlugin] = {
@@ -38,10 +38,12 @@ object BuildInfo extends AutoPluginHelper {
     val now: Calendar = Calendar.getInstance()
     val year = now.get(Calendar.YEAR)
     Seq(
-      buildInfoKeys := Seq[BuildInfoKey](name,
-                                         version,
-                                         scalaVersion,
-                                         sbtVersion),
+      buildInfoKeys := Seq[BuildInfoKey](
+        name,
+        version,
+        scalaVersion,
+        sbtVersion
+      ),
       buildInfoPackage := codePackage.value,
       buildInfoObject := {
         val pieces = codePackage.value
@@ -75,9 +77,11 @@ object BuildInfo extends AutoPluginHelper {
         )
       ),
       buildInfoOptions :=
-        Seq(BuildInfoOption.ToMap,
-            BuildInfoOption.ToJson,
-            BuildInfoOption.BuildTime)
+        Seq(
+          BuildInfoOption.ToMap,
+          BuildInfoOption.ToJson,
+          BuildInfoOption.BuildTime
+        )
     )
   }
 

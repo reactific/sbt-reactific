@@ -125,15 +125,20 @@ pomExtra in Global := {
   // scalastyle:on
 }
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
-addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
-addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.1")
-addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.3.1")
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.1")
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % "3.0.2")
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.2")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % Ver.sbt_release)
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Ver.sbt_sonatype)
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % Ver.sbt_pgp)
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % Ver.sbt_git)
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % Ver.sbt_buildinfo)
+addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % Ver.sbt_unidoc)
+addSbtPlugin("com.typesafe.sbt" % "sbt-site" % Ver.sbt_site)
+addSbtPlugin(
+  "com.typesafe.sbt" % "sbt-native-packager" % Ver.sbt_native_packager
+)
+addSbtPlugin("de.heikoseeberger" % "sbt-header" % Ver.sbt_header)
+addSbtPlugin(
+  "org.scalastyle" %% "scalastyle-sbt-plugin" % Ver.scalastyle_sbt_plugin
+)
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % Ver.sbt_scoverage)
+addSbtPlugin("org.scoverage" % "sbt-coveralls" % Ver.sbt_coveralls)
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % Ver.sbt_scalafmt)

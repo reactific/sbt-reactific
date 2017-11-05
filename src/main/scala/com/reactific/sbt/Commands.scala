@@ -67,7 +67,7 @@ object Commands extends AutoPluginHelper {
     out
   }
 
-  def print_test_class_path: Def.Initialize[Task[File]]  = Def.task {
+  def print_test_class_path: Def.Initialize[Task[File]] = Def.task {
     val out = target.value
     val cp = (fullClasspath in Test).value
     println("----- Test: " + out.getCanonicalPath + ": FILES:")
@@ -76,7 +76,7 @@ object Commands extends AutoPluginHelper {
     out
   }
 
-  def print_runtime_class_path: Def.Initialize[Task[File]]  = Def.task {
+  def print_runtime_class_path: Def.Initialize[Task[File]] = Def.task {
     val out = target.value
     val cp = (fullClasspath in Runtime).value
     println("----- Runtime: " + out.getCanonicalPath + ": FILES:")
@@ -85,7 +85,7 @@ object Commands extends AutoPluginHelper {
     out
   }
 
-  def compile_only: Def.Initialize[Task[File]]  = Def.task {
+  def compile_only: Def.Initialize[Task[File]] = Def.task {
     val out = target.value
     // val comp = (compile in Compile).value
     println("Not Implemented Yet.")
