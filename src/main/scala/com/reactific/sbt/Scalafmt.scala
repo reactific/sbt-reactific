@@ -25,7 +25,6 @@ object Scalafmt extends AutoPluginHelper {
       update := {
         val log = streams.value.log
         val localFile: File = baseDirectory.value / scalafmt_conf
-        log.info(s"localFile: ${localFile.getCanonicalPath}")
         Miscellaneous
           .updateFromPublicRepository(localFile, scalafmtPath, maxAge, log)
         update.value
