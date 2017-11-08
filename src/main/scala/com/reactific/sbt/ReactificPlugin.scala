@@ -17,6 +17,7 @@
 package com.reactific.sbt
 
 import com.typesafe.sbt.GitPlugin
+import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._
 import sbt.Keys._
 import sbt.internal.inc.ReflectUtilities
@@ -139,11 +140,13 @@ object ReactificPlugin extends AutoPlugin {
       .settings(
         name := id,
         aggregate in update := false,
+        aggregate in HeaderPlugin.autoImport.headerCheck := false,
+        aggregate in HeaderPlugin.autoImport.headerCreate := false,
         publishArtifact := false, // no artifact to publish for the virtual root project
         publish := {}, // just to be sure
         publishLocal := {}, // and paranoid
         publishTo := Some(Resolver.defaultLocal),
-        shellPrompt := Miscellaneous.buildShellPrompt.value
+        shellPrompt := Miscellaneous.buildShellPrompt.value,
       )
       .aggregate(aggregates: _*)
   }
