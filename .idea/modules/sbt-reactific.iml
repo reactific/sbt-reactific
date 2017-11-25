@@ -24,33 +24,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: antlr:antlr:2.7.7:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:trees_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:transversers_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:tokens_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:tokenizers_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:semantic_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:scalameta_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:quasiquotes_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:parsers_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:io_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:inputs_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:inline_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:dialects_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.scalameta:common_2.12:1.7.0:jar" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="SBT: com.trueaccord.scalapb:scalapb-runtime_2.12:0.6.0-pre2:jar" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="SBT: com.trueaccord.lenses:lenses_2.12:0.4.10:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.martiansoftware:nailgun-server:0.9.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.lihaoyi:sourcecode_2.12:0.1.3:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.lihaoyi:scalaparse_2.12:0.4.2:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.lihaoyi:fastparse_2.12:0.4.2:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.lihaoyi:fastparse-utils_2.12:0.4.2:jar" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="SBT: com.google.protobuf:protobuf-java:3.2.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.scopt:scopt_2.12:3.5.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.geirsson:scalafmt-core_2.12:1.3.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.geirsson:scalafmt-cli_2.12:1.3.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.geirsson:sbt-scalafmt:1.3.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.geirsson:metaconfig-typesafe-config_2.12:0.4.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.geirsson:metaconfig-core_2.12:0.4.0:jar" level="project" />
     <orderEntry type="module-library">
       <library name="SBT: unmanaged-sources-and-docs">
         <CLASSES />
@@ -81,6 +54,19 @@
     <orderEntry type="library" name="SBT: org.scalastyle:scalastyle_2.12:1.0.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scalastyle:scalastyle-sbt-plugin:1.0.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scalariform:scalariform_2.12:0.2.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:trees_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:transversers_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:tokens_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:tokenizers_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:semantic_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:scalameta_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:quasiquotes_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:parsers_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:io_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:inputs_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:inline_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:dialects_2.12:1.7.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scalameta:common_2.12:1.7.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scalaj:scalaj-http_2.12:2.3.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-sbt.ivy:ivy:2.3.0-sbt-1b57d3bbc08ecf671169fd548918da18c91f77be:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.scala-sbt:zinc_2.12:1.0.3:jar" level="project" />
@@ -157,6 +143,7 @@
     <orderEntry type="library" name="SBT: org.foundweekends:knockoff_2.12:0.8.6:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.sisu:org.eclipse.sisu.plexus:0.0.0.M5:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.sisu:org.eclipse.sisu.inject:0.0.0.M5:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.eclipse.jgit:org.eclipse.jgit:4.5.0.201609210915-r:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-xml:9.2.21.v20170120:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-webapp:9.2.21.v20170120:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-util:9.2.21.v20170120:jar" level="project" />
@@ -169,6 +156,7 @@
     <orderEntry type="library" name="SBT: org.eclipse.aether:aether-spi:0.9.0.M2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.aether:aether-impl:0.9.0.M2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.aether:aether-api:0.9.0.M2:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-utils:3.0.17:jar" level="project" />
     <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-interpolation:1.19:jar" level="project" />
     <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-component-annotations:1.5.5:jar" level="project" />
     <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-classworlds:2.5.1:jar" level="project" />
@@ -216,21 +204,32 @@
     <orderEntry type="library" name="SBT: com.typesafe.akka:akka-actor_2.12:2.5.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe:ssl-config-core_2.12:0.2.2:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe:config:1.3.1:jar" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="SBT: com.trueaccord.scalapb:scalapb-runtime_2.12:0.6.0-pre2:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.trueaccord.scalapb:scalapb-runtime_2.12:0.6.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.trueaccord.lenses:lenses_2.12:0.4.12:jar" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="SBT: com.trueaccord.lenses:lenses_2.12:0.4.10:jar" level="project" />
     <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.8:jar" level="project" />
     <orderEntry type="library" name="SBT: com.squareup.okio:okio:1.12.0:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.squareup.okhttp3:okhttp-urlconnection:3.7.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.squareup.okhttp3:okhttp:3.7.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.spotify:docker-client:8.9.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.martiansoftware:nailgun-server:0.9.1:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.lmax:disruptor:3.3.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.lihaoyi:sourcecode_2.12:0.1.3:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.lihaoyi:scalaparse_2.12:0.4.2:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.lihaoyi:fastparse_2.12:0.4.2:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.lihaoyi:fastparse-utils_2.12:0.4.2:jar" level="project" />
     <orderEntry type="library" name="SBT: com.lightbend.paradox:sbt-paradox:0.3.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.lightbend.paradox:paradox_2.12:0.3.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.lightbend.paradox:paradox-theme-generic:0.2.13:jar" level="project" />
     <orderEntry type="library" name="SBT: com.jsuereth:sbt-pgp:1.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.jsuereth:pgp-library_2.12:1.1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.jcraft:jsch:0.1.53:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.googlecode.javaewah:JavaEWAH:0.7.9:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.google.protobuf:protobuf-java:3.3.1:jar" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="SBT: com.google.protobuf:protobuf-java:3.2.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.google.guava:guava:20.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.scopt:scopt_2.12:3.5.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.jnr:jnr-x86asm:1.0.2:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.jnr:jnr-unixsocket:0.8:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.jnr:jnr-posix:3.0.12:jar" level="project" />
@@ -240,6 +239,11 @@
     <orderEntry type="library" name="SBT: com.github.jnr:jffi:1.2.9:native:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.jnr:jffi:1.2.9:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.gseitz:sbt-release:1.0.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.geirsson:scalafmt-core_2.12:1.3.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.geirsson:scalafmt-cli_2.12:1.3.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.geirsson:sbt-scalafmt:1.3.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.geirsson:metaconfig-typesafe-config_2.12:0.4.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.geirsson:metaconfig-core_2.12:0.4.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-scala_2.12:2.9.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-paranamer:2.9.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.8:jar" level="project" />
@@ -261,9 +265,5 @@
     <orderEntry type="library" name="SBT: ch.qos.logback:logback-core:1.2.1:jar" level="project" />
     <orderEntry type="library" name="SBT: ch.qos.logback:logback-classic:1.2.1:jar" level="project" />
     <orderEntry type="library" name="SBT: aopalliance:aopalliance:1.0:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.googlecode.javaewah:JavaEWAH:0.7.9:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.jcraft:jsch:0.1.53:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.codehaus.plexus:plexus-utils:3.0.17:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jgit:org.eclipse.jgit:4.5.0.201609210915-r:jar" level="project" />
   </component>
 </module>

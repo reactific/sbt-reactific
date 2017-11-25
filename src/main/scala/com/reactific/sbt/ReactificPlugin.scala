@@ -33,7 +33,6 @@ object ReactificPlugin extends AutoPlugin {
       Compiler,
       Header,
       Miscellaneous,
-      Packaging,
       Publishing,
       Release,
       Scalastyle,
@@ -49,6 +48,7 @@ object ReactificPlugin extends AutoPlugin {
 
   object conf {
     val useClassPathJar: P2P = Miscellaneous.useClassPathJar
+    val linuxServerPackaging: P2P = Packaging.linuxServerPackaging
   }
 
   override def requires: Plugins = {

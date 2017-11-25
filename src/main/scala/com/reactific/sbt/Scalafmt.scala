@@ -13,7 +13,7 @@ object Scalafmt extends AutoPluginHelper {
     Seq(ScalafmtPlugin)
   }
 
-  val scalafmt_path: String = "/reactific/sbt-reactific/master/.scalafmt.conf"
+  val scalafmt_path: String = "/reactific/public/master/.scalafmt.conf"
   val scalafmt_conf: String = ".scalafmt.conf"
 
   def autoUpdateScalaFmtConf(

@@ -16,11 +16,7 @@
 
 package com.reactific.sbt
 
-import com.typesafe.sbt.SbtNativePackager.{
-  Universal,
-  UniversalDocs,
-  UniversalSrc
-}
+import com.typesafe.sbt.SbtNativePackager.{Universal, UniversalDocs, UniversalSrc}
 import com.typesafe.sbt.packager.SettingsHelper
 import com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging
 import com.typesafe.sbt.packager.archetypes.systemloader.SystemVPlugin
@@ -28,48 +24,43 @@ import com.typesafe.sbt.packager.debian.DebianPlugin
 import com.typesafe.sbt.packager.rpm.RpmPlugin
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
-import com.typesafe.sbt.packager.windows.WindowsPlugin
 import sbt.Keys._
-import sbt._
+import sbt.{addArtifact, _}
 
 /** Enable PublishUniversalPlugin to make universal artifacts publishable */
-object Packaging extends AutoPluginHelper {
+object Packaging {
 
-  import ReactificPlugin.autoImport._
-
-  override def autoPlugins: Seq[AutoPlugin] =
-    Seq(
-      JavaServerAppPackaging,
-      UniversalPlugin,
-      SystemVPlugin,
-      WindowsPlugin,
-      RpmPlugin,
-      DebianPlugin
-    )
-
-  /**
-   * Define the values of the settings
-   */
-  override def projectSettings: Seq[Setting[_]] = {
-    super.projectSettings ++
+  def linuxServerPackaging(project: Project): Project = {
+    import ReactificPlugin.autoImport._
+  
+    project.enablePlugins(
+        JavaServerAppPackaging,
+        UniversalPlugin,
+        SystemVPlugin,
+        RpmPlugin,
+        DebianPlugin
+    ).settings(
       SettingsHelper
         .makeDeploymentSettings(Universal, dist in Universal, "zip") ++
-      SettingsHelper.makeDeploymentSettings(
-        UniversalSrc,
-        dist in UniversalSrc,
-        "zip"
-      ) ++
-      SettingsHelper.makeDeploymentSettings(
-        UniversalDocs,
-        dist in UniversalDocs,
-        "zip"
-      ) ++ Seq(
+        SettingsHelper.makeDeploymentSettings(
+          UniversalSrc,
+          dist in UniversalSrc,
+          "zip"
+        ) ++
+        SettingsHelper.makeDeploymentSettings(
+          UniversalDocs,
+          dist in UniversalDocs,
+          "zip"
+        ) ++
+        // --add the artifact so it is included in the publishing tasks
+        addArtifact(artifact in (Universal, packageZip), packageZip in Universal)
+    ).settings(
       // --hard coded result of "universal:packageBin"
       packageZip :=
         (baseDirectory in Compile).value / "target" / "universal" /
           s"${name.value}-${version.value}.zip",
       // --label the zip artifact as a zip instead of the default jar
-// 0.13:
+      // 0.13:
       artifact in (Universal, packageZip) ~= { (art: Artifact) =>
         art.withType("zip").withExtension("zip")
       },
@@ -82,15 +73,6 @@ object Packaging extends AutoPluginHelper {
       publish := { publish.dependsOn(dist in Universal).value },
       publishM2 := { publishM2.dependsOn(dist in Universal).value },
       publishLocal := { publishLocal.dependsOn(dist in Universal).value }
-    ) ++
-      // --add the artifact so it is included in the publishing tasks
-      addArtifact(artifact in (Universal, packageZip), packageZip in Universal)
+    )
   }
-
-  /** The Configurations to add to each project that activates this
-   * AutoPlugin.
-   */
-  override def projectConfigurations: Seq[Configuration] = Nil
-  override def buildSettings: Seq[Setting[_]] = Nil
-  override def globalSettings: Seq[Setting[_]] = Nil
 }

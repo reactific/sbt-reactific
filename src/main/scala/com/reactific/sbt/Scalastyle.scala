@@ -42,15 +42,15 @@ object Scalastyle extends AutoPluginHelper {
       scalastyleConfigUrl :=
         Some(
           url(
-            "https://raw.githubusercontent.com/reactific/sbt-reactific" +
-              "/master/project/scalastyle-config.xml"
+            "https://raw.githubusercontent.com/reactific/public" +
+              "/master/scalastyle-config.xml"
           )
         ),
       (scalastyleConfigUrl in Test) :=
         Some(
           url(
-            "https://raw.githubusercontent.com/reactific/sbt-reactific" +
-              "/master/project/scalastyle-test-config.xml"
+            "https://raw.githubusercontent.com/reactific/public" +
+              "/master/scalastyle-test-config.xml"
           )
         ),
       scalastyleConfigUrlCacheFile := compName,
