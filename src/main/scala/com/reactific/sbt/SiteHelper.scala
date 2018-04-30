@@ -21,7 +21,7 @@ import com.typesafe.sbt.site.SitePlugin.autoImport._
 import sbt._
 
 /** Settings For Site Plugin */
-object Site extends AutoPluginHelper {
+object SiteHelper extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(SitePlugin)

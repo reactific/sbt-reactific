@@ -34,7 +34,8 @@ trait AutoPluginHelper {
    */
   def projectConfigurations: Seq[Configuration] = Nil
 
-  /** The Settings to add in the scope of each project that activates this
+  /** Define default settings for ReactificPlugin at The Settings to add in the
+    * scope of each project that activates this
    * AutoPlugin.
    */
   def projectSettings: Seq[Setting[_]] = Nil

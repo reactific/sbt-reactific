@@ -21,7 +21,7 @@ import sbt._
 import sbtunidoc.ScalaUnidocPlugin
 
 /** Plugin Settings For UniDoc, since it is not an AutoPlugin */
-object Unidoc extends AutoPluginHelper {
+object UnidocHelper extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ScalaUnidocPlugin)

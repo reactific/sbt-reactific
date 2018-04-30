@@ -20,27 +20,12 @@ import sbt.Keys._
 import sbt._
 
 /** Compiler Settings Needed */
-object Compiler extends AutoPluginHelper {
+object ScalaCompilerHelper extends AutoPluginHelper {
 
-  import com.reactific.sbt.ReactificPlugin.autoImport._
-
-  val java_compile_options: Seq[String] = Seq[String](
-    "-g",
-    "-deprecation",
-    "-encoding",
-    "UTF-8",
-    "-Xlint",
-    "-Xdoclint:all",
-    "-Xmaxerrs",
-    "50",
-    "-Xmaxwarns",
-    "50",
-    "-Xprefer:source"
-  )
+  import ReactificPlugin.autoImport._
 
   val scalac_common_options = Seq(
-    "-encoding",
-    "UTF-8", // Yes, this is 2 args
+    "-encoding", "UTF-8", // Yes, this is 2 args
     "-language:existentials", // Turn on existentials feature
     "-language:higherKinds", // Turn on higher kinds feature
     "-language:implicitConversions", // Turn on implicit conversions feature
@@ -91,45 +76,43 @@ object Compiler extends AutoPluginHelper {
     "-Ywarn-unused:privates" // Warn if a private member is unused.
   )
 
-  override def projectSettings: Seq[Setting[_]] = Seq(
-    warningsAreErrors := true,
-    javaOptions in test ++= Seq("-Xmx512m"),
-    javacOptions ++= java_compile_options ++ {
-      if (warningsAreErrors.value) Seq("-Werror") else Seq.empty[String]
-    },
-    scalaVersion := "2.12.3",
-    // ivyScala  := ivyScala.value map {_.copy(overrideScalaVersion = true)},
-    scalacOptions ++= {
-      {
-        if (scalaVersion.value.startsWith("2.10")) {
-          scalac_2_10_options
-        } else if (scalaVersion.value.startsWith("2.11")) {
-          scalac_2_11_options
-        } else if (scalaVersion.value.startsWith("2.12")) {
-          scalac_2_12_options
-        } else {
-          scalac_common_options
+  def common(project: Project): Project = {
+    project
+      .settings(
+        warningsAreErrors := true,
+        scalaVersion := "2.12.5",
+        scalacOptions ++= {
+          {
+            if (scalaVersion.value.startsWith("2.10")) {
+              scalac_2_10_options
+            } else if (scalaVersion.value.startsWith("2.11")) {
+              scalac_2_11_options
+            } else if (scalaVersion.value.startsWith("2.12")) {
+              scalac_2_12_options
+            } else {
+              scalac_common_options
+            }
+          } ++ {
+            if (warningsAreErrors.value) {
+              Seq("-Xfatal-warnings")
+            } else {
+              Seq.empty[String]
+            }
+          }
+        },
+        scalacOptions in (Compile, doc) ++= {
+          Opts.doc.title(titleForDocs.value) ++
+            Opts.doc.version(version.value) ++ Seq(
+            "-feature",
+            "-unchecked",
+            "-deprecation",
+            "-diagrams",
+            "-explaintypes",
+            "-language:existentials", // Turn on existentials feature
+            "-language:higherKinds", // Turn on higher kinds feature
+            "-language:implicitConversions" // Turn on implicit conversions
+          )
         }
-      } ++ {
-        if (warningsAreErrors.value) {
-          Seq("-Xfatal-warnings")
-        } else {
-          Seq.empty[String]
-        }
-      }
-    },
-    scalacOptions in (Compile, doc) ++= {
-      Opts.doc.title(titleForDocs.value) ++
-        Opts.doc.version(version.value) ++ Seq(
-        "-feature",
-        "-unchecked",
-        "-deprecation",
-        "-diagrams",
-        "-explaintypes",
-        "-language:existentials", // Turn on existentials feature
-        "-language:higherKinds", // Turn on higher kinds feature
-        "-language:implicitConversions" // Turn on implicit conversions feature
       )
-    }
-  )
+  }
 }

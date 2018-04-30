@@ -15,13 +15,17 @@
  */
 import sbt.Keys._
 
-libraryDependencies ++= Seq("org.slf4j" % "slf4j-simple" % "1.7.25")
+libraryDependencies ++= Seq(
+  "org.slf4j" % "slf4j-simple" % "1.7.25",
+  "com.spotify" % "docker-client" % "3.5.13"
+)
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0-M1")
-addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.8")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % "3.0.2")
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.1")
-addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.3.0")
+addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.0.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.5.1")
+

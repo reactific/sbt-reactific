@@ -22,7 +22,7 @@ import org.scalastyle.sbt.ScalastylePlugin
 import org.scalastyle.sbt.ScalastylePlugin.autoImport._
 
 /** Unit Tests For Scalastyle */
-object Scalastyle extends AutoPluginHelper {
+object ScalastyleHelper extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = {
