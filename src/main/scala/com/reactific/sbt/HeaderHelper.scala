@@ -30,6 +30,7 @@ object HeaderHelper extends AutoPluginHelper {
   override def autoPlugins: Seq[AutoPlugin] = Seq(HeaderPlugin)
 
   private[sbt] val earliestStart = 2015
+
   def enable(project: Project): Project = {
     import ReactificPlugin.autoImport._
     val copyright = "Reactific Software LLC"
@@ -38,21 +39,22 @@ object HeaderHelper extends AutoPluginHelper {
     project
       .enablePlugins(HeaderPlugin)
       .settings(
-      Seq(
-        startYear := Some(earliestStart),
-        headerLicense := {
-          val years = startYear.value.get.toString + "-" + Year.now().toString
-          Some(ALv2(years, copyright))
-        },
-        organizationName := copyrightHolderName.value,
-        headerMappings ++= Map[FileType, CommentStyle](
-          FileType.sh → CommentStyle.HashLineComment,
-          FileType(".sbt") → CommentStyle.CStyleBlockComment,
-          FileType(".xml") → CommentStyle.XmlStyleBlockComment,
-          FileType(".scala.html") → CommentStyle.TwirlStyleBlockComment,
-          FileType(".conf") → CommentStyle.HashLineComment
+        Seq(
+          checkHeaders := true,
+          startYear := Some(earliestStart),
+          headerLicense := {
+            val years = startYear.value.get.toString + "-" + Year.now().toString
+            Some(ALv2(years, copyright))
+          },
+          organizationName := copyrightHolderName.value,
+          headerMappings ++= Map[FileType, CommentStyle](
+            FileType.sh → CommentStyle.HashLineComment,
+            FileType(".sbt") → CommentStyle.CStyleBlockComment,
+            FileType(".xml") → CommentStyle.XmlStyleBlockComment,
+            FileType(".scala.html") → CommentStyle.TwirlStyleBlockComment,
+            FileType(".conf") → CommentStyle.HashLineComment
+          )
         )
       )
-    )
   }
 }

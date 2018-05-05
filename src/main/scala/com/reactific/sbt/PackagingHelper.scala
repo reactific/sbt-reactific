@@ -17,7 +17,11 @@
 package com.reactific.sbt
 
 import sbt._
-import com.typesafe.sbt.SbtNativePackager.{Universal, UniversalDocs, UniversalSrc}
+import com.typesafe.sbt.SbtNativePackager.{
+  Universal,
+  UniversalDocs,
+  UniversalSrc
+}
 import com.typesafe.sbt.packager.SettingsHelper
 import com.typesafe.sbt.packager.archetypes.JavaServerAppPackaging
 import com.typesafe.sbt.packager.archetypes.jar.ClasspathJarPlugin
@@ -44,32 +48,31 @@ object PackagingHelper extends AutoPluginHelper {
 
   val packageZip: TaskKey[File] = taskKey[File]("package-zip")
 
-
   override def projectSettings: Seq[sbt.Setting[_]] = {
-    Seq[Setting[_]](
-      packagingReleaseSteps := Seq.empty[ReleaseStep]
-    )
+    Seq[Setting[_]](packagingReleaseSteps := Seq.empty[ReleaseStep])
+  }
+
+  def sbtPlugin(project: Project): Project = {
+    project
+      .enablePlugins(ClasspathJarPlugin)
+      .settings(
+        _root_.sbt.Keys.sbtPlugin := true
+      )
   }
 
   def universalCode(project: Project): Project = {
     project
       .settings(
         packagingReleaseSteps +=
-          releaseStepTask (UniversalPlugin.autoImport.dist),
-        SettingsHelper.makeDeploymentSettings(
-          Universal, dist in Universal, zip
-        ) ++ SettingsHelper.makeDeploymentSettings(
-          UniversalSrc,
-          dist in UniversalSrc,
-          zip
-        ) ++ SettingsHelper.makeDeploymentSettings(
-          UniversalDocs,
-          dist in UniversalDocs,
-          zip
-        ) ++
+          releaseStepTask(UniversalPlugin.autoImport.dist),
+        SettingsHelper
+          .makeDeploymentSettings(Universal, dist in Universal, zip) ++ SettingsHelper
+          .makeDeploymentSettings(UniversalSrc, dist in UniversalSrc, zip) ++ SettingsHelper
+          .makeDeploymentSettings(UniversalDocs, dist in UniversalDocs, zip) ++
           // --add the artifact so it is included in the publishing tasks
           addArtifact(
-            artifact in(Universal, packageZip), packageZip in Universal
+            artifact in (Universal, packageZip),
+            packageZip in Universal
           )
       )
       .settings(
@@ -83,7 +86,7 @@ object PackagingHelper extends AutoPluginHelper {
         publishLocal := {
           publishLocal.dependsOn(dist in Universal).value
         }
-    )
+      )
   }
 
   def universalLibrary(project: Project): Project = {
@@ -100,8 +103,8 @@ object PackagingHelper extends AutoPluginHelper {
         packageZip :=
           (baseDirectory in Compile).value / "target" / "universal" /
             s"${name.value}-${version.value}.$zip",
-        artifact in(Universal, packageZip) := {
-          val art = (artifact in(Universal, packageZip)).value
+        artifact in (Universal, packageZip) := {
+          val art = (artifact in (Universal, packageZip)).value
           art.withType(zip).withExtension(zip)
         }
       )
@@ -111,9 +114,7 @@ object PackagingHelper extends AutoPluginHelper {
     project
       .configure(universalServer)
       .enablePlugins(SystemVPlugin, RpmPlugin, DebianPlugin)
-      .settings(
-        packagingReleaseSteps += releaseStepCommand("rpm:packageBin")
-      )
+      .settings(packagingReleaseSteps += releaseStepCommand("rpm:packageBin"))
   }
 
   def dockerServer(project: Project): Project = {
@@ -140,3 +141,53 @@ object PackagingHelper extends AutoPluginHelper {
       )
   }
 }
+
+import com.typesafe.sbt.packager.Keys.daemonGroup
+import com.typesafe.sbt.packager.Keys.maintainer
+import com.typesafe.sbt.packager.docker.Cmd
+import com.typesafe.sbt.packager.docker.CmdLike
+
+
+enablePlugins(UniversalPlugin)
+enablePlugins(JavaAppPackaging)
+mainClass in Compile :=
+Some("com.robothive.assimilation.server.RobotHiveAssimilationServer")
+topLevelDirectory := None
+mappings in Universal += {
+val jar = (packageBin in Compile).value
+jar -> ("lib/" + jar.getName)
+}
+
+
+enablePlugins(com.typesafe.sbt.packager.docker.DockerPlugin)
+
+mappings in Docker := (mappings in Universal).value
+packageName in Docker := packageName.value
+version in Docker := version.value
+maintainer in Docker := "Yoppworks Inc."
+daemonUser in Docker := "root"
+defaultLinuxInstallLocation in Docker := "/app"
+dockerCommands := {
+val destDir = (defaultLinuxInstallLocation in Docker).value
+val user = (daemonUser in Docker).value
+val group = (daemonGroup in Docker).value
+val cmds = dockerCommands.value.map {
+case Cmd("ADD", _) =>
+Cmd("ADD", s"--chown=$user:$group . $destDir")
+case x: CmdLike =>
+x
+}
+println("DockerCommands:\n" + cmds.map(_.toString).mkString("\n"))
+cmds
+}
+
+dockerBaseImage := "openjdk:8-jre-slim"
+dockerExposedPorts := Seq[Int](8080)
+dockerExposedUdpPorts := Seq.empty[Int]
+dockerExposedVolumes := Seq()
+dockerLabels in Docker := Map(
+"latest" -> version.value,
+version.value -> version.value
+)
+dockerRepository := Some("nexus.yoppworks.com:18082")
+

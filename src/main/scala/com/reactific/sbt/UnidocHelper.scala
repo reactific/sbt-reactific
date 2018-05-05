@@ -39,33 +39,40 @@ object UnidocHelper extends AutoPluginHelper {
     )
   )
 
-  override def projectSettings: Seq[Setting[_]] = {
-    ScalaUnidocPlugin.projectSettings ++ Seq(
-      apiURL := Some(
-        url("https://github.com/reactific/" + normalizedName.value + "/api/")
-      ),
-      autoAPIMappings := true,
-      apiMappings ++= {
-        val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
-        def findManagedDependency(
-          organization: String,
-          name: String
-        ): Option[File] = {
-          (for {
-            entry <- cp
-            module <- entry.get(moduleID.key)
-            if module.organization == organization
-            if module.name.startsWith(name)
-            jarFile = entry.data
-          } yield jarFile).headOption
+  def enable(project: Project): Project = {
+    import ReactificPlugin.autoImport._
+    project
+      .enablePlugins(ScalaUnidocPlugin)
+      .settings(ScalaUnidocPlugin.projectSettings)
+      .settings(
+        apiURL := Some(
+          url(
+            s"https://github.com/${organizationGitHubGroup
+              .value}/${normalizedName.value}/api/"
+          )
+        ),
+        autoAPIMappings := true,
+        apiMappings ++= {
+          val cp: Seq[Attributed[File]] = (fullClasspath in Compile).value
+          def findManagedDependency(
+            organization: String,
+            name: String
+          ): Option[File] = {
+            (for {
+              entry <- cp
+              module <- entry.get(moduleID.key)
+              if module.organization == organization
+              if module.name.startsWith(name)
+              jarFile = entry.data
+            } yield jarFile).headOption
+          }
+          for {
+            ((org, lib), url) <- knownApiMappings
+            dep = findManagedDependency(org, lib) if dep.isDefined
+          } yield {
+            dep.get -> url
+          }
         }
-        for {
-          ((org, lib), url) <- knownApiMappings
-          dep = findManagedDependency(org, lib) if dep.isDefined
-        } yield {
-          dep.get -> url
-        }
-      }
-    )
+      )
   }
 }

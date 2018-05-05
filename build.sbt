@@ -15,9 +15,19 @@
 
 import java.time.Year
 
-import ReleaseTransformations._
+import com.typesafe.sbt.GitPlugin
+import com.typesafe.sbt.SbtPgp
+import com.typesafe.sbt.pgp.PgpKeys
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.License.ALv2
+import org.scalastyle.sbt.ScalastylePlugin
+import sbt._
+import sbt.Keys._
+import sbtrelease.ReleasePlugin
+import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.ReleaseStateTransformations._
+import xerial.sbt.Sonatype
+
 
 val defaultScmInfo = Def.setting {
   val gitUrl = "//github.com/reactific/" + normalizedName.value + ".git"
@@ -46,7 +56,7 @@ name := "sbt-reactific"
 organization := "com.reactific"
 scalaVersion := "2.12.5"
 scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint")
-logLevel := Level.Info
+logLevel := Level.Warn
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots"),
@@ -58,6 +68,7 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-lang3" % "3.5",
   "org.slf4j" % "slf4j-simple" % "1.7.25"
 )
+
 // Scripted - sbt plugin tests
 scriptedLaunchOpts := {
   scriptedLaunchOpts.value ++
@@ -125,20 +136,16 @@ pomExtra in Global := {
   // scalastyle:on
 }
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % Ver.sbt_release)
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Ver.sbt_sonatype)
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % Ver.sbt_pgp)
-addSbtPlugin("com.typesafe.sbt" % "sbt-git" % Ver.sbt_git)
-addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % Ver.sbt_buildinfo)
-addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % Ver.sbt_unidoc)
-addSbtPlugin("com.typesafe.sbt" % "sbt-site" % Ver.sbt_site)
-addSbtPlugin(
-  "com.typesafe.sbt" % "sbt-native-packager" % Ver.sbt_native_packager
-)
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % Ver.sbt_header)
-addSbtPlugin(
-  "org.scalastyle" %% "scalastyle-sbt-plugin" % Ver.scalastyle_sbt_plugin
-)
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % Ver.sbt_scoverage)
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % Ver.sbt_coveralls)
-addSbtPlugin("com.geirsson" % "sbt-scalafmt" % Ver.sbt_scalafmt)
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.6")
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.9.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")
+addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.0.0")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.8")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.5.1")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
+addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.3.1")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
+addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.1")
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")

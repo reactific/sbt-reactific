@@ -23,6 +23,8 @@ import sbt.IO
 import sbt.Keys._
 import sbt._
 
+import com.reactific.sbt.ReactificPlugin.autoImport._
+
 /** General settings for the project */
 object MiscellaneousHelper extends AutoPluginHelper {
 
@@ -73,21 +75,23 @@ object MiscellaneousHelper extends AutoPluginHelper {
   }
 
   override def projectSettings: Seq[sbt.Def.Setting[_]] = {
-      Seq(
-        baseDirectory := thisProject.value.base,
-        target := baseDirectory.value / "target",
-        logLevel := Level.Info,
-        fork in Test := false,
-        logBuffered in Test := false,
-        shellPrompt := buildShellPrompt.value,
-      )
+    Seq(
+      baseDirectory := thisProject.value.base,
+      target := baseDirectory.value / "target",
+      logLevel := Level.Info,
+      fork in Test := false,
+      logBuffered in Test := false,
+      shellPrompt := buildShellPrompt.value,
+      artifactKinds := { Seq[ArtifactKind](ZipFileArtifact) }
+    )
+    
   }
 
   private val classpath_jar = "classpath.jar"
 
   private def makeRelativeClasspathNames(
-                                          mappings: Seq[(File, String)]
-                                        ): Seq[String] = {
+    mappings: Seq[(File, String)]
+  ): Seq[String] = {
     for {
       (_, name) <- mappings
     } yield {
@@ -98,8 +102,9 @@ object MiscellaneousHelper extends AutoPluginHelper {
   }
 
   private def makeClasspathJar(
-                                classPath: Seq[String], target: File
-                              ): Seq[String] = {
+    classPath: Seq[String],
+    target: File
+  ): Seq[String] = {
     val manifest = new java.util.jar.Manifest()
     manifest.getMainAttributes
       .putValue("Class-Path", classPath.mkString(" "))
@@ -107,7 +112,6 @@ object MiscellaneousHelper extends AutoPluginHelper {
     IO.jar(Seq.empty, classpathJar, manifest)
     Seq(classpath_jar)
   }
-
 
   def useClassPathJar(project: Project): Project = {
     project.settings(Seq[Def.SettingsDefinition](scriptClasspath := {

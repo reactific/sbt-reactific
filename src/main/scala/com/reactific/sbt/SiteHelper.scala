@@ -26,6 +26,9 @@ object SiteHelper extends AutoPluginHelper {
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(SitePlugin)
 
-  override def projectSettings: Seq[Setting[_]] = Seq(siteSubdirName := "")
-
+  def enable(project: Project): Project = {
+    project
+      .enablePlugins(SitePlugin)
+      .settings(siteSubdirName := "")
+  }
 }

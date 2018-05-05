@@ -157,6 +157,28 @@ errors by the compiler. In other words, it will be impossible to build
 or release software that have any warnings in it. This has helped to produce 
 higher quality software as many warnings are actually bugs waiting to happen.
 
+### checkScalaStyle (Boolean)
+When this flag is true, the `scalastyle` task will be run during the release
+process to check the source code for style issues. Default is true.
+
+### checkHeaders (Boolean)
+When this flag is true, the `headerCheck` task will be run during the release
+process to check that all source files have correct headers. Default is true.
+
+### checkTests (Boolean)
+When this flag is true, the `test` task will be run during the release 
+process to check that all tests pass. Default is true.    
+
+### runScalafmtWhenReleases (Boolean)
+When this flag is true, the `scalafmt` task will be run during the release
+process to reformat code to the standard form. Any changes will be checked in
+with the version checkin. Default is false.  
+
+### additionalCheckSteps (Seq[ReleaseStep])
+Additional steps to add to the release process to check the artifact's 
+correctness. These steps should generate errors if the checks fail and should
+not modify the code in any way. 
+
 ## Prompt Style
 The sbt-reactific plugin changes the sbt plugin to contain useful information.
 For example, one of the test cases produces this prompt:

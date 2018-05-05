@@ -16,17 +16,93 @@
 
 package com.reactific.sbt
 
+import com.typesafe.sbt.packager.universal.UniversalPlugin
 import com.typesafe.sbt.pgp.PgpKeys
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 import sbtrelease.ReleasePlugin.autoImport._
-import sbtrelease.{ReleasePlugin, Version}
+import sbtrelease.{ ReleasePlugin, Version }
+import ReactificPlugin.autoImport._
+import sbt.Keys.publish
 
 object ReleaseHelper extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ReleasePlugin)
 
+  def initialSteps: Seq[ReleaseStep] =
+    Seq[ReleaseStep](checkSnapshotDependencies, inquireVersions, runClean)
+
+  def checkingSteps(
+    checkHeaders: Boolean,
+    checkScalastyle: Boolean,
+    checkTests: Boolean,
+    additionalCheckSteps: Seq[ReleaseStep]
+  ): Seq[ReleaseStep] = {
+    additionalCheckSteps ++ {
+      if (checkHeaders) {
+        Seq[ReleaseStep](releaseStepCommand("headerCheck"))
+      } else {
+        Seq.empty[ReleaseStep]
+      }
+    } ++ {
+      if (checkScalastyle) {
+        Seq[ReleaseStep](releaseStepCommand("scalastyle"))
+      } else {
+        Seq.empty[ReleaseStep]
+      }
+    } ++ {
+      if (checkTests) {
+        Seq[ReleaseStep](releaseStepCommand("test"))
+      } else {
+        Seq.empty[ReleaseStep]
+      }
+    }
+  }
+  
+  def taggingSteps(runScalafmt: Boolean): Seq[ReleaseStep] = {
+    {
+      if (runScalafmt) {
+        Seq[ReleaseStep](releaseStepCommand("scalafmt"))
+      } else {
+        Seq.empty[ReleaseStep]
+      }
+    } ++
+      Seq[ReleaseStep](
+        setReleaseVersion,
+        commitReleaseVersion,
+        tagRelease
+      )
+  }
+  
+  def packagingSteps(artifactKinds: Seq[ArtifactKind]): Seq[ReleaseStep] = {
+    artifactKinds.map[ReleaseStep,Seq[ReleaseStep]] {
+      case ZipFileArtifact ⇒
+        releaseStepTask(UniversalPlugin.autoImport.dist)
+      case DebianServerArtifact ⇒
+        releaseStepCommand("deb:packageBin")
+      case RPMScalaServerArtifact ⇒
+        releaseStepCommand("rpm:packageBin")
+      case DockerServerArtifact ⇒
+        releaseStepCommand("docker:stage")
+    }
+  }
+  
+  
+  def finalSteps(releaseOSS: Boolean): Seq[ReleaseStep] = {
+    Seq[ReleaseStep](
+      publishArtifacts,
+      setNextVersion,
+      commitNextVersion
+    ) ++ {
+      if (releaseOSS) {
+        Seq[ReleaseStep](releaseStepCommand("sonatypeReleaseAll"))
+      } else {
+        Seq.empty[ReleaseStep]
+      }
+    } :+ pushChanges
+  }
+  
   def process(project: Project): Project = {
     import ReactificPlugin.autoImport._
     project
@@ -34,35 +110,23 @@ object ReleaseHelper extends AutoPluginHelper {
       .settings(
         releaseUseGlobalVersion := true,
         releaseVersionBump := Version.Bump.Bugfix,
-        releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-        releaseProcess := Seq[ReleaseStep](
-          checkSnapshotDependencies,
-          inquireVersions,
-          runClean
-        ) ++ {
-          if (checkScalaStyle.value)
-            Seq[ReleaseStep](releaseStepCommand("scalastyle"))
-          else
-            Seq.empty[ReleaseStep]
-        } ++ {
-          if (checkHeaders.value)
-              Seq[ReleaseStep](releaseStepCommand("headerCheck"))
-          else
-            Seq.empty[ReleaseStep]
-        } ++ Seq[ReleaseStep](
-          runTest,
-          setReleaseVersion,
-          commitReleaseVersion,
-          tagRelease
-        ) ++
-          PackagingHelper.packagingReleaseSteps.value
-        ++ Seq[ReleaseStep](
-          publishArtifacts,
-          setNextVersion,
-          commitNextVersion,
-          releaseStepCommand("sonatypeReleaseAll"),
-          pushChanges
-        )
+        releasePublishArtifactsAction := {
+          if (privateNexusResolver.value.isEmpty) { // releasing open source
+            PgpKeys.publishSigned.value
+          } else {
+            publish.value
+          }
+        },
+        releaseProcess := {
+          initialSteps ++
+            checkingSteps(
+              checkHeaders.value, checkScalaStyle.value,
+              checkTests.value, additionalCheckSteps.value
+            ) ++
+            taggingSteps(runScalafmtWhenReleasing.value) ++
+            packagingSteps(artifactKinds.value) ++
+            finalSteps(privateNexusResolver.value.isEmpty)
+        }
       )
   }
 }

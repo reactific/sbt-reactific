@@ -46,7 +46,7 @@ object PublishingHelper extends AutoPluginHelper {
     project
       .settings(
         publishMavenStyle := true,
-        pomExtra:= {
+        pomExtra := {
           val devs =
             <developers>
               <developer>
@@ -61,9 +61,11 @@ object PublishingHelper extends AutoPluginHelper {
             }
           }
           val lics = <licenses>{liclist}</licenses>
-          NodeSeq.fromSeq(Seq(devs,lics))
+          NodeSeq.fromSeq(Seq(devs, lics))
         },
-        pomIncludeRepository := { _ => false }
+        pomIncludeRepository := { _ =>
+          false
+        }
       )
   }
   // scalastyle:on
@@ -73,7 +75,7 @@ object PublishingHelper extends AutoPluginHelper {
       .enablePlugins(SonatypePlugin)
       .settings(sonatypeSettings)
       .settings(
-        SonatypeKeys.sonatypeProfileName := "com." + gitHubGroup.value,
+        SonatypeKeys.sonatypeProfileName := organization.value,
         publishSnapshotsTo := Resolver.sonatypeRepo("snapshots"),
         publishReleasesTo :=
           MavenRepository(
@@ -82,7 +84,9 @@ object PublishingHelper extends AutoPluginHelper {
           ),
         homepage := Some(
           new URL(
-            s"https://github.com/${gitHubGroup.value}/${normalizedName.value}")
+            s"https://github.com/${organizationGitHubGroup
+              .value}/${normalizedName.value}"
+          )
         )
       )
       .configure(publishAsMaven)
@@ -96,10 +100,9 @@ object PublishingHelper extends AutoPluginHelper {
       .configure(publishAsMaven)
   }
 
-
   override def projectSettings: Seq[Setting[_]] = {
     Seq(
-      gitHubGroup := "reactific",
+      organizationGitHubGroup := "reactific",
       licenses := Seq(
         "Apache2" -> url("http://www.apache.org/licenses/LICENSE-2.0")
       ),
@@ -115,12 +118,15 @@ object PublishingHelper extends AutoPluginHelper {
       },
       scmInfo := {
         val gitUrl =
-          s"//github.com/${gitHubGroup.value}/${normalizedName.value}.git"
-        Some(ScmInfo(
-          url("https:" ++ gitUrl),
-          "scm:git:" ++ gitUrl,
-          Some("https:" ++ gitUrl)
-        ))
+          s"//github.com/${organizationGitHubGroup.value}/${normalizedName
+            .value}"
+        Some(
+          ScmInfo(
+            url("https:" + gitUrl),
+            "scm:git:" + gitUrl + ".git",
+            Some("https:" + gitUrl)
+          )
+        )
       }
     )
   }

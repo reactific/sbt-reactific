@@ -61,7 +61,6 @@ object CommandsHelper extends AutoPluginHelper {
   private[sbt] val compileOnly =
     TaskKey[File]("compile-only", "Compile just the specified files")
 
-
   def classPathCommands(project: Project): Project = {
     project.settings(
       printClasspath := { print_class_path.value },
@@ -71,9 +70,7 @@ object CommandsHelper extends AutoPluginHelper {
   }
 
   def shellCommands(project: Project): Project = {
-    project.settings(
-      commands ++= Seq(shell_command, bang_command)
-    )
+    project.settings(commands ++= Seq(shell_command, bang_command))
   }
 
   def allCommands(project: Project): Project = {
@@ -127,18 +124,14 @@ object CommandsHelper extends AutoPluginHelper {
   }
 
   private def shell_command: Command = {
-    Command.args(
-      "sh", "Invoke a system shell and pass arguments to it"
-    ) {
+    Command.args("sh", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state
     }
   }
 
   private def bang_command: Command = {
-    Command.args(
-      "!", "Invoke a system shell and pass arguments to it"
-    ) {
+    Command.args("!", "Invoke a system shell and pass arguments to it") {
       (state, args) =>
         Process(args).!; state
     }

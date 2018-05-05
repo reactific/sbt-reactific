@@ -2,7 +2,7 @@ package com.reactific.sbt
 
 import com.reactific.sbt.ReactificPlugin.autoImport.privateNexusResolver
 import sbt._
-import sbt.Keys.externalResolvers
+import sbt.Keys._
 
 object ResolversHelper extends AutoPluginHelper {
 
@@ -26,16 +26,16 @@ object ResolversHelper extends AutoPluginHelper {
 
   def standard(project: Project): Project = {
     project.settings(
+      resolvers := Seq.empty[Resolver],
       externalResolvers := {
         Seq[Resolver](
           Resolver.file(
             "local",
             _root_.sbt.file(Path.userHome.absolutePath + "/.ivy2/local")
           )(Resolver.ivyStylePatterns),
-          Resolver.mavenLocal
-        ) ++ {
-          Seq(privateNexusResolver.value.getOrElse(Resolver.mavenCentral))
-        } ++ standardResolvers
+          Resolver.mavenLocal,
+          privateNexusResolver.value.getOrElse(Resolver.mavenCentral)
+        ) ++ standardResolvers
       }
     )
   }
@@ -54,9 +54,8 @@ object ResolversHelper extends AutoPluginHelper {
       .configure(sbt)
       .settings(
         externalResolvers ++= Seq(
-          Resolver.bintrayRepo("sbt", "sbt-plugin-releases"),
-            Resolver.typesafeIvyRepo(releases),
-        Resolver.bintrayRepo("scalaz", releases)
+          Resolver.typesafeIvyRepo(releases),
+          Resolver.bintrayRepo("scalaz", releases)
         )
       )
   }

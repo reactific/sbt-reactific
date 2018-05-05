@@ -26,6 +26,7 @@ object ReactificPlugin extends AutoPlugin {
   /** The list of helper objects in this package */
   val helpers: Seq[AutoPluginHelper] = {
     Seq(
+      AssemblyHelper,
       BuildInfoHelper,
       CommandsHelper,
       GitHelper,
@@ -56,7 +57,8 @@ object ReactificPlugin extends AutoPlugin {
   }
 
   object autoImport extends ReactificKeys {
-    object config {
+
+    object With {
       val BuildInfo: BuildInfoHelper.type = BuildInfoHelper
       val Commands: CommandsHelper.type = CommandsHelper
       val Git: GitHelper.type = GitHelper
@@ -72,6 +74,30 @@ object ReactificPlugin extends AutoPlugin {
       val Scalastyle: ScalastyleHelper.type = ScalastyleHelper
       val Site: SiteHelper.type = SiteHelper
       val Unidoc: UnidocHelper.type = UnidocHelper
+
+      def typical(project: Project): Project = {
+        project.configure(
+          Commands.allCommands,
+          Git.command,
+          Header.enable,
+          JavaC.typical,
+          Packaging.universalServer,
+          Publishing.publishToSonaType,
+          Release.process,
+          Resolvers.all,
+          ScalaC.common,
+          Scalafmt.all,
+          Scalastyle.enable,
+          Unidoc.enable
+        )
+      }
+
+      def everything(project: Project): Project = {
+        project
+          .configure(typical, Site.enable)
+          .configure(Miscellaneous.useClassPathJar)
+          .configure(Miscellaneous.useUnmanagedJarLibs)
+      }
     }
   }
 

@@ -29,32 +29,38 @@ object ScalastyleHelper extends AutoPluginHelper {
     Seq(ScalastylePlugin)
   }
 
-  /** The Settings to add in the scope of each project that activates this
-   * AutoPlugin.
+  /** The configuration function to enable Scalastyle command, configuration
+   * from the project directory, and the default config url.
    */
-  override def projectSettings: Seq[Setting[_]] = {
+  def enable(project: Project): Project = {
+    import ReactificPlugin.autoImport._
     val compName = "scalastyle-config.xml"
     val testName = "scalastyle-test-config.xml"
-    Seq(
-      scalastyleFailOnError := true,
-      scalastyleConfig := baseDirectory.value / "project" / compName,
-      (scalastyleConfig in Test) := baseDirectory.value / "project" / testName,
-      scalastyleConfigUrl :=
-        Some(
-          url(
-            "https://raw.githubusercontent.com/reactific/public" +
-              "/master/scalastyle-config.xml"
-          )
-        ),
-      (scalastyleConfigUrl in Test) :=
-        Some(
-          url(
-            "https://raw.githubusercontent.com/reactific/public" +
-              "/master/scalastyle-test-config.xml"
-          )
-        ),
-      scalastyleConfigUrlCacheFile := compName,
-      (scalastyleConfigUrlCacheFile in Test) := testName
-    )
+    project
+      .enablePlugins(ScalastylePlugin)
+      .settings(
+        Seq(
+          checkScalaStyle := true,
+          scalastyleFailOnError := true,
+          scalastyleConfig := baseDirectory.value / "project" / compName,
+          (scalastyleConfig in Test) := baseDirectory.value / "project" / testName,
+          scalastyleConfigUrl :=
+            Some(
+              url(
+                "https://raw.githubusercontent.com/reactific/public" +
+                  "/master/scalastyle-config.xml"
+              )
+            ),
+          (scalastyleConfigUrl in Test) :=
+            Some(
+              url(
+                "https://raw.githubusercontent.com/reactific/public" +
+                  "/master/scalastyle-test-config.xml"
+              )
+            ),
+          scalastyleConfigUrlCacheFile := compName,
+          (scalastyleConfigUrlCacheFile in Test) := testName
+        )
+      )
   }
 }
