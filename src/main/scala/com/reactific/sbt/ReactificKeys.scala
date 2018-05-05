@@ -15,8 +15,8 @@ trait ReactificKeys {
   case object DockerServerArtifact extends ArtifactKind
   
   val artifactKinds: SettingKey[Seq[ArtifactKind]] =
-    settingKey[Seq[ArtifactKind[]](
-      "The kinds of artifacts the project should produce. "+
+    settingKey[Seq[ArtifactKind]](
+      "The kinds of artifacts the project should produce. " +
         "Defaults to just to ZipFileArtifact"
   )
   
@@ -88,11 +88,11 @@ trait ReactificKeys {
       "Additional steps in release process to check the artifact's correctness"
     )
   
+  private val thisDir = file(".")
   def theProject: Project = {
-    val base = file(".")
-    val id = base.getCanonicalFile.getName
+    val id = thisDir.getCanonicalFile.getName
     Project
-      .apply(id.replaceAll(" ","-"), base)
+      .apply(id.replaceAll(" ","-"), thisDir)
       .settings(
         name := id
       )
@@ -102,13 +102,12 @@ trait ReactificKeys {
     val projects: Seq[Project] = {
       ReflectUtilities.allVals[Project](this).values.toSeq
     }
-    val aggregates = projects.filterNot(_.base == file(".")).map { p =>
+    val aggregates = projects.filterNot(_.base == thisDir).map { p =>
       p.project
     }
-    val base = file(".")
-    val id = base.getCanonicalFile.getName + "-root"
+    val id = thisDir.getCanonicalFile.getName + "-root"
     Project
-      .apply(id, base)
+      .apply(id, thisDir)
       .settings(
         name := id,
         aggregate in update := false,

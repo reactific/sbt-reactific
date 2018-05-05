@@ -23,12 +23,23 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 import sbtrelease.ReleasePlugin.autoImport._
 import sbtrelease.{ ReleasePlugin, Version }
 import ReactificPlugin.autoImport._
+import sbt.KeyRanks.APlusTask
 import sbt.Keys.publish
 
 object ReleaseHelper extends AutoPluginHelper {
 
   /** The AutoPlugins that we depend upon */
   override def autoPlugins: Seq[AutoPlugin] = Seq(ReleasePlugin)
+  
+  override def projectSettings: Seq[sbt.Setting[_]] = {
+    Seq[sbt.Setting[_]](
+      runScalafmtWhenReleasing := false,
+      additionalCheckSteps := Seq.empty[ReleaseStep],
+      checkTests := true,
+      checkScalaStyle := true,
+      checkHeaders := true
+    )
+  }
 
   def initialSteps: Seq[ReleaseStep] =
     Seq[ReleaseStep](checkSnapshotDependencies, inquireVersions, runClean)
@@ -103,6 +114,21 @@ object ReleaseHelper extends AutoPluginHelper {
     } :+ pushChanges
   }
   
+  val choosePublishTask = TaskKey[Unit](
+    "choose-publish-signed", "Choose which publishing task to use", APlusTask
+  )
+  
+  
+  def releasePublishTask(
+    isOSS: Boolean
+  ): Def.Initialize[Task[Unit]] = Def.taskDyn[Unit] {
+    if (isOSS) { // releasing open source
+      PgpKeys.publishSigned
+    } else {
+      publish
+    }
+  }
+  
   def process(project: Project): Project = {
     import ReactificPlugin.autoImport._
     project
@@ -110,13 +136,9 @@ object ReleaseHelper extends AutoPluginHelper {
       .settings(
         releaseUseGlobalVersion := true,
         releaseVersionBump := Version.Bump.Bugfix,
-        releasePublishArtifactsAction := {
-          if (privateNexusResolver.value.isEmpty) { // releasing open source
-            PgpKeys.publishSigned.value
-          } else {
-            publish.value
-          }
-        },
+        choosePublishTask :=
+          releasePublishTask(privateNexusResolver.value.isEmpty),
+        releasePublishArtifactsAction := choosePublishTask.value,
         releaseProcess := {
           initialSteps ++
             checkingSteps(

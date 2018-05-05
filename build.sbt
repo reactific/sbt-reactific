@@ -56,7 +56,7 @@ name := "sbt-reactific"
 organization := "com.reactific"
 scalaVersion := "2.12.5"
 scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint")
-logLevel := Level.Warn
+logLevel := Level.Info
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots"),

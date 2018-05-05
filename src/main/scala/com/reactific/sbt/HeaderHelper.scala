@@ -48,11 +48,11 @@ object HeaderHelper extends AutoPluginHelper {
           },
           organizationName := copyrightHolderName.value,
           headerMappings ++= Map[FileType, CommentStyle](
-            FileType.sh → CommentStyle.HashLineComment,
-            FileType(".sbt") → CommentStyle.CStyleBlockComment,
-            FileType(".xml") → CommentStyle.XmlStyleBlockComment,
-            FileType(".scala.html") → CommentStyle.TwirlStyleBlockComment,
-            FileType(".conf") → CommentStyle.HashLineComment
+            FileType.sh → CommentStyle.hashLineComment,
+            FileType(".sbt") → CommentStyle.cStyleBlockComment,
+            FileType(".xml") → CommentStyle.xmlStyleBlockComment,
+            FileType(".scala.html") → CommentStyle.twirlStyleBlockComment,
+            FileType(".conf") → CommentStyle.hashLineComment
           )
         )
       )

@@ -142,12 +142,8 @@ object PackagingHelper extends AutoPluginHelper {
   }
 }
 
-import com.typesafe.sbt.packager.Keys.daemonGroup
-import com.typesafe.sbt.packager.Keys.maintainer
-import com.typesafe.sbt.packager.docker.Cmd
-import com.typesafe.sbt.packager.docker.CmdLike
 
-
+/*
 enablePlugins(UniversalPlugin)
 enablePlugins(JavaAppPackaging)
 mainClass in Compile :=
@@ -191,3 +187,4 @@ version.value -> version.value
 )
 dockerRepository := Some("nexus.yoppworks.com:18082")
 
+*/
