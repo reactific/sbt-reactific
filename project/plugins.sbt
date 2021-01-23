@@ -16,7 +16,7 @@
 import sbt.Keys._
 
 libraryDependencies ++= Seq(
-  "org.slf4j" % "slf4j-simple" % "1.7.25",
+  "org.slf4j" % "slf4j-simple" % "1.7.30",
   "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
 )
 
