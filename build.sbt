@@ -54,7 +54,7 @@ enablePlugins(
 sbtPlugin := true
 name := "sbt-reactific"
 organization := "com.reactific"
-scalaVersion := "2.12.5"
+scalaVersion := "2.12.15"
 scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint")
 logLevel := Level.Info
 resolvers ++= Seq(
