@@ -66,7 +66,7 @@ resolvers ++= Seq(
 )
 libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-lang3" % "3.5",
-  "org.slf4j" % "slf4j-simple" % "1.7.25"
+  "org.slf4j" % "slf4j-simple" % "1.7.34"
 )
 
 // Scripted - sbt plugin tests
