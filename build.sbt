@@ -39,7 +39,7 @@ val defaultScmInfo = Def.setting {
 }
 
 // Libraries for the project we plug into
-val dependencies = Seq("org.apache.commons" % "commons-lang3" % "3.5")
+val dependencies = Seq("org.apache.commons" % "commons-lang3" % "3.14.0")
 
 enablePlugins(
   SbtPgp,
@@ -65,7 +65,7 @@ resolvers ++= Seq(
   "eclipse-jgit".at("http://download.eclipse.org/jgit/maven")
 )
 libraryDependencies ++= Seq(
-  "org.apache.commons" % "commons-lang3" % "3.5",
+  "org.apache.commons" % "commons-lang3" % "3.14.0",
   "org.slf4j" % "slf4j-simple" % "1.7.25"
 )
 
