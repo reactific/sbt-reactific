@@ -80,7 +80,7 @@ object ScalaCompilerHelper extends AutoPluginHelper {
     project
       .settings(
         warningsAreErrors := true,
-        scalaVersion := "2.12.5",
+        scalaVersion := "2.12.19",
         scalacOptions ++= {
           {
             if (scalaVersion.value.startsWith("2.10")) {
